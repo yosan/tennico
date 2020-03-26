@@ -1,0 +1,60 @@
+{
+  "name": "tennico",
+  "version": "0.1.0",
+  "description": "The application to find tennis court",
+  "engines": {
+    "node": "10"
+  },
+  "scripts": {
+    "dev": "next src/app",
+    "preserve": "npm run build-public && npm run build-functions && npm run build-app && npm run copy-deps && npm run install-deps",
+    "serve": "cross-env NODE_ENV=production firebase serve",
+    "deploy": "firebase deploy",
+    "clean": "rimraf \"dist/functions\" && rimraf \"dist/public\"",
+    "build-app": "next build \"src/app\"",
+    "build-public": "cpx \"src/app/public/**/*.*\" \"dist/public\" -C",
+    "build-functions": "tsc --project src/functions",
+    "lint-app": "eslint src/app --ext .ts,.tsx",
+    "typecheck-app": "tsc --project src/app",
+    "lint-functions": "eslint src/functions --ext .ts,.tsx",
+    "copy-deps": "cpx \"*{package.json,package-lock.json,yarn.lock}\" \"dist/functions\" -C",
+    "install-deps": "cd \"dist/functions\" && npm i"
+  },
+  "dependencies": {
+    "@sentry/browser": "^5.14.1",
+    "@types/react-dom": "^16.9.5",
+    "algoliasearch": "^4.1.0",
+    "firebase": "^7.10.0",
+    "firebase-admin": "^8.9.0",
+    "firebase-functions": "^3.1.0",
+    "google-map-react": "^1.1.6",
+    "moment": "^2.24.0",
+    "next": "^9.3.0",
+    "react": "^16.10.0",
+    "react-dom": "^16.13.1",
+    "react-redux": "^7.1.0",
+    "react-redux-firebase": "^3.1.2",
+    "redux": "^4.0.4",
+    "redux-firestore": "^0.9.0"
+  },
+  "devDependencies": {
+    "@types/node": "12.0.12",
+    "@types/react": "^16.6.0",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "cpx": "1.5.0",
+    "cross-env": "5.2.0",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.19.0",
+    "firebase-tools": "^7.1.0",
+    "prettier": "^2.0.1",
+    "rimraf": "2.6.2",
+    "typescript": "^3.2.0"
+  },
+  "prettier": {
+    "singleQuote": true,
+    "semi": false
+  }
+}
