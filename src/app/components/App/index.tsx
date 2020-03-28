@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { Provider } from 'react-redux'
 import {
   ReactReduxFirebaseProvider,
@@ -32,32 +31,18 @@ if (process.browser) {
 }
 
 const App: React.FC<{}> = ({ children }) => (
-  <>
-    <Head>
-      <link rel="manifest" href="/manifest.json" />
-      <link rel="shortcut icon" href="/favicon.ico" />
-      <link
-        href="https://fonts.googleapis.com/icon?family=Material+Icons"
-        rel="stylesheet"
-      />
-      <link
-        rel="stylesheet"
-        href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
-      />
-    </Head>
-    <main>
-      <Provider store={store}>
-        <ReactReduxFirebaseProvider
-          firebase={firebase}
-          config={rfConfig}
-          dispatch={store.dispatch}
-          createFirestoreInstance={createFirestoreInstance}
-        >
-          <div className="App">{children}</div>
-        </ReactReduxFirebaseProvider>
-      </Provider>
-    </main>
-  </>
+  <main>
+    <Provider store={store}>
+      <ReactReduxFirebaseProvider
+        firebase={firebase}
+        config={rfConfig}
+        dispatch={store.dispatch}
+        createFirestoreInstance={createFirestoreInstance}
+      >
+        <div className="App">{children}</div>
+      </ReactReduxFirebaseProvider>
+    </Provider>
+  </main>
 )
 
 export default App
