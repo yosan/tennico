@@ -12,10 +12,12 @@ const app = next({
 })
 const handle = app.getRequestHandler()
 
-export const nextApp = functions.https.onRequest((req, res) => {
-  console.log('File: ' + req.originalUrl)
-  return app.prepare().then(() => handle(req, res))
-})
+export const nextApp = functions
+  .runWith({ memory: '1GB' })
+  .https.onRequest((req, res) => {
+    console.log('File: ' + req.originalUrl)
+    return app.prepare().then(() => handle(req, res))
+  })
 
 const client = algoliasearch('3COL1FI90V', '480d1fce05c9b1e4568cb6baab9a1b57')
 const index = client.initIndex('courts')
