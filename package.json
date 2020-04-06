@@ -29,7 +29,7 @@
     "firebase-functions": "^3.1.0",
     "google-map-react": "^1.1.6",
     "moment": "^2.24.0",
-    "next": "^9.3.0",
+    "next": "^9.3.2",
     "react": "^16.10.0",
     "react-dom": "^16.13.1",
     "react-redux": "^7.1.0",
