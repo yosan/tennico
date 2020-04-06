@@ -51,3 +51,14 @@ export const google = {
 
 export default { firebase, reduxFirebase, algolia, google }
 ```
+
+## 2. Add src/functions/config.ts
+
+```typescript
+export const algolia = {
+  appId: 'xxx',
+  adminKey: 'xxx',
+}
+
+export default { algolia }
+```
