@@ -1,0 +1,8 @@
+dist
+node_modules
+.firebaserc
+src/app/config.ts
+src/functions/config.ts
+
+# Firebase cache
+.firebase/
