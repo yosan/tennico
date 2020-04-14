@@ -1,14 +1,14 @@
 import * as functions from 'firebase-functions'
 import next from 'next'
-import path from 'path'
 import algoliasearch from 'algoliasearch'
 import { algolia } from './config'
 
 // const dev = process.env.NODE_ENV !== 'production'
 const app = next({
   dev: false,
+  dir: __dirname,
   conf: {
-    distDir: `${path.relative(process.cwd(), __dirname)}/../functions/next`,
+    distDir: 'next',
   },
 })
 const handle = app.getRequestHandler()

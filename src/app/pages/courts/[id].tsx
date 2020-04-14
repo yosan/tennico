@@ -28,7 +28,9 @@ const Court: NextPage<Props> = (props) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context
+) => {
   const id = context.params.id
   const res = await fetch(
     `https://firestore.googleapis.com/v1/projects/tennico-f93a4/databases/(default)/documents/courts/${id}`
