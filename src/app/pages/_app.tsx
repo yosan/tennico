@@ -14,6 +14,7 @@ import { createStore, combineReducers } from 'redux'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
+import './styles.css'
 
 const initialState = {}
 const rootReducer = combineReducers({
