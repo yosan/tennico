@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { Provider } from 'react-redux'
 import {
   ReactReduxFirebaseProvider,
@@ -10,9 +9,11 @@ import 'firebase/analytics'
 import firebase from 'firebase/app'
 import 'firebase/auth'
 import 'firebase/firestore'
-import { firebase as fbConfig, reduxFirebase as rfConfig } from '../../config'
+import { firebase as fbConfig, reduxFirebase as rfConfig } from '../config'
 import { createStore, combineReducers } from 'redux'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
+import { NextComponentType } from 'next'
+import { AppContext, AppInitialProps, AppProps } from 'next/app'
 
 const initialState = {}
 const rootReducer = combineReducers({
@@ -31,19 +32,22 @@ if (process.browser) {
   })
 }
 
-const App: React.FC<{}> = ({ children }) => (
-  <main>
-    <Provider store={store}>
-      <ReactReduxFirebaseProvider
-        firebase={firebase}
-        config={rfConfig}
-        dispatch={store.dispatch}
-        createFirestoreInstance={createFirestoreInstance}
-      >
-        <div className="App">{children}</div>
-      </ReactReduxFirebaseProvider>
-    </Provider>
-  </main>
+const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
+  Component,
+  pageProps,
+}) => (
+  <Provider store={store}>
+    <ReactReduxFirebaseProvider
+      firebase={firebase}
+      config={rfConfig}
+      dispatch={store.dispatch}
+      createFirestoreInstance={createFirestoreInstance}
+    >
+      <div className="App">
+        <Component {...pageProps} />
+      </div>
+    </ReactReduxFirebaseProvider>
+  </Provider>
 )
 
 export default App

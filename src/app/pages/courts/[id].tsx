@@ -1,7 +1,6 @@
 import { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
 import * as React from 'react'
-import App from '../../components/App'
 import CourtDetails from '../../components/courts/CourtDetails'
 import Navbar from '../../components/Navbar'
 import { useRouter } from 'next/router'
@@ -17,14 +16,14 @@ const Court: NextPage<Props> = (props) => {
   const { id } = router.query
 
   return (
-    <App>
+    <div>
       <Head>
         <title>{`${props.name} - Tennico`}</title>
         <meta name="description" content={props.address} />
       </Head>
       <Navbar />
       <CourtDetails id={id as string} />
-    </App>
+    </div>
   )
 }
 
