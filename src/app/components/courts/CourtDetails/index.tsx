@@ -8,16 +8,11 @@ import { useFirestoreConnect } from 'react-redux-firebase'
 import Court, { SurfaceType, surfaceTypeName } from '../../../models/court'
 import { State } from '../../../models/type'
 import { google } from '../../../config'
+import Pin from '../../Pin'
 
 interface Props {
   id: string
 }
-
-const AnyReactComponent: React.FC<{ lat: number; lng: number }> = () => (
-  <i className="material-icons" style={{ color: 'red' }}>
-    place
-  </i>
-)
 
 const CourtDetails: React.FC<Props> = ({ id }) => {
   React.useEffect(() => {
@@ -50,10 +45,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
                 }}
                 defaultZoom={15}
               >
-                <AnyReactComponent
-                  lat={court.geo.latitude}
-                  lng={court.geo.longitude}
-                />
+                <Pin lat={court.geo.latitude} lng={court.geo.longitude} />
               </GoogleMapReact>
             </div>
           )}

@@ -1,13 +1,14 @@
 import React from 'react'
 import { FC, useEffect, useState } from 'react'
-import algoliasearch from 'algoliasearch'
-import Court from '../../models/court'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
-import { algolia } from '../../config'
+import GoogleMapReact from 'google-map-react'
+import Court from '../../models/court'
+import Pin from '../Pin'
+import { search } from '../../models/search'
+import { google } from '../../config'
 
-const client = algoliasearch(algolia.appId, algolia.apiKey)
-const index = client.initIndex('courts')
+const hits = 20
 
 const Search: FC<{}> = () => {
   const router = useRouter()
@@ -16,30 +17,38 @@ const Search: FC<{}> = () => {
   const text = q as string
 
   useEffect(() => {
-    let cleanedUp = false
-
     text &&
-      index
-        .search<Court>(text, { hitsPerPage: 20 })
-        .then((result) => {
-          if (cleanedUp) {
-            return
-          }
-          const hitCourts = result.hits.map((hit) => {
-            return { id: hit.objectID, ...hit }
-          })
-          setCourts(hitCourts)
-        })
+      search(text, hits)
+        .then((courts) => setCourts(courts))
         .catch((e) => console.error(e))
-
-    const cleanup = () => {
-      cleanedUp = true
-    }
-    return cleanup
   }, [text])
 
   return (
     <main className="section container">
+      <div className="section" style={{ height: '400px', width: '100%' }}>
+        {courts && (
+          <GoogleMapReact
+            bootstrapURLKeys={{
+              key: google.apiKey,
+            }}
+            defaultCenter={{
+              lat: courts[0].geo.latitude,
+              lng: courts[0].geo.longitude,
+            }}
+            defaultZoom={10}
+          >
+            {courts.map((court) => {
+              return (
+                <Pin
+                  key={court.id}
+                  lat={court.geo.latitude}
+                  lng={court.geo.longitude}
+                />
+              )
+            })}
+          </GoogleMapReact>
+        )}
+      </div>
       <div className="collection">
         {courts &&
           courts.map((court: Court) => {
