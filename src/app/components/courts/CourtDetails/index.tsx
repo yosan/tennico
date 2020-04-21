@@ -45,7 +45,12 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
                 }}
                 defaultZoom={15}
               >
-                <Pin lat={court.geo.latitude} lng={court.geo.longitude} />
+                <Pin
+                  id={court.id}
+                  lat={court.geo.latitude}
+                  lng={court.geo.longitude}
+                  selected={false}
+                />
               </GoogleMapReact>
             </div>
           )}

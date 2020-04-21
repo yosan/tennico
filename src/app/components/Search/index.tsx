@@ -1,5 +1,5 @@
 import React from 'react'
-import { FC, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import Link from 'next/link'
 import GoogleMapReact from 'google-map-react'
@@ -14,6 +14,7 @@ const Search: FC<{}> = () => {
   const router = useRouter()
   const { q } = router.query
   const [courts, setCourts] = useState<Court[] | undefined>()
+  const [selectedID, setSelectedID] = useState<string | undefined>()
   const text = q as string
 
   useEffect(() => {
@@ -22,6 +23,12 @@ const Search: FC<{}> = () => {
         .then((courts) => setCourts(courts))
         .catch((e) => console.error(e))
   }, [text])
+
+  const selectedCourt = useMemo(() => {
+    return courts?.find((court) => court.id === selectedID)
+  }, [selectedID, courts])
+
+  const onClick = useCallback((id: string) => setSelectedID(id), [])
 
   return (
     <main className="section container">
@@ -41,30 +48,34 @@ const Search: FC<{}> = () => {
               return (
                 <Pin
                   key={court.id}
+                  id={court.id}
                   lat={court.geo.latitude}
                   lng={court.geo.longitude}
+                  selected={court.id === selectedID}
+                  onClick={onClick}
                 />
               )
             })}
           </GoogleMapReact>
         )}
       </div>
-      <div className="collection">
-        {courts &&
-          courts.map((court: Court) => {
-            return (
-              <Link
-                href="/courts/[id]"
-                as={'/courts/' + court.id}
-                key={court.id}
-              >
-                <a className="collection-item">
-                  <h5>{court.name}</h5>
-                  <p>{court.address}</p>
-                </a>
-              </Link>
-            )
-          })}
+      <div>
+        {selectedCourt && (
+          <Link
+            href="/courts/[id]"
+            as={'/courts/' + selectedCourt.id}
+            key={selectedCourt.id}
+          >
+            <a>
+              <div className="card">
+                <div className="card-content grey-text text-darken-3">
+                  <p className="card-title">{selectedCourt.name}</p>
+                  <p className="grey-text">{selectedCourt.address}</p>
+                </div>
+              </div>
+            </a>
+          </Link>
+        )}
       </div>
     </main>
   )
