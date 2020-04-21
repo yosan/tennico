@@ -7,6 +7,7 @@ import Court from '../../models/court'
 import Pin from '../Pin'
 import { search } from '../../models/search'
 import { google } from '../../config'
+import * as geolib from 'geolib'
 
 const hits = 20
 
@@ -28,19 +29,33 @@ const Search: FC<{}> = () => {
     return courts?.find((court) => court.id === selectedID)
   }, [selectedID, courts])
 
+  const courtsCenter = useMemo(() => {
+    if (!courts) {
+      return false
+    }
+    return geolib.getCenter(
+      courts.map((court) => {
+        return {
+          latitude: court.geo.latitude,
+          longitude: court.geo.longitude,
+        }
+      })
+    )
+  }, [courts])
+
   const onClick = useCallback((id: string) => setSelectedID(id), [])
 
   return (
     <main>
       <div style={{ height: 'calc(100vh - 56px)', width: '100%' }}>
-        {courts && (
+        {courts && courtsCenter && (
           <GoogleMapReact
             bootstrapURLKeys={{
               key: google.apiKey,
             }}
             defaultCenter={{
-              lat: courts[0].geo.latitude,
-              lng: courts[0].geo.longitude,
+              lat: courtsCenter.latitude,
+              lng: courtsCenter.longitude,
             }}
             defaultZoom={10}
           >

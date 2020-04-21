@@ -1553,6 +1553,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/geolib@^2.0.23":
+  version "2.0.23"
+  resolved "https://registry.yarnpkg.com/@types/geolib/-/geolib-2.0.23.tgz#83aa8d2772f3898daec211eac176583bd466b418"
+  integrity sha512-afIUEoDag0RdcaeQ965SlGRZA361Ngz2OthkkxAVMlvYPVn/5wm/9dYl5yPXteTyjSYxkhKUhWdFyJdVG87hJg==
+  dependencies:
+    geolib "*"
+
 "@types/json-schema@^7.0.3":
   version "7.0.4"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
@@ -4722,6 +4729,11 @@ gcs-resumable-upload@^2.2.4:
     google-auth-library "^5.0.0"
     pumpify "^2.0.0"
     stream-events "^1.0.4"
+
+geolib@*, geolib@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/geolib/-/geolib-3.2.1.tgz#1d7c6e7106eddc10445ba2038550aab63d6e4fa4"
+  integrity sha512-O9nD8iSD4VimupKak8bKySLkkWI5VWetxIXsU7jmJRXxBFRR9LxSXGfTomtcHJLSRiznx+YHXHTOIVq4qgQmPw==
 
 get-stdin@^6.0.0:
   version "6.0.0"
