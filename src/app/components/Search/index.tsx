@@ -31,8 +31,8 @@ const Search: FC<{}> = () => {
   const onClick = useCallback((id: string) => setSelectedID(id), [])
 
   return (
-    <main className="section container">
-      <div className="section" style={{ height: '400px', width: '100%' }}>
+    <main>
+      <div style={{ height: 'calc(100vh - 56px)', width: '100%' }}>
         {courts && (
           <GoogleMapReact
             bootstrapURLKeys={{
@@ -59,7 +59,14 @@ const Search: FC<{}> = () => {
           </GoogleMapReact>
         )}
       </div>
-      <div>
+      <div
+        style={{
+          position: 'absolute',
+          top: '70px',
+          width: '100%',
+          padding: '0 20px',
+        }}
+      >
         {selectedCourt && (
           <Link
             href="/courts/[id]"
