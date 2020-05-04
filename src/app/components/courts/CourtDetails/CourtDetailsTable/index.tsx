@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Court, { SurfaceType, surfaceTypeName } from '../../../../models/court'
+import Court, { SurfaceType, surfaceTypeName } from 'models/court'
 import moment from 'moment'
 
 interface Props {

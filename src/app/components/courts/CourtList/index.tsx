@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import * as React from 'react'
-import CourtSummary from '../../../components/courts/CourtSummary'
-import Court from '../../../models/court'
+import CourtSummary from 'components/courts/CourtSummary'
+import Court from 'models/court'
 
 interface Props {
   courts?: Court[]

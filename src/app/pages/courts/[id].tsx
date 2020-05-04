@@ -1,8 +1,8 @@
 import { NextPage, GetServerSideProps } from 'next'
 import Head from 'next/head'
 import * as React from 'react'
-import CourtDetails from '../../components/courts/CourtDetails'
-import Navbar from '../../components/Navbar'
+import CourtDetails from 'components/courts/CourtDetails'
+import Navbar from 'components/Navbar'
 import { useRouter } from 'next/router'
 import fetch from 'node-fetch'
 

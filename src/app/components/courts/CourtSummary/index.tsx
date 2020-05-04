@@ -1,5 +1,5 @@
 import * as React from 'react'
-import Court from '../../../models/court'
+import Court from 'models/court'
 
 interface Props {
   court: Court

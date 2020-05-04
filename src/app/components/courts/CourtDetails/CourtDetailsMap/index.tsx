@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Court from '../../../../models/court'
+import Court from 'models/court'
 import GoogleMapReact from 'google-map-react'
-import { google } from '../../../../config'
-import Pin from '../../../Pin'
+import { google } from 'config'
+import Pin from 'components/Pin'
 
 interface Props {
   court: Court
