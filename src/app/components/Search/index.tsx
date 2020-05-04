@@ -1,14 +1,14 @@
-import React from 'react'
-import { FC, useCallback, useEffect, useMemo, useState } from 'react'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import Pin from 'components/Pin'
+import { google } from 'config'
+import * as geolib from 'geolib'
 import GoogleMapReact from 'google-map-react'
 import { fitBounds } from 'google-map-react/utils'
 import Court from 'models/court'
-import Pin from 'components/Pin'
 import { search } from 'models/search'
-import { google } from 'config'
-import * as geolib from 'geolib'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+import React from 'react'
+import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 const hits = 20
 

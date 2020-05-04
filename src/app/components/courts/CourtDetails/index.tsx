@@ -1,12 +1,13 @@
-import firebase from 'firebase/app'
 import 'firebase/analytics'
+
+import CourtDetailsTable from 'components/courts/CourtDetails//CourtDetailsTable'
+import CourtDetailsMap from 'components/courts/CourtDetails/CourtDetailsMap'
+import firebase from 'firebase/app'
+import Court from 'models/court'
+import { State } from 'models/type'
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { useFirestoreConnect } from 'react-redux-firebase'
-import Court from 'models/court'
-import { State } from 'models/type'
-import CourtDetailsMap from 'components/courts/CourtDetails/CourtDetailsMap'
-import CourtDetailsTable from 'components/courts/CourtDetails//CourtDetailsTable'
 
 interface Props {
   id: string

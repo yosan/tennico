@@ -1,20 +1,21 @@
+import 'firebase/analytics'
+import 'firebase/auth'
+import 'firebase/firestore'
+import './styles.css'
+
+import * as Sentry from '@sentry/browser'
+import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config'
+import firebase from 'firebase/app'
+import { NextComponentType } from 'next'
+import { AppContext, AppInitialProps, AppProps } from 'next/app'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import {
-  ReactReduxFirebaseProvider,
   firebaseReducer,
+  ReactReduxFirebaseProvider,
 } from 'react-redux-firebase'
-import * as Sentry from '@sentry/browser'
-import 'firebase/analytics'
-import firebase from 'firebase/app'
-import 'firebase/auth'
-import 'firebase/firestore'
-import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config'
-import { createStore, combineReducers } from 'redux'
+import { combineReducers, createStore } from 'redux'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
-import { NextComponentType } from 'next'
-import { AppContext, AppInitialProps, AppProps } from 'next/app'
-import './styles.css'
 
 const initialState = {}
 const rootReducer = combineReducers({

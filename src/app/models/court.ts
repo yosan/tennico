@@ -1,5 +1,6 @@
-import firebase from 'firebase/app'
 import 'firebase/firestore'
+
+import firebase from 'firebase/app'
 
 export default interface Court {
   id: string

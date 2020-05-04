@@ -1,10 +1,10 @@
-import { NextPage, GetServerSideProps } from 'next'
-import Head from 'next/head'
-import * as React from 'react'
 import CourtDetails from 'components/courts/CourtDetails'
 import Navbar from 'components/Navbar'
+import { GetServerSideProps, NextPage } from 'next'
+import Head from 'next/head'
 import { useRouter } from 'next/router'
 import fetch from 'node-fetch'
+import * as React from 'react'
 
 interface Props {
   name: string

@@ -1,12 +1,12 @@
+import CourtList from 'components/courts/CourtList'
+import SearchBar from 'components/SearchBar'
+import Court from 'models/court'
+import { State } from 'models/type'
+import Router from 'next/router'
 import React from 'react'
 import { FC, useCallback } from 'react'
 import { useSelector } from 'react-redux'
 import { isEmpty, isLoaded, useFirestoreConnect } from 'react-redux-firebase'
-import Court from 'models/court'
-import CourtList from 'components/courts/CourtList'
-import SearchBar from 'components/SearchBar'
-import Router from 'next/router'
-import { State } from 'models/type'
 
 const getSearchPath = (query: string | undefined) => {
   return query && `/search?q=${query}`
