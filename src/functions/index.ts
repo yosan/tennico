@@ -1,6 +1,7 @@
+import algoliasearch from 'algoliasearch'
 import * as functions from 'firebase-functions'
 import next from 'next'
-import algoliasearch from 'algoliasearch'
+
 import { algolia } from './config'
 
 // const dev = process.env.NODE_ENV !== 'production'
