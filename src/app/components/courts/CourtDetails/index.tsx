@@ -1,13 +1,10 @@
 import firebase from 'firebase/app'
 import 'firebase/analytics'
-import GoogleMapReact from 'google-map-react'
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { useFirestoreConnect } from 'react-redux-firebase'
 import Court from '../../../models/court'
 import { State } from '../../../models/type'
-import { google } from '../../../config'
-import Pin from '../../Pin'
 import CourtDetailsMap from './CourtDetailsMap'
 import CourtDetailsTable from './CourtDetailsTable'
 
