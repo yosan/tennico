@@ -1,5 +1,6 @@
 import CourtDetails from 'components/courts/CourtDetails'
 import Navbar from 'components/Navbar'
+import { firebase } from 'config'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
@@ -32,7 +33,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const id = context.params.id
   const res = await fetch(
-    `https://firestore.googleapis.com/v1/projects/tennico-f93a4/databases/(default)/documents/courts/${id}`
+    `https://firestore.googleapis.com/v1/projects/${firebase.projectId}/databases/(default)/documents/courts/${id}`
   )
   const data = await res.json()
   return {
