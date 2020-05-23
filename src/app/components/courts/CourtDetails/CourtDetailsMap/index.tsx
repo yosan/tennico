@@ -4,6 +4,8 @@ import GoogleMapReact from 'google-map-react'
 import Court from 'models/court'
 import * as React from 'react'
 
+import styles from './styles.module.css'
+
 interface Props {
   court: Court
 }
@@ -11,7 +13,7 @@ interface Props {
 const CourtDetailsMap: React.FC<Props> = ({ court }) => {
   return (
     court.geo && (
-      <div className="section" style={{ height: '400px', width: '100%' }}>
+      <div className={`section ${styles.map}`}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: google.apiKey,

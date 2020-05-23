@@ -1,0 +1,18 @@
+.main {
+    height: 100%;
+    width: 100%;
+}
+
+.searchContainer {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    padding: 0;
+}
+
+.cardContainer {
+    position: absolute;
+    top: 60px;
+    width: 100%;
+    padding: 0 10px;
+}

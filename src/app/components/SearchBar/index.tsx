@@ -1,5 +1,7 @@
 import React from 'react'
 
+import styles from './styles.module.css'
+
 interface Props {
   onSearch: (value: string | undefined) => void
 }
@@ -24,13 +26,7 @@ const SearchBar: React.FC<Props> = ({ onSearch }) => {
     [query]
   )
   return (
-    <div
-      className="row"
-      style={{
-        backgroundColor: 'rgba(255,255,255,0.90)',
-        padding: '5px 5px 0px 5px',
-      }}
-    >
+    <div className={`row ${styles.container}`}>
       <input
         type="text"
         id="search"

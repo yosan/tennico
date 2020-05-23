@@ -10,6 +10,8 @@ import Link from 'next/link'
 import React from 'react'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
+import styles from './styles.module.css'
+
 const hits = 20
 
 const createMapOptions = () => {
@@ -88,50 +90,34 @@ const Home: FC<{}> = () => {
   const onClick = useCallback((id: string) => setSelectedID(id), [])
 
   return (
-    <main style={{ height: '100%', width: '100%' }}>
-      <div style={{ height: '100%', width: '100%' }}>
-        {courts && courtsCenter && (
-          <GoogleMap
-            bootstrapURLKeys={{
-              key: google.apiKey,
-            }}
-            defaultCenter={center}
-            defaultZoom={zoom}
-            options={createMapOptions}
-          >
-            {courts.map((court) => {
-              return (
-                <Pin
-                  key={court.id}
-                  id={court.id}
-                  lat={court.geo.latitude}
-                  lng={court.geo.longitude}
-                  selected={court.id === selectedID}
-                  onClick={onClick}
-                />
-              )
-            })}
-          </GoogleMap>
-        )}
-      </div>
-      <div
-        style={{
-          position: 'absolute',
-          bottom: '0px',
-          width: '100%',
-          padding: '0',
-        }}
-      >
+    <main className={styles.main}>
+      {courts && courtsCenter && (
+        <GoogleMap
+          bootstrapURLKeys={{
+            key: google.apiKey,
+          }}
+          defaultCenter={center}
+          defaultZoom={zoom}
+          options={createMapOptions}
+        >
+          {courts.map((court) => {
+            return (
+              <Pin
+                key={court.id}
+                id={court.id}
+                lat={court.geo.latitude}
+                lng={court.geo.longitude}
+                selected={court.id === selectedID}
+                onClick={onClick}
+              />
+            )
+          })}
+        </GoogleMap>
+      )}
+      <div className={styles.searchContainer}>
         <SearchBar onSearch={onSearch} />
       </div>
-      <div
-        style={{
-          position: 'absolute',
-          top: '60px',
-          width: '100%',
-          padding: '0 10px',
-        }}
-      >
+      <div className={styles.cardContainer}>
         {selectedCourt && (
           <Link
             href="/courts/[id]"

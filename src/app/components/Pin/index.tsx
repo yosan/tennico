@@ -1,6 +1,8 @@
 import React from 'react'
 import { FC, useCallback } from 'react'
 
+import styles from './styles.module.css'
+
 interface Props {
   id: string
   lat: number
@@ -15,12 +17,9 @@ const Pin: FC<Props> = ({ id, selected, onClick }) => {
   }, [id, onClick])
   return (
     <i
-      className="material-icons"
-      style={{
-        color: selected ? 'green' : 'red',
-        cursor: 'pointer',
-        fontSize: selected ? '30px' : '24px',
-      }}
+      className={`material-icons ${
+        selected ? styles.selected : styles.default
+      }`}
       onClick={callback}
     >
       place
