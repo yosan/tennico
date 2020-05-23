@@ -1,7 +1,6 @@
 import Pin from 'components/Pin'
 import SearchBar from 'components/SearchBar'
 import { google } from 'config'
-import * as geolib from 'geolib'
 import GoogleMap from 'google-map-react'
 import { fitBounds } from 'google-map-react/utils'
 import Court from 'models/court'
@@ -40,20 +39,6 @@ const Home: FC<{}> = () => {
     return courts?.find((court) => court.id === selectedID)
   }, [selectedID, courts])
 
-  const courtsCenter = useMemo(() => {
-    if (!courts) {
-      return false
-    }
-    return geolib.getCenter(
-      courts.map((court) => {
-        return {
-          latitude: court.geo.latitude,
-          longitude: court.geo.longitude,
-        }
-      })
-    )
-  }, [courts])
-
   const { center, zoom } = useMemo(() => {
     if (!courts) {
       return {}
@@ -91,7 +76,7 @@ const Home: FC<{}> = () => {
 
   return (
     <main className={styles.main}>
-      {courts && courtsCenter && (
+      {courts && (
         <GoogleMap
           bootstrapURLKeys={{
             key: google.apiKey,
