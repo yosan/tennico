@@ -5,14 +5,14 @@ import Head from 'next/head'
 import * as React from 'react'
 
 const IndexPage: NextPage<{}> = () => (
-  <div>
+  <>
     <Head>
       <title>Tennico</title>
       <meta name="description" content="近くのテニスコートを探そう" />
     </Head>
     <Navbar />
     <Home />
-  </div>
+  </>
 )
 
 export default IndexPage

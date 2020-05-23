@@ -88,8 +88,8 @@ const Home: FC<{}> = () => {
   const onClick = useCallback((id: string) => setSelectedID(id), [])
 
   return (
-    <main>
-      <div style={{ height: 'calc(100vh - 56px)', width: '100%' }}>
+    <main style={{ height: '100%', width: '100%' }}>
+      <div style={{ height: '100%', width: '100%' }}>
         {courts && courtsCenter && (
           <GoogleMap
             bootstrapURLKeys={{

@@ -17,14 +17,14 @@ const Court: NextPage<Props> = (props) => {
   const { id } = router.query
 
   return (
-    <div>
+    <>
       <Head>
         <title>{`${props.name} - Tennico`}</title>
         <meta name="description" content={props.address} />
       </Head>
       <Navbar />
       <CourtDetails id={id as string} />
-    </div>
+    </>
   )
 }
 
