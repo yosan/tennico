@@ -24,7 +24,13 @@ const SearchBar: React.FC<Props> = ({ onSearch }) => {
     [query]
   )
   return (
-    <div className="row">
+    <div
+      className="row"
+      style={{
+        backgroundColor: 'rgba(255,255,255,0.90)',
+        padding: '5px 5px 0px 5px',
+      }}
+    >
       <input
         type="text"
         id="search"
