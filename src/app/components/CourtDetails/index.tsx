@@ -1,7 +1,7 @@
 import 'firebase/analytics'
 
-import CourtDetailsTable from 'components/courts/CourtDetails//CourtDetailsTable'
-import CourtDetailsMap from 'components/courts/CourtDetails/CourtDetailsMap'
+import CourtDetailsMap from 'components/CourtDetails/CourtDetailsMap'
+import CourtDetailsTable from 'components/CourtDetails/CourtDetailsTable'
 import firebase from 'firebase/app'
 import Court from 'models/court'
 import { State } from 'models/type'

@@ -1,4 +1,4 @@
-import CourtDetails from 'components/courts/CourtDetails'
+import CourtDetails from 'components/CourtDetails'
 import Navbar from 'components/Navbar'
 import { firebase } from 'config'
 import { GetServerSideProps, NextPage } from 'next'
