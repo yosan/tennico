@@ -10,6 +10,14 @@ interface Props {
   court: Court
 }
 
+const createMapOptions = () => {
+  return {
+    panControl: false,
+    zoomControl: false,
+    fullscreenControl: false,
+  }
+}
+
 const CourtDetailsMap: React.FC<Props> = ({ court }) => {
   return (
     court.geo && (
@@ -23,6 +31,7 @@ const CourtDetailsMap: React.FC<Props> = ({ court }) => {
             lng: court.geo.longitude,
           }}
           defaultZoom={15}
+          options={createMapOptions}
         >
           <Pin
             id={court.id}
