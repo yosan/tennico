@@ -81,8 +81,8 @@ const Home: FC<{}> = () => {
           bootstrapURLKeys={{
             key: google.apiKey,
           }}
-          defaultCenter={center}
-          defaultZoom={zoom}
+          center={center}
+          zoom={zoom}
           options={createMapOptions}
         >
           {courts.map((court) => {
