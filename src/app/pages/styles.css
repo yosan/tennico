@@ -17,9 +17,3 @@ body {
 .App {
     height: 100%;
 }
-
-nav {
-    position: absolute;
-    top: 0;
-    z-index: 1;
-}

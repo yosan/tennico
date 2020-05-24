@@ -31,7 +31,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
     return (
       <main>
         <div className="container section project-details">
-          <h1 className="header section">{court.name}</h1>
+          <h4 className="header section">{court.name}</h4>
           <CourtDetailsMap court={court} />
           <CourtDetailsTable court={court} />
         </div>

@@ -10,7 +10,7 @@ const IndexPage: NextPage<{}> = () => (
       <title>Tennico</title>
       <meta name="description" content="近くのテニスコートを探そう" />
     </Head>
-    <Navbar />
+    <Navbar absolute={true} />
     <Home />
   </>
 )
