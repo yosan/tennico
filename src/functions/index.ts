@@ -23,9 +23,15 @@ const client = algoliasearch(algolia.appId, algolia.adminKey)
 const index = client.initIndex('courts')
 
 const addToIndex = async (snapshot: FirebaseFirestore.DocumentSnapshot) => {
+  const data = snapshot.data()
+
   const object = {
     objectID: snapshot.id,
-    ...snapshot.data(),
+    _geoloc: {
+      lat: data?.geo._latitude,
+      lng: data?.geo._longitude,
+    },
+    ...data,
   }
   try {
     return await index.saveObject(object)

@@ -4,14 +4,14 @@ import { google } from 'config'
 import GoogleMap from 'google-map-react'
 import { fitBounds } from 'google-map-react/utils'
 import Court from 'models/court'
-import { search } from 'models/search'
+import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
 import React from 'react'
 import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import styles from './styles.module.css'
 
-const hits = 20
+const hits = 10
 
 const createMapOptions = () => {
   return {
@@ -22,25 +22,48 @@ const createMapOptions = () => {
 }
 
 const Home: FC<{}> = () => {
+  const [mode, setMode] = useState<'text' | 'location'>('text')
   const [query, setQuery] = useState('東京')
   const [courts, setCourts] = useState<Court[] | undefined>()
   const [selectedID, setSelectedID] = useState<string | undefined>()
-  const onSearch = useCallback((query: string | undefined) => {
-    query && setQuery(query)
+  const [mapCenter, setMapCenter] = useState<
+    { lat: number; lng: number } | undefined
+  >()
+  const onSearch = useCallback((mode: 'text' | 'location', value?: string) => {
+    switch (mode) {
+      case 'text':
+        setMode('text')
+        value && setQuery(value)
+        break
+      case 'location':
+        setMode('location')
+        break
+      default:
+        break
+    }
   }, [])
 
   useEffect(() => {
-    search(query, hits)
-      .then((courts) => setCourts(courts))
-      .catch((e) => console.error(e))
-  }, [query])
+    mode === 'text' &&
+      search(query, hits)
+        .then((courts) => setCourts(courts))
+        .catch((e) => console.error(e))
+  }, [query, mode])
+
+  useEffect(() => {
+    mode === 'location' &&
+      mapCenter &&
+      searchByGeo(mapCenter.lat, mapCenter.lng, hits)
+        .then((courts) => setCourts(courts))
+        .catch((e) => console.error(e))
+  }, [mapCenter, mode])
 
   const selectedCourt = useMemo(() => {
     return courts?.find((court) => court.id === selectedID)
   }, [selectedID, courts])
 
   const { center, zoom } = useMemo(() => {
-    if (!courts) {
+    if (!courts || mode === 'location') {
       return {}
     }
 
@@ -73,6 +96,7 @@ const Home: FC<{}> = () => {
   }, [courts])
 
   const onClick = useCallback((id: string) => setSelectedID(id), [])
+  const onBoundsChange = useCallback((center) => setMapCenter(center), [])
 
   return (
     <main className={styles.main}>
@@ -84,6 +108,7 @@ const Home: FC<{}> = () => {
           center={center}
           zoom={zoom}
           options={createMapOptions}
+          onBoundsChange={onBoundsChange}
         >
           {courts.map((court) => {
             return (
