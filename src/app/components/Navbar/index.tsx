@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
+import { memo } from 'react'
 
 import styles from './styles.module.css'
 
@@ -23,4 +24,4 @@ const Navbar: React.FC<Props> = ({ absolute }) => {
   )
 }
 
-export default Navbar
+export default memo(Navbar)

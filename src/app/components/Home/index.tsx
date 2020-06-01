@@ -1,5 +1,6 @@
 import Pin from 'components/Pin'
 import SearchBar from 'components/SearchBar'
+import SearchModeButton from 'components/SearchModeButton'
 import { google } from 'config'
 import GoogleMap from 'google-map-react'
 import { fitBounds } from 'google-map-react/utils'
@@ -29,7 +30,7 @@ const Home: FC<{}> = () => {
   const [mapCenter, setMapCenter] = useState<
     { lat: number; lng: number } | undefined
   >()
-  const onSearch = useCallback((mode: 'text' | 'location', value?: string) => {
+  const onSearch = useCallback((value?: string) => {
     switch (mode) {
       case 'text':
         setMode('text')
@@ -96,6 +97,9 @@ const Home: FC<{}> = () => {
   }, [courts])
 
   const onClick = useCallback((id: string) => setSelectedID(id), [])
+  const onClickMode = useCallback((value: 'text' | 'location') => {
+    setMode(value)
+  }, [])
   const onBoundsChange = useCallback((center) => setMapCenter(center), [])
 
   return (
@@ -124,10 +128,7 @@ const Home: FC<{}> = () => {
           })}
         </GoogleMap>
       )}
-      <div className={styles.searchContainer}>
-        <SearchBar onSearch={onSearch} />
-      </div>
-      <div className={styles.cardContainer}>
+      <div className={styles.card}>
         {selectedCourt && (
           <Link
             href="/courts/[id]"
@@ -143,6 +144,16 @@ const Home: FC<{}> = () => {
               </div>
             </a>
           </Link>
+        )}
+      </div>
+      <div className={styles.controls}>
+        <div className={styles.modeButton}>
+          <SearchModeButton mode={mode} onClick={onClickMode} />
+        </div>
+        {mode === 'text' && (
+          <div>
+            <SearchBar onSearch={onSearch} />
+          </div>
         )}
       </div>
     </main>

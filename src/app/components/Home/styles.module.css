@@ -3,16 +3,21 @@
     width: 100%;
 }
 
-.searchContainer {
-    position: absolute;
-    bottom: 0px;
-    width: 100%;
-    padding: 0;
-}
-
-.cardContainer {
+.card {
     position: absolute;
     top: 60px;
     width: 100%;
     padding: 0 10px;
+}
+
+.controls {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.modeButton {
+    margin: 0 0 10px auto;
 }

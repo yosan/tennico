@@ -1,5 +1,5 @@
 import React from 'react'
-import { FC, useCallback } from 'react'
+import { FC, memo, useCallback } from 'react'
 
 import styles from './styles.module.css'
 
@@ -27,4 +27,4 @@ const Pin: FC<Props> = ({ id, selected, onClick }) => {
   )
 }
 
-export default Pin
+export default memo(Pin)
