@@ -1,6 +1,8 @@
 import algoliasearch from 'algoliasearch'
 import { algolia } from 'config'
-import Court, { SurfaceType } from 'models/court'
+import { Court } from 'models/court'
+
+import { SurfaceType } from './surfaceType'
 
 const client = algoliasearch(algolia.appId, algolia.apiKey)
 const index = client.initIndex('courts')
@@ -14,7 +16,10 @@ interface CourtAlgolia {
   address: string
   price: string
   surfaces: { [type in SurfaceType]: number }
-  createdAt: firebase.firestore.Timestamp
+  createdAt: {
+    _seconds: number
+    _nanoseconds: number
+  }
   nighter: boolean
   geo: {
     _latitude: number
@@ -33,6 +38,7 @@ export const search = async (text: string, hitsPerPage: number) => {
         latitude: hit.geo._latitude,
         longitude: hit.geo._longitude,
       },
+      createdAt: hit.createdAt._seconds,
     }
   })
   return courts
@@ -55,6 +61,7 @@ export const searchByGeo = async (
         latitude: hit.geo._latitude,
         longitude: hit.geo._longitude,
       },
+      createdAt: hit.createdAt._seconds,
     }
   })
   return courts

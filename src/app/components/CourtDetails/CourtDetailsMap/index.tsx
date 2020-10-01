@@ -1,7 +1,7 @@
 import Pin from 'components/Pin'
 import { google } from 'config'
 import GoogleMapReact from 'google-map-react'
-import Court from 'models/court'
+import { Court } from 'models/court'
 import * as React from 'react'
 
 import styles from './styles.module.css'

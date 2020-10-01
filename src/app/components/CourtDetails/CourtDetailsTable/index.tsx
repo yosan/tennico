@@ -1,4 +1,5 @@
-import Court, { SurfaceType, surfaceTypeName } from 'models/court'
+import { Court } from 'models/court'
+import { SurfaceType, surfaceTypeName } from 'models/surfaceType'
 import moment from 'moment'
 import * as React from 'react'
 
@@ -44,7 +45,7 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
         </tr>
         <tr>
           <td>追加日</td>
-          <td>{moment(court.createdAt.toDate()).calendar()}</td>
+          <td>{moment(court.createdAt).calendar()}</td>
         </tr>
       </tbody>
     </table>
