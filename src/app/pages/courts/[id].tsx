@@ -2,7 +2,7 @@ import 'firebase/analytics'
 
 import CourtDetails from 'components/CourtDetails'
 import Navbar from 'components/Navbar'
-import { firebase as config } from 'config'
+import { firebase as fbConfig } from 'config'
 import firebase from 'firebase/app'
 import { Court } from 'models/court'
 import { toCourt } from 'models/firebase'
@@ -39,7 +39,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
 ) => {
   const id = context.params.id
   const res = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${config.projectId}/databases/(default)/documents/courts/${id}`
+    `https://firestore.googleapis.com/v1/projects/${fbConfig.projectId}/databases/(default)/documents/courts/${id}`
   )
   const data = await res.json()
   return {

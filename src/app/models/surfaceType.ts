@@ -4,7 +4,7 @@ export enum SurfaceType {
   hard = 'hard',
 }
 
-export const surfaceTypeName = (type: SurfaceType) => {
+export const surfaceTypeName = (type: SurfaceType): string => {
   switch (type) {
     case SurfaceType.omni:
       return 'オムニ'

@@ -2,8 +2,7 @@ import Pin from 'components/Pin'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
 import { google } from 'config'
-import GoogleMap from 'google-map-react'
-import { fitBounds } from 'google-map-react/utils'
+import GoogleMap, { fitBounds } from 'google-map-react'
 import { Court } from 'models/court'
 import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
@@ -22,7 +21,7 @@ const createMapOptions = () => {
   }
 }
 
-const Home: FC<{}> = () => {
+const Home: FC<Record<string, unknown>> = () => {
   const [mode, setMode] = useState<'text' | 'location'>('text')
   const [query, setQuery] = useState('東京')
   const [courts, setCourts] = useState<Court[] | undefined>()

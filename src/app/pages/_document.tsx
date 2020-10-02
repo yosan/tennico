@@ -1,10 +1,8 @@
 import NextDocument, { Head, Html, Main, NextScript } from 'next/document'
 import React from 'react'
 
-type Props = {}
-
-class Document extends NextDocument<Props> {
-  render() {
+class Document extends NextDocument<Record<string, unknown>> {
+  render(): JSX.Element {
     return (
       <Html lang="ja">
         <Head>

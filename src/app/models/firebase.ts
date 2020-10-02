@@ -1,7 +1,6 @@
 import 'firebase/firestore'
 
 import firebase from 'firebase/app'
-import _ from 'lodash'
 
 import { Court } from './court'
 import { SurfaceType } from './surfaceType'

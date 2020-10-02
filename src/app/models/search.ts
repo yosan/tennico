@@ -28,7 +28,10 @@ interface CourtAlgolia {
   url?: string
 }
 
-export const search = async (text: string, hitsPerPage: number) => {
+export const search = async (
+  text: string,
+  hitsPerPage: number
+): Promise<Court[]> => {
   const result = await index.search<CourtAlgolia>(text, { hitsPerPage })
   const courts: Court[] = result.hits.map((hit) => {
     return {
@@ -48,7 +51,7 @@ export const searchByGeo = async (
   lat: number,
   lng: number,
   hitsPerPage: number
-) => {
+): Promise<Court[]> => {
   const result = await index.search<CourtAlgolia>('', {
     hitsPerPage,
     aroundLatLng: `${lat}, ${lng}`,
