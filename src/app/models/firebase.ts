@@ -20,48 +20,13 @@ export interface FirCourt {
   url?: string
 }
 
-export interface FirtCourtAPI {
-  name: string
-  fields: {
-    price: {
-      stringValue: string
-    }
-    createdAt: { timestampValue: string }
-    nighter: { booleanValue: string }
-    url: {
-      stringValue: string
-    }
-    geo: { geoPointValue: { latitude: string; longitude: string } }
-    address: { stringValue: string }
-    name: { stringValue: string }
-    surfaces: {
-      mapValue: { fields: { [key in SurfaceType]?: { integerValue: string } } }
-    }
-  }
-  createTime: string
-  updateTime: string
-}
-
-export const toCourt = (data: FirtCourtAPI): Court => {
-  const path = data.name.split('/')
-  const surfaceFields = data.fields.surfaces.mapValue.fields
-
-  const surfaces: { [type in SurfaceType]?: number } = {}
-  Object.keys(surfaceFields).forEach((key) => {
-    surfaces[key] = parseInt(surfaceFields[key].integerValue)
-  })
+export const toCourt = (data: FirCourt): Court => {
   return {
-    id: path[path.length - 1],
-    address: data.fields.address.stringValue,
-    price: data.fields.price.stringValue,
-    nighter: data.fields.nighter.booleanValue === 'true',
-    surfaces,
-    name: data.fields.name.stringValue,
-    createdAt: parseInt(data.fields.createdAt.timestampValue),
+    ...data,
     geo: {
-      latitude: parseFloat(data.fields.geo.geoPointValue.latitude),
-      longitude: parseFloat(data.fields.geo.geoPointValue.longitude),
+      latitude: data.geo.latitude,
+      longitude: data.geo.longitude,
     },
-    url: data.fields.url.stringValue,
+    createdAt: data.createdAt.toMillis(),
   }
 }

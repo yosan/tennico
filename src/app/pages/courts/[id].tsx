@@ -1,15 +1,14 @@
 import 'firebase/analytics'
+import 'firebase/firestore'
 
 import CourtDetails from 'components/CourtDetails'
 import Navbar from 'components/Navbar'
-import { firebase as fbConfig } from 'config'
 import firebase from 'firebase/app'
 import { Court } from 'models/court'
-import { toCourt } from 'models/firebase'
+import { FirCourt, toCourt } from 'models/firebase'
 import { GetServerSideProps, NextPage } from 'next'
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import fetch from 'node-fetch'
 import * as React from 'react'
 
 type Props = Court
@@ -17,6 +16,8 @@ type Props = Court
 const CourtPage: NextPage<Props> = (props) => {
   const router = useRouter()
   const { id } = router.query
+
+  console.log(props)
 
   React.useEffect(() => {
     firebase.analytics().logEvent('select_content', { court: id })
@@ -37,13 +38,15 @@ const CourtPage: NextPage<Props> = (props) => {
 export const getServerSideProps: GetServerSideProps<Props> = async (
   context
 ) => {
-  const id = context.params.id
-  const res = await fetch(
-    `https://firestore.googleapis.com/v1/projects/${fbConfig.projectId}/databases/(default)/documents/courts/${id}`
-  )
-  const data = await res.json()
+  const id = context.params.id as string
+  const querySnapshot = await firebase
+    .firestore()
+    .collection('courts')
+    .doc(id)
+    .get()
+  const fieldValues = querySnapshot.data()
   return {
-    props: toCourt(data),
+    props: toCourt({ ...fieldValues, id } as FirCourt),
   }
 }
 
