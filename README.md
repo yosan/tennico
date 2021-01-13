@@ -52,13 +52,8 @@ export const google = {
 export default { firebase, reduxFirebase, algolia, google }
 ```
 
-## 2. Add src/functions/config.ts
+## 2. Set some cloudfunctions config
 
-```typescript
-export const algolia = {
-  appId: 'xxx',
-  adminKey: 'xxx',
-}
-
-export default { algolia }
+```bash
+firebase functions:config:set algolia.appId="XXX" algolia.adminKey="XXXXXXXXXX" rendertron.appHost="YOUR_APPLICATION_HOST" rendertron.rendertronHost="YOUR_RENDERTRON_HOST"
 ```

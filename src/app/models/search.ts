@@ -1,5 +1,8 @@
+import 'firebase/firestore'
+
 import algoliasearch from 'algoliasearch'
 import { algolia } from 'config'
+import firebase from 'firebase/app'
 import { Court } from 'models/court'
 
 import { SurfaceType } from './surfaceType'
@@ -37,11 +40,14 @@ export const search = async (
     return {
       id: hit.objectID,
       ...hit,
-      geo: {
-        latitude: hit.geo._latitude,
-        longitude: hit.geo._longitude,
-      },
-      createdAt: hit.createdAt._seconds,
+      geo: new firebase.firestore.GeoPoint(
+        hit.geo._latitude,
+        hit.geo._longitude
+      ),
+      createdAt: new firebase.firestore.Timestamp(
+        hit.createdAt._seconds,
+        hit.createdAt._nanoseconds
+      ),
     }
   })
   return courts
@@ -60,11 +66,14 @@ export const searchByGeo = async (
     return {
       id: hit.objectID,
       ...hit,
-      geo: {
-        latitude: hit.geo._latitude,
-        longitude: hit.geo._longitude,
-      },
-      createdAt: hit.createdAt._seconds,
+      geo: new firebase.firestore.GeoPoint(
+        hit.geo._latitude,
+        hit.geo._longitude
+      ),
+      createdAt: new firebase.firestore.Timestamp(
+        hit.createdAt._seconds,
+        hit.createdAt._nanoseconds
+      ),
     }
   })
   return courts
