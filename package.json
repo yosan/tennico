@@ -40,7 +40,8 @@
     "react-redux-firebase": "^3.9.0",
     "redux": "^4.0.4",
     "redux-firestore": "^0.14.0",
-    "sitemap": "^6.3.2"
+    "sitemap": "^6.3.2",
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@types/node": "14.11.2",

@@ -1,24 +1,17 @@
 import { useFormik } from 'formik'
 import * as React from 'react'
-
-interface Parameters {
-  name: string
-}
-
-const initialiValues: Parameters = {
-  name: '',
-}
+import * as Yup from 'yup'
 
 const NewCourt: React.FC<Record<string, unknown>> = () => {
   const formik = useFormik({
-    initialValues: initialiValues,
-    validate: (values) => {
-      const errors: Partial<Parameters> = {}
-      if (!values.name) {
-        errors.name = '必須です'
-      }
-      return errors
+    initialValues: {
+      name: '',
     },
+    validationSchema: Yup.object({
+      name: Yup.string()
+        .required('必須項目です')
+        .max(100, '最大100文字で入力してください'),
+    }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
     },
