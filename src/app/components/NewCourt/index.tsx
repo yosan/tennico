@@ -12,8 +12,9 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
         .required('必須項目です')
         .max(100, '最大100文字で入力してください'),
     }),
-    onSubmit: (values) => {
+    onSubmit: (values, { setSubmitting }) => {
       alert(JSON.stringify(values, null, 2))
+      setSubmitting(false)
     },
   })
 
@@ -21,22 +22,29 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
     <main>
       <h2>コート追加</h2>
       <form onSubmit={formik.handleSubmit}>
-        <label htmlFor="name">コート名</label>
-        <input
-          type="text"
-          name="name"
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          value={formik.values.name}
-        />
-        {formik.errors.name ? <div>{formik.errors.name}</div> : null}
-        <button
-          className="waves-effect waves-light btn"
-          type="submit"
-          disabled={formik.isSubmitting}
-        >
-          登録
-        </button>
+        <div className="row">
+          <div className="input-field col s12">
+            <input
+              className={`${formik.errors.name ? 'invalid' : 'valid'}`}
+              type="text"
+              id="name"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.name}
+            />
+            <label htmlFor="name">コート名</label>
+            <span className="helper-text" data-error={formik.errors.name} />
+          </div>
+        </div>
+        <div className="row">
+          <button
+            className="waves-effect waves-light btn"
+            type="submit"
+            disabled={formik.isSubmitting}
+          >
+            登録
+          </button>
+        </div>
       </form>
     </main>
   )
