@@ -8,6 +8,7 @@ import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config'
 import firebase from 'firebase/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
+import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import {
@@ -47,18 +48,26 @@ const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
   }, [])
 
   return (
-    <Provider store={store}>
-      <ReactReduxFirebaseProvider
-        firebase={firebase}
-        config={rfConfig}
-        dispatch={store.dispatch}
-        createFirestoreInstance={createFirestoreInstance}
-      >
-        <div className="App">
-          <Component {...pageProps} />
-        </div>
-      </ReactReduxFirebaseProvider>
-    </Provider>
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+      </Head>
+      <Provider store={store}>
+        <ReactReduxFirebaseProvider
+          firebase={firebase}
+          config={rfConfig}
+          dispatch={store.dispatch}
+          createFirestoreInstance={createFirestoreInstance}
+        >
+          <div className="App">
+            <Component {...pageProps} />
+          </div>
+        </ReactReduxFirebaseProvider>
+      </Provider>
+    </>
   )
 }
 
