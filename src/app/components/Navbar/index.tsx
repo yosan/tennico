@@ -14,7 +14,9 @@ const Navbar: React.FC<Props> = () => {
     <AppBar position="static">
       <Toolbar>
         <Link href="/">
-          <Typography variant="h5">Tennico</Typography>
+          <Typography variant="h5" style={{ cursor: 'pointer' }}>
+            Tennico
+          </Typography>
         </Link>
         <Typography variant="body1" style={{ marginLeft: '20px' }}>
           東京のテニスコートを探そう
