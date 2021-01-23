@@ -1,26 +1,26 @@
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
 import Link from 'next/link'
 import React from 'react'
 import { memo } from 'react'
-
-import styles from './styles.module.css'
 
 interface Props {
   absolute?: boolean
 }
 
-const Navbar: React.FC<Props> = ({ absolute }) => {
+const Navbar: React.FC<Props> = () => {
   return (
-    <nav
-      className={`nav-wrapper teal accent-4 ${
-        absolute === true ? styles.absolute : ''
-      }`}
-    >
-      <div className="container">
+    <AppBar position="static">
+      <Toolbar>
         <Link href="/">
-          <div className="brand-logo">Tennico</div>
+          <Typography variant="h5">Tennico</Typography>
         </Link>
-      </div>
-    </nav>
+        <Typography variant="body1" style={{ marginLeft: '20px' }}>
+          東京のテニスコートを探そう
+        </Typography>
+      </Toolbar>
+    </AppBar>
   )
 }
 

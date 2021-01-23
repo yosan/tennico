@@ -37,19 +37,29 @@ if (process.browser) {
 const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
   Component,
   pageProps,
-}) => (
-  <Provider store={store}>
-    <ReactReduxFirebaseProvider
-      firebase={firebase}
-      config={rfConfig}
-      dispatch={store.dispatch}
-      createFirestoreInstance={createFirestoreInstance}
-    >
-      <div className="App">
-        <Component {...pageProps} />
-      </div>
-    </ReactReduxFirebaseProvider>
-  </Provider>
-)
+}) => {
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
+  return (
+    <Provider store={store}>
+      <ReactReduxFirebaseProvider
+        firebase={firebase}
+        config={rfConfig}
+        dispatch={store.dispatch}
+        createFirestoreInstance={createFirestoreInstance}
+      >
+        <div className="App">
+          <Component {...pageProps} />
+        </div>
+      </ReactReduxFirebaseProvider>
+    </Provider>
+  )
+}
 
 export default App

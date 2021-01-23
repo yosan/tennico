@@ -1,3 +1,4 @@
+import Button from '@material-ui/core/Button'
 import React from 'react'
 import { FC, memo } from 'react'
 
@@ -32,14 +33,14 @@ const label = (mode: Mode) => {
 
 const SearchModeButton: FC<Props> = ({ mode, onClick }) => {
   return (
-    <div
-      className={'btn col s2'}
-      onClick={() => {
-        onClick?.(toggle(mode))
-      }}
+    <Button
+      variant="contained"
+      color="secondary"
+      onClick={() => onClick?.(toggle(mode))}
+      style={{ margin: '8px' }}
     >
       {label(mode)}
-    </div>
+    </Button>
   )
 }
 

@@ -35,7 +35,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
   return (
     <main>
       <Head>
-        <title>{`${court.name} - Tennico`}</title>
+        <title>{`${court.name} - Tennico 東京のテニスコートを探そう`}</title>
         <meta name="description" content={court.address} />
       </Head>
       <div className="container section project-details">
