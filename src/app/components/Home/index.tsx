@@ -1,3 +1,6 @@
+import { Card, CardContent } from '@material-ui/core'
+import CardActionArea from '@material-ui/core/CardActionArea'
+import Typography from '@material-ui/core/Typography'
 import Pin from 'components/Pin'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
@@ -134,14 +137,22 @@ const Home: FC<Record<string, unknown>> = () => {
             as={'/courts/' + selectedCourt.id}
             key={selectedCourt.id}
           >
-            <a>
-              <div className="card">
-                <div className="card-content grey-text text-darken-3">
-                  <p className="card-title">{selectedCourt.name}</p>
-                  <p className="grey-text">{selectedCourt.address}</p>
-                </div>
-              </div>
-            </a>
+            <Card>
+              <CardActionArea>
+                <CardContent>
+                  <Typography gutterBottom variant="h5" component="h2">
+                    {selectedCourt.name}
+                  </Typography>
+                  <Typography
+                    variant="body2"
+                    color="textSecondary"
+                    component="p"
+                  >
+                    {selectedCourt.address}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
           </Link>
         )}
       </div>

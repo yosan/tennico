@@ -8,6 +8,7 @@ import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config'
 import firebase from 'firebase/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
+import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import {
@@ -37,19 +38,37 @@ if (process.browser) {
 const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
   Component,
   pageProps,
-}) => (
-  <Provider store={store}>
-    <ReactReduxFirebaseProvider
-      firebase={firebase}
-      config={rfConfig}
-      dispatch={store.dispatch}
-      createFirestoreInstance={createFirestoreInstance}
-    >
-      <div className="App">
-        <Component {...pageProps} />
-      </div>
-    </ReactReduxFirebaseProvider>
-  </Provider>
-)
+}) => {
+  React.useEffect(() => {
+    // Remove the server-side injected CSS.
+    const jssStyles = document.querySelector('#jss-server-side')
+    if (jssStyles) {
+      jssStyles.parentElement.removeChild(jssStyles)
+    }
+  }, [])
+
+  return (
+    <>
+      <Head>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no"
+        />
+      </Head>
+      <Provider store={store}>
+        <ReactReduxFirebaseProvider
+          firebase={firebase}
+          config={rfConfig}
+          dispatch={store.dispatch}
+          createFirestoreInstance={createFirestoreInstance}
+        >
+          <div className="App">
+            <Component {...pageProps} />
+          </div>
+        </ReactReduxFirebaseProvider>
+      </Provider>
+    </>
+  )
+}
 
 export default App
