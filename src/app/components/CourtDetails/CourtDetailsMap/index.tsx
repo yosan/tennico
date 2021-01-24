@@ -21,7 +21,7 @@ const createMapOptions = () => {
 const CourtDetailsMap: React.FC<Props> = ({ court }) => {
   return (
     court.geo && (
-      <div className={`section ${styles.map}`}>
+      <div className={styles.map}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: google.apiKey,
