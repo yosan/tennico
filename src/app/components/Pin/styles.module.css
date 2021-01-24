@@ -1,12 +1,9 @@
 .default {
     color: red;
     cursor: pointer;
-    font-size: 24px;
 }
 
 .selected {
     color: green;
     cursor: pointer;
-    font-size: 30px;
-
 }
