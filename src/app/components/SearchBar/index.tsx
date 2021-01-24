@@ -45,9 +45,9 @@ const SearchBar: FC<Props> = ({ onSearch }) => {
     onSearch(query)
   }, [query])
 
-  const onKeyDown = useCallback(
-    (event: React.KeyboardEvent<HTMLInputElement>) => {
-      if (event.keyCode === 13) {
+  const onKeyPress = useCallback(
+    (event: React.KeyboardEvent<HTMLDivElement>) => {
+      if (event.key === 'Enter') {
         onSearch(query)
       }
     },
@@ -55,12 +55,12 @@ const SearchBar: FC<Props> = ({ onSearch }) => {
   )
 
   return (
-    <Paper component="form" className={classes.root}>
+    <Paper className={classes.root}>
       <InputBase
         className={classes.input}
         placeholder="キーワード 例)東京都"
         onChange={onChangeQuery}
-        onKeyDown={onKeyDown}
+        onKeyPress={onKeyPress}
       />
       <IconButton
         className={classes.iconButton}
