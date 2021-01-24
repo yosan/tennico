@@ -6,8 +6,6 @@
 .card {
     position: absolute;
     top: 80px;
-    width: 97%;
-    padding: 0 10px;
 }
 
 .controls {

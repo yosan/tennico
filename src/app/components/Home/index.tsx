@@ -1,4 +1,4 @@
-import { Card, CardContent } from '@material-ui/core'
+import { Card, CardContent, Container } from '@material-ui/core'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import Typography from '@material-ui/core/Typography'
 import Pin from 'components/Pin'
@@ -130,7 +130,7 @@ const Home: FC<Record<string, unknown>> = () => {
           })}
         </GoogleMap>
       )}
-      <div className={styles.card}>
+      <Container className={styles.card}>
         {selectedCourt && (
           <Link
             href="/courts/[id]"
@@ -155,7 +155,7 @@ const Home: FC<Record<string, unknown>> = () => {
             </Card>
           </Link>
         )}
-      </div>
+      </Container>
       <div className={styles.controls}>
         <div className={styles.modeButton}>
           <SearchModeButton mode={mode} onClick={onClickMode} />
