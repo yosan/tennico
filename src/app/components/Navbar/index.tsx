@@ -9,9 +9,9 @@ interface Props {
   absolute?: boolean
 }
 
-const Navbar: React.FC<Props> = () => {
+const Navbar: React.FC<Props> = ({ absolute }) => {
   return (
-    <AppBar position="static">
+    <AppBar position={absolute ? 'absolute' : 'static'}>
       <Toolbar>
         <Link href="/">
           <Typography variant="h5" style={{ cursor: 'pointer' }}>

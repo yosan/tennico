@@ -10,7 +10,7 @@ const IndexPage: NextPage<Record<string, unknown>> = () => (
       <title>Tennico - 東京のテニスコートを探そう</title>
       <meta name="description" content="東京のテニスコートを探そう" />
     </Head>
-    <Navbar absolute={true} />
+    <Navbar absolute />
     <Home />
   </>
 )
