@@ -1,5 +1,7 @@
 import 'firebase/auth'
 
+import { Button } from '@material-ui/core'
+import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import firebase from 'firebase/app'
 import React from 'react'
 import { FC, useCallback, useEffect, useState } from 'react'
@@ -39,12 +41,14 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
       return (
         <>
           {children}
-          <button
-            className="waves-effect waves-light btn"
+          <Button
+            variant="contained"
+            color="primary"
+            startIcon={<ExitToAppIcon />}
             onClick={onLogOutClicked}
           >
-            <i className="material-icons left">exit_to_app</i>logout
-          </button>
+            logout
+          </Button>
         </>
       )
     case 'loggedOut':
