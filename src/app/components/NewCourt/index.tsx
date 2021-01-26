@@ -1,6 +1,8 @@
 import {
   Button,
+  Checkbox,
   Container,
+  FormControlLabel,
   MenuItem,
   TextField,
   Typography,
@@ -29,7 +31,10 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       minWidth: 120,
     },
-    text: {
+    input: {
+      margin: theme.spacing(1),
+    },
+    button: {
       margin: theme.spacing(1),
     },
   })
@@ -48,6 +53,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
       surfaceOmni: 0,
       surfaceHard: 0,
       surfaceCray: 0,
+      nighter: false,
     },
     validationSchema: CourtSchema,
     onSubmit: (values, { setSubmitting }) => {
@@ -71,7 +77,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             helperText={formik.touched.name && formik.errors.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.text}
+            className={classes.input}
             fullWidth
           />
           <TextField
@@ -84,7 +90,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             helperText={formik.touched.address && formik.errors.address}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.text}
+            className={classes.input}
             fullWidth
           />
           <TextField
@@ -96,7 +102,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             placeholder="1時間　平日1,300円　土日祝日1,300円　【夜間照明料】 1時間以内500円"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.text}
+            className={classes.input}
             fullWidth
           />
           <TextField
@@ -107,7 +113,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             helperText={formik.touched.url && formik.errors.url}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.text}
+            className={classes.input}
             fullWidth
           />
           <TextField
@@ -170,12 +176,25 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
               </MenuItem>
             ))}
           </TextField>
-
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={formik.values.nighter}
+                onChange={formik.handleChange}
+                name="nighter"
+                color="primary"
+              />
+            }
+            label="ナイター設備有"
+            className={classes.input}
+          />
           <Button
             type="submit"
             disabled={formik.isSubmitting}
             color="secondary"
             variant="contained"
+            className={classes.button}
+            fullWidth
           >
             登録
           </Button>
