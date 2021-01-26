@@ -46,6 +46,7 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
             color="primary"
             startIcon={<ExitToAppIcon />}
             onClick={onLogOutClicked}
+            style={{ margin: '8px' }}
           >
             logout
           </Button>
