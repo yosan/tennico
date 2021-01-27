@@ -78,6 +78,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.input}
+            name="name"
             fullWidth
           />
           <TextField
@@ -91,6 +92,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.input}
+            name="address"
             fullWidth
           />
           <TextField
@@ -103,17 +105,19 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.input}
+            name="price"
             fullWidth
           />
           <TextField
             error={formik.touched.url && formik.errors.url !== undefined}
             id="url"
             label="URL"
-            value={formik.touched.url && formik.values.url}
+            value={formik.values.url}
             helperText={formik.touched.url && formik.errors.url}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.input}
+            name="url"
             fullWidth
           />
           <TextField
@@ -123,11 +127,12 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             }
             id="surface-omni"
             label="人工芝面数"
-            value={formik.touched.surfaceOmni && formik.values.surfaceOmni}
+            value={formik.values.surfaceOmni}
             helperText={formik.touched.surfaceOmni && formik.errors.surfaceOmni}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
+            name="surfaceOmni"
             select
           >
             {Array.from(Array(surfaceMax + 1).keys()).map((num) => (
@@ -143,11 +148,12 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             }
             id="surface-hard"
             label="ハード面数"
-            value={formik.touched.surfaceHard && formik.values.surfaceHard}
+            value={formik.values.surfaceHard}
             helperText={formik.touched.surfaceHard && formik.errors.surfaceHard}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
+            name="surfaceHard"
             select
           >
             {Array.from(Array(surfaceMax + 1).keys()).map((num) => (
@@ -163,11 +169,12 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             }
             id="surface-cray"
             label="クレー面数"
-            value={formik.touched.surfaceCray && formik.values.surfaceCray}
+            value={formik.values.surfaceCray}
             helperText={formik.touched.surfaceCray && formik.errors.surfaceCray}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
+            name="surfaceCray"
             select
           >
             {Array.from(Array(surfaceMax + 1).keys()).map((num) => (
@@ -187,6 +194,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             }
             label="ナイター設備有"
             className={classes.input}
+            name="nighter"
           />
           <Button
             type="submit"
