@@ -1,3 +1,5 @@
+import 'firebase/firestore'
+
 import { Client, Status } from '@googlemaps/google-maps-services-js'
 import {
   Button,
@@ -9,8 +11,12 @@ import {
 } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { google } from 'config'
+import firebase from 'firebase/app'
 import { useFormik } from 'formik'
+import { Court } from 'models/court'
+import { useRouter } from 'next/router'
 import * as React from 'react'
+import { useFirestore } from 'react-redux-firebase'
 import * as Yup from 'yup'
 
 const CourtSchema = Yup.object().shape({
@@ -51,6 +57,8 @@ const client = new Client({})
 
 const NewCourt: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles()
+  const firestore = useFirestore()
+  const router = useRouter()
   const formik = useFormik({
     initialValues: {
       name: '',
@@ -65,8 +73,24 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
       longitude: 0,
     },
     validationSchema: CourtSchema,
-    onSubmit: (values, { setSubmitting }) => {
-      alert(JSON.stringify(values, null, 2))
+    onSubmit: async (values, { setSubmitting }) => {
+      const data: Omit<Court, 'id'> = {
+        address: values.address,
+        price: values.price,
+        nighter: values.nighter,
+        surfaces: {},
+        name: values.name,
+        createdAt: firebase.firestore.Timestamp.now(),
+        geo: new firebase.firestore.GeoPoint(values.latitude, values.longitude),
+        url: values.url,
+      }
+
+      try {
+        const ref = await firestore.collection('courts').add(data)
+        router.push(`/courts/${ref.id}`)
+      } catch (e) {
+        alert(e)
+      }
       setSubmitting(false)
     },
   })
