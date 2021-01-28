@@ -4,7 +4,6 @@ import {
   Checkbox,
   Container,
   FormControlLabel,
-  MenuItem,
   TextField,
   Typography,
 } from '@material-ui/core'
@@ -24,14 +23,20 @@ const CourtSchema = Yup.object().shape({
   price: Yup.string()
     .required('必須項目です')
     .max(200, '最大200文字で入力してください'),
-  url: Yup.string().url().max(500, '最大500文字で入力してください'),
+  url: Yup.string().url().max(500, '最大500文字で入力してください').nullable(),
+  surfaceOmni: Yup.number().nullable(),
+  surfaceHard: Yup.number().nullable(),
+  surfaceCray: Yup.number().nullable(),
+  nighter: Yup.boolean().nullable(),
+  latitude: Yup.number().required('必須項目です'),
+  longitude: Yup.number().required('必須項目です'),
 })
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
       margin: theme.spacing(1),
-      minWidth: 120,
+      maxWidth: 120,
     },
     input: {
       margin: theme.spacing(1),
@@ -42,8 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 )
 
-const surfaceMax = 50
-
 const client = new Client({})
 
 const NewCourt: React.FC<Record<string, unknown>> = () => {
@@ -53,7 +56,7 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
       name: '',
       address: '',
       price: '',
-      url: null,
+      url: '',
       surfaceOmni: 0,
       surfaceHard: 0,
       surfaceCray: 0,
@@ -194,20 +197,14 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             }
             id="surface-omni"
             label="人工芝面数"
+            type="number"
             value={formik.values.surfaceOmni}
             helperText={formik.touched.surfaceOmni && formik.errors.surfaceOmni}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
             name="surfaceOmni"
-            select
-          >
-            {Array.from(Array(surfaceMax + 1).keys()).map((num) => (
-              <MenuItem key={`surface-omni-${num}`} value={num}>
-                {num}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
           <TextField
             error={
               formik.touched.surfaceHard &&
@@ -215,41 +212,29 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             }
             id="surface-hard"
             label="ハード面数"
+            type="number"
             value={formik.values.surfaceHard}
             helperText={formik.touched.surfaceHard && formik.errors.surfaceHard}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
             name="surfaceHard"
-            select
-          >
-            {Array.from(Array(surfaceMax + 1).keys()).map((num) => (
-              <MenuItem key={`surface-hard-${num}`} value={num}>
-                {num}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
           <TextField
             error={
               formik.touched.surfaceCray &&
               formik.errors.surfaceCray !== undefined
             }
-            id="surface-cray"
+            id="surface-ccray"
             label="クレー面数"
+            type="number"
             value={formik.values.surfaceCray}
             helperText={formik.touched.surfaceCray && formik.errors.surfaceCray}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
             name="surfaceCray"
-            select
-          >
-            {Array.from(Array(surfaceMax + 1).keys()).map((num) => (
-              <MenuItem key={`surface-cray-${num}`} value={num}>
-                {num}
-              </MenuItem>
-            ))}
-          </TextField>
+          />
           <FormControlLabel
             control={
               <Checkbox
