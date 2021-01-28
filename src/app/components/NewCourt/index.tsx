@@ -24,12 +24,12 @@ const CourtSchema = Yup.object().shape({
     .required('必須項目です')
     .max(200, '最大200文字で入力してください'),
   url: Yup.string().url().max(500, '最大500文字で入力してください').nullable(),
-  surfaceOmni: Yup.number().nullable(),
-  surfaceHard: Yup.number().nullable(),
-  surfaceCray: Yup.number().nullable(),
+  surfaceOmni: Yup.number().positive().integer(),
+  surfaceHard: Yup.number().positive().integer(),
+  surfaceCray: Yup.number().positive().integer(),
   nighter: Yup.boolean().nullable(),
-  latitude: Yup.number().required('必須項目です'),
-  longitude: Yup.number().required('必須項目です'),
+  latitude: Yup.number().required('必須項目です').moreThan(0, '必須項目です'),
+  longitude: Yup.number().required('必須項目です').moreThan(0, '必須項目です'),
 })
 
 const useStyles = makeStyles((theme: Theme) =>
