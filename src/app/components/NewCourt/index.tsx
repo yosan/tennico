@@ -1,3 +1,4 @@
+import { Client, Status } from '@googlemaps/google-maps-services-js'
 import {
   Button,
   Checkbox,
@@ -8,6 +9,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+import { google } from 'config'
 import { useFormik } from 'formik'
 import * as React from 'react'
 import * as Yup from 'yup'
@@ -42,6 +44,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const surfaceMax = 50
 
+const client = new Client({})
+
 const NewCourt: React.FC<Record<string, unknown>> = () => {
   const classes = useStyles()
   const formik = useFormik({
@@ -49,11 +53,13 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
       name: '',
       address: '',
       price: '',
-      url: '',
+      url: null,
       surfaceOmni: 0,
       surfaceHard: 0,
       surfaceCray: 0,
       nighter: false,
+      latitude: 0,
+      longitude: 0,
     },
     validationSchema: CourtSchema,
     onSubmit: (values, { setSubmitting }) => {
@@ -61,6 +67,32 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
       setSubmitting(false)
     },
   })
+
+  const onClickGeo = React.useCallback(async () => {
+    if (formik.errors.address) {
+      return
+    }
+
+    const result = await client.geocode({
+      params: {
+        address: formik.values.address,
+        key: google.apiKeyGeo,
+      },
+    })
+
+    if (result.data.status === Status.OK) {
+      formik.setValues({
+        ...formik.values,
+        latitude: result.data.results[0].geometry.location.lat,
+        longitude: result.data.results[0].geometry.location.lng,
+      })
+      formik.setTouched({
+        ...formik.touched,
+        latitude: true,
+        longitude: true,
+      })
+    }
+  }, [formik.values.address])
 
   return (
     <main>
@@ -94,6 +126,41 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
             className={classes.input}
             name="address"
             fullWidth
+          />
+          <Button
+            disabled={!formik.values.address}
+            color="primary"
+            variant="contained"
+            className={classes.button}
+            onClick={onClickGeo}
+          >
+            住所から座標取得
+          </Button>
+          <TextField
+            error={
+              formik.touched.latitude && formik.errors.latitude !== undefined
+            }
+            id="latitude"
+            label="緯度"
+            value={formik.values.latitude}
+            helperText={formik.touched.url && formik.errors.latitude}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={classes.input}
+            name="latitude"
+          />
+          <TextField
+            error={
+              formik.touched.longitude && formik.errors.longitude !== undefined
+            }
+            id="longitude"
+            label="経度"
+            value={formik.values.longitude}
+            helperText={formik.touched.url && formik.errors.longitude}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={classes.input}
+            name="longitude"
           />
           <TextField
             error={formik.touched.price && formik.errors.price !== undefined}
