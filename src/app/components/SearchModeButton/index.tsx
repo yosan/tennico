@@ -37,7 +37,6 @@ const SearchModeButton: FC<Props> = ({ mode, onClick }) => {
       variant="contained"
       color="secondary"
       onClick={() => onClick?.(toggle(mode))}
-      style={{ margin: '8px' }}
     >
       {label(mode)}
     </Button>
