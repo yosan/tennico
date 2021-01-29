@@ -30,9 +30,9 @@ const CourtSchema = Yup.object().shape({
     .required('必須項目です')
     .max(200, '最大200文字で入力してください'),
   url: Yup.string().url().max(500, '最大500文字で入力してください').nullable(),
-  surfaceOmni: Yup.number().positive().integer(),
-  surfaceHard: Yup.number().positive().integer(),
-  surfaceCray: Yup.number().positive().integer(),
+  surfaceOmni: Yup.number().integer().min(0, '0以上です'),
+  surfaceHard: Yup.number().integer().min(0, '0以上です'),
+  surfaceClay: Yup.number().integer().min(0, '0以上です'),
   nighter: Yup.boolean().nullable(),
   latitude: Yup.number().required('必須項目です').moreThan(0, '必須項目です'),
   longitude: Yup.number().required('必須項目です').moreThan(0, '必須項目です'),
@@ -67,18 +67,29 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
       url: '',
       surfaceOmni: 0,
       surfaceHard: 0,
-      surfaceCray: 0,
+      surfaceClay: 0,
       nighter: false,
       latitude: 0,
       longitude: 0,
     },
     validationSchema: CourtSchema,
     onSubmit: async (values, { setSubmitting }) => {
+      const surfaces: Court['surfaces'] = {}
+      if (values.surfaceOmni) {
+        surfaces.omni = values.surfaceOmni
+      }
+      if (values.surfaceHard) {
+        surfaces.hard = values.surfaceHard
+      }
+      if (values.surfaceClay) {
+        surfaces.clay = values.surfaceClay
+      }
+
       const data: Omit<Court, 'id'> = {
         address: values.address,
         price: values.price,
         nighter: values.nighter,
-        surfaces: {},
+        surfaces: surfaces,
         name: values.name,
         createdAt: firebase.firestore.Timestamp.now(),
         geo: new firebase.firestore.GeoPoint(values.latitude, values.longitude),
@@ -246,18 +257,18 @@ const NewCourt: React.FC<Record<string, unknown>> = () => {
           />
           <TextField
             error={
-              formik.touched.surfaceCray &&
-              formik.errors.surfaceCray !== undefined
+              formik.touched.surfaceClay &&
+              formik.errors.surfaceClay !== undefined
             }
             id="surface-ccray"
             label="クレー面数"
             type="number"
-            value={formik.values.surfaceCray}
-            helperText={formik.touched.surfaceCray && formik.errors.surfaceCray}
+            value={formik.values.surfaceClay}
+            helperText={formik.touched.surfaceClay && formik.errors.surfaceClay}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.select}
-            name="surfaceCray"
+            name="surfaceClay"
           />
           <FormControlLabel
             control={
