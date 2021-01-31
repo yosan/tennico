@@ -130,8 +130,8 @@ const Home: FC<Record<string, unknown>> = () => {
           })}
         </GoogleMap>
       )}
-      <Container className={styles.card}>
-        {selectedCourt && (
+      {selectedCourt && (
+        <Container className={styles.card}>
           <Link
             href="/courts/[id]"
             as={'/courts/' + selectedCourt.id}
@@ -154,8 +154,8 @@ const Home: FC<Record<string, unknown>> = () => {
               </CardActionArea>
             </Card>
           </Link>
-        )}
-      </Container>
+        </Container>
+      )}
       <div className={styles.controls}>
         <div className={styles.modeButton}>
           <SearchModeButton mode={mode} onClick={onClickMode} />
