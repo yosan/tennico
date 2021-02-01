@@ -31,10 +31,10 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
   React.useEffect(() => {
     firebase.analytics().logEvent('select_content', { id })
   }, [id])
-  useFirestoreConnect(() => ({
+  useFirestoreConnect({
     collection: 'courts',
     doc: id,
-  }))
+  })
   const court = useSelector((state: State) => {
     return (
       state.firestore.data.courts && (state.firestore.data.courts[id] as Court)

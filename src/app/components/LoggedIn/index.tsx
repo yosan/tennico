@@ -3,19 +3,28 @@ import 'firebase/auth'
 import { Button } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import firebase from 'firebase/app'
+import { State } from 'models/type'
 import React from 'react'
-import { FC, useCallback, useEffect, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo } from 'react'
+import { useSelector } from 'react-redux'
+import { FirebaseReducer, isEmpty, isLoaded } from 'react-redux-firebase'
 
 type LoginStatus = 'loggedIn' | 'loggedOut' | 'unknown'
 
 const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
-  const [logInStatus, setLogInStatus] = useState<LoginStatus>('unknown')
+  const auth: FirebaseReducer.AuthState = useSelector(
+    (state: State) => state.firebase.auth
+  )
 
-  useEffect(() => {
-    firebase.auth().onAuthStateChanged((user) => {
-      setLogInStatus(user ? 'loggedIn' : 'loggedOut')
-    })
-  }, [])
+  const logInStatus: LoginStatus = useMemo(() => {
+    if (!isLoaded(auth)) {
+      return 'unknown'
+    } else if (isEmpty(auth)) {
+      return 'loggedOut'
+    } else {
+      return 'loggedIn'
+    }
+  }, [auth])
 
   useEffect(() => {
     if (process.browser && logInStatus === 'loggedOut') {

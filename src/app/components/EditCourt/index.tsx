@@ -10,10 +10,10 @@ interface Props {
 }
 
 const EditCourt: React.FC<Props> = ({ id }) => {
-  useFirestoreConnect(() => ({
+  useFirestoreConnect({
     collection: 'courts',
     doc: id,
-  }))
+  })
   const court = useSelector((state: State) => {
     return (
       state.firestore.data.courts && (state.firestore.data.courts[id] as Court)
