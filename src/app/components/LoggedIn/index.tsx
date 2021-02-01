@@ -7,14 +7,12 @@ import { State } from 'models/type'
 import React from 'react'
 import { FC, useCallback, useEffect, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { FirebaseReducer, isEmpty, isLoaded } from 'react-redux-firebase'
+import { isEmpty, isLoaded } from 'react-redux-firebase'
 
 type LoginStatus = 'loggedIn' | 'loggedOut' | 'unknown'
 
 const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
-  const auth: FirebaseReducer.AuthState = useSelector(
-    (state: State) => state.firebase.auth
-  )
+  const auth = useSelector((state: State) => state.firebase.auth)
 
   const logInStatus: LoginStatus = useMemo(() => {
     if (!isLoaded(auth)) {
