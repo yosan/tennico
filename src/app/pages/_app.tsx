@@ -16,6 +16,7 @@ import {
   ReactReduxFirebaseProvider,
 } from 'react-redux-firebase'
 import { combineReducers, createStore } from 'redux'
+import { devToolsEnhancer } from 'redux-devtools-extension/developmentOnly'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
 
 const initialState = {}
@@ -23,7 +24,7 @@ const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
 })
-const store = createStore(rootReducer, initialState)
+const store = createStore(rootReducer, initialState, devToolsEnhancer({}))
 
 if (!firebase.apps.length) {
   firebase.initializeApp(fbConfig)
