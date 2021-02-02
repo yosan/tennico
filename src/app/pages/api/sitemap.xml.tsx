@@ -23,14 +23,14 @@ export default async (
 
     smStream.write({
       url: '/',
-      changefreq: EnumChangefreq.WEEKLY,
+      changefreq: EnumChangefreq.MONTHLY,
     })
 
     const querySnapshot = await firebase.firestore().collection('courts').get()
     querySnapshot.docs.forEach((doc) => {
       smStream.write({
         url: `/courts/${doc.id}`,
-        changefreq: EnumChangefreq.WEEKLY,
+        changefreq: EnumChangefreq.MONTHLY,
       })
     })
 
