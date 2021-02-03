@@ -4,8 +4,12 @@ import firebase from 'firebase/app'
 
 import { SurfaceType } from './surfaceType'
 
-export interface Court {
+export interface CourtDoc {
   id: string
+  data: Court
+}
+
+export interface Court {
   address: string
   price: string
   nighter: boolean

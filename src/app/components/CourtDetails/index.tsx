@@ -55,7 +55,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
         {court.name}
       </Typography>
       <Container>
-        <CourtDetailsMap court={court} />
+        <CourtDetailsMap courtDoc={{ id, data: court }} />
         <CourtDetailsTable court={court} />
       </Container>
     </main>

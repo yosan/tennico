@@ -6,7 +6,7 @@ import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
 import { google } from 'config'
 import GoogleMap, { fitBounds } from 'google-map-react'
-import { Court } from 'models/court'
+import { CourtDoc } from 'models/court'
 import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
 import React from 'react'
@@ -27,7 +27,7 @@ const createMapOptions = () => {
 const Home: FC<Record<string, unknown>> = () => {
   const [mode, setMode] = useState<'text' | 'location'>('text')
   const [query, setQuery] = useState('東京')
-  const [courts, setCourts] = useState<Court[] | undefined>()
+  const [courtDocs, setCourtDocs] = useState<CourtDoc[] | undefined>()
   const [selectedID, setSelectedID] = useState<string | undefined>()
   const [mapCenter, setMapCenter] = useState<
     { lat: number; lng: number } | undefined
@@ -49,7 +49,7 @@ const Home: FC<Record<string, unknown>> = () => {
   useEffect(() => {
     mode === 'text' &&
       search(query, hits)
-        .then((courts) => setCourts(courts))
+        .then((courtDocs) => setCourtDocs(courtDocs))
         .catch((e) => console.error(e))
   }, [query, mode])
 
@@ -57,28 +57,31 @@ const Home: FC<Record<string, unknown>> = () => {
     mode === 'location' &&
       mapCenter &&
       searchByGeo(mapCenter.lat, mapCenter.lng, hits)
-        .then((courts) => setCourts(courts))
+        .then((courtDocs) => setCourtDocs(courtDocs))
         .catch((e) => console.error(e))
   }, [mapCenter, mode])
 
-  const selectedCourt = useMemo(() => {
-    return courts?.find((court) => court.id === selectedID)
-  }, [selectedID, courts])
+  const selectedCourtDoc = useMemo(() => {
+    return courtDocs?.find((court) => court.id === selectedID)
+  }, [selectedID, courtDocs])
 
   const { center, zoom } = useMemo(() => {
-    if (!courts || mode === 'location') {
+    if (!courtDocs || mode === 'location') {
       return {}
     }
 
-    if (courts.length === 1) {
+    if (courtDocs.length === 1) {
       return {
-        center: { lat: courts[0].geo.latitude, lng: courts[0].geo.longitude },
+        center: {
+          lat: courtDocs[0].data.geo.latitude,
+          lng: courtDocs[0].data.geo.longitude,
+        },
         zoom: 16,
       }
     }
 
-    const lats = courts.map((court) => court.geo.latitude)
-    const lngs = courts.map((court) => court.geo.longitude)
+    const lats = courtDocs.map((court) => court.data.geo.latitude)
+    const lngs = courtDocs.map((court) => court.data.geo.longitude)
     const bounds = {
       nw: {
         lat: Math.max(...lats),
@@ -96,7 +99,7 @@ const Home: FC<Record<string, unknown>> = () => {
     }
 
     return fitBounds(bounds, size)
-  }, [courts])
+  }, [courtDocs])
 
   const onClick = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback((value: 'text' | 'location') => {
@@ -106,7 +109,7 @@ const Home: FC<Record<string, unknown>> = () => {
 
   return (
     <main className={styles.main}>
-      {courts && (
+      {courtDocs && (
         <GoogleMap
           bootstrapURLKeys={{
             key: google.apiKey,
@@ -116,39 +119,39 @@ const Home: FC<Record<string, unknown>> = () => {
           options={createMapOptions}
           onBoundsChange={onBoundsChange}
         >
-          {courts.map((court) => {
+          {courtDocs.map((courtDoc) => {
             return (
               <Pin
-                key={court.id}
-                id={court.id}
-                lat={court.geo.latitude}
-                lng={court.geo.longitude}
-                selected={court.id === selectedID}
+                key={courtDoc.id}
+                id={courtDoc.id}
+                lat={courtDoc.data.geo.latitude}
+                lng={courtDoc.data.geo.longitude}
+                selected={courtDoc.id === selectedID}
                 onClick={onClick}
               />
             )
           })}
         </GoogleMap>
       )}
-      {selectedCourt && (
+      {selectedCourtDoc && (
         <Container className={styles.card}>
           <Link
             href="/courts/[id]"
-            as={'/courts/' + selectedCourt.id}
-            key={selectedCourt.id}
+            as={'/courts/' + selectedCourtDoc.id}
+            key={selectedCourtDoc.id}
           >
             <Card>
               <CardActionArea>
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="h2">
-                    {selectedCourt.name}
+                    {selectedCourtDoc.data.name}
                   </Typography>
                   <Typography
                     variant="body2"
                     color="textSecondary"
                     component="p"
                   >
-                    {selectedCourt.address}
+                    {selectedCourtDoc.data.address}
                   </Typography>
                 </CardContent>
               </CardActionArea>

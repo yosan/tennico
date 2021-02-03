@@ -1,13 +1,13 @@
 import Pin from 'components/Pin'
 import { google } from 'config'
 import GoogleMapReact from 'google-map-react'
-import { Court } from 'models/court'
+import { CourtDoc } from 'models/court'
 import * as React from 'react'
 
 import styles from './styles.module.css'
 
 interface Props {
-  court: Court
+  courtDoc: CourtDoc
 }
 
 const createMapOptions = () => {
@@ -18,25 +18,25 @@ const createMapOptions = () => {
   }
 }
 
-const CourtDetailsMap: React.FC<Props> = ({ court }) => {
+const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
   return (
-    court.geo && (
+    courtDoc.data.geo && (
       <div className={styles.map}>
         <GoogleMapReact
           bootstrapURLKeys={{
             key: google.apiKey,
           }}
           defaultCenter={{
-            lat: court.geo.latitude,
-            lng: court.geo.longitude,
+            lat: courtDoc.data.geo.latitude,
+            lng: courtDoc.data.geo.longitude,
           }}
           defaultZoom={15}
           options={createMapOptions}
         >
           <Pin
-            id={court.id}
-            lat={court.geo.latitude}
-            lng={court.geo.longitude}
+            id={courtDoc.id}
+            lat={courtDoc.data.geo.latitude}
+            lng={courtDoc.data.geo.longitude}
             selected={false}
           />
         </GoogleMapReact>

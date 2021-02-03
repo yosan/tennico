@@ -13,7 +13,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import { google } from 'config'
 import firebase from 'firebase/app'
 import { useFormik } from 'formik'
-import { Court } from 'models/court'
+import { Court, CourtDoc } from 'models/court'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useFirestore } from 'react-redux-firebase'
@@ -56,31 +56,28 @@ const useStyles = makeStyles((theme: Theme) =>
 const client = new Client({})
 
 interface Props {
-  court?: {
-    id: string
-    data: Court
-  }
+  courtDoc?: CourtDoc
 }
 
-const CourtForms: React.FC<Props> = ({ court }) => {
+const CourtForms: React.FC<Props> = ({ courtDoc }) => {
   const classes = useStyles()
   const firestore = useFirestore()
   const router = useRouter()
 
-  const isEdit = court !== undefined
+  const isEdit = courtDoc !== undefined
   const formik = useFormik({
-    initialValues: court
+    initialValues: courtDoc
       ? {
-          name: court.data.name,
-          address: court.data.address,
-          price: court.data.price,
-          url: court.data.url,
-          surfaceOmni: court.data.surfaces.omni,
-          surfaceHard: court.data.surfaces.hard,
-          surfaceClay: court.data.surfaces.clay,
-          nighter: court.data.nighter,
-          latitude: court.data.geo.latitude,
-          longitude: court.data.geo.longitude,
+          name: courtDoc.data.name,
+          address: courtDoc.data.address,
+          price: courtDoc.data.price,
+          url: courtDoc.data.url,
+          surfaceOmni: courtDoc.data.surfaces.omni,
+          surfaceHard: courtDoc.data.surfaces.hard,
+          surfaceClay: courtDoc.data.surfaces.clay,
+          nighter: courtDoc.data.nighter,
+          latitude: courtDoc.data.geo.latitude,
+          longitude: courtDoc.data.geo.longitude,
         }
       : {
           name: '',
@@ -109,7 +106,7 @@ const CourtForms: React.FC<Props> = ({ court }) => {
 
       try {
         if (isEdit) {
-          const data: Omit<Court, 'id' | 'createdAt'> = {
+          const data: Omit<Court, 'createdAt'> = {
             address: values.address,
             price: values.price,
             nighter: values.nighter,
@@ -121,10 +118,10 @@ const CourtForms: React.FC<Props> = ({ court }) => {
             ),
             url: values.url,
           }
-          await firestore.collection('courts').doc(court.id).update(data)
-          router.push(`/courts/${court.id}`)
+          await firestore.collection('courts').doc(courtDoc.id).update(data)
+          router.push(`/courts/${courtDoc.id}`)
         } else {
-          const data: Omit<Court, 'id'> = {
+          const data: Court = {
             address: values.address,
             price: values.price,
             nighter: values.nighter,

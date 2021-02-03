@@ -24,7 +24,7 @@ const EditCourt: React.FC<Props> = ({ id }) => {
     return null
   }
 
-  return <CourtForms court={{ id: id, data: court }} />
+  return <CourtForms courtDoc={{ id: id, data: court }} />
 }
 
 export default EditCourt

@@ -3,7 +3,7 @@ import 'firebase/firestore'
 import algoliasearch from 'algoliasearch'
 import { algolia } from 'config'
 import firebase from 'firebase/app'
-import { Court } from 'models/court'
+import { CourtDoc } from 'models/court'
 
 import { SurfaceType } from './surfaceType'
 
@@ -34,20 +34,22 @@ interface CourtAlgolia {
 export const search = async (
   text: string,
   hitsPerPage: number
-): Promise<Court[]> => {
+): Promise<CourtDoc[]> => {
   const result = await index.search<CourtAlgolia>(text, { hitsPerPage })
-  const courts: Court[] = result.hits.map((hit) => {
+  const courts: CourtDoc[] = result.hits.map((hit) => {
     return {
       id: hit.objectID,
-      ...hit,
-      geo: new firebase.firestore.GeoPoint(
-        hit.geo._latitude,
-        hit.geo._longitude
-      ),
-      createdAt: new firebase.firestore.Timestamp(
-        hit.createdAt._seconds,
-        hit.createdAt._nanoseconds
-      ),
+      data: {
+        ...hit,
+        geo: new firebase.firestore.GeoPoint(
+          hit.geo._latitude,
+          hit.geo._longitude
+        ),
+        createdAt: new firebase.firestore.Timestamp(
+          hit.createdAt._seconds,
+          hit.createdAt._nanoseconds
+        ),
+      },
     }
   })
   return courts
@@ -57,23 +59,25 @@ export const searchByGeo = async (
   lat: number,
   lng: number,
   hitsPerPage: number
-): Promise<Court[]> => {
+): Promise<CourtDoc[]> => {
   const result = await index.search<CourtAlgolia>('', {
     hitsPerPage,
     aroundLatLng: `${lat}, ${lng}`,
   })
-  const courts: Court[] = result.hits.map((hit) => {
+  const courts: CourtDoc[] = result.hits.map((hit) => {
     return {
       id: hit.objectID,
-      ...hit,
-      geo: new firebase.firestore.GeoPoint(
-        hit.geo._latitude,
-        hit.geo._longitude
-      ),
-      createdAt: new firebase.firestore.Timestamp(
-        hit.createdAt._seconds,
-        hit.createdAt._nanoseconds
-      ),
+      data: {
+        ...hit,
+        geo: new firebase.firestore.GeoPoint(
+          hit.geo._latitude,
+          hit.geo._longitude
+        ),
+        createdAt: new firebase.firestore.Timestamp(
+          hit.createdAt._seconds,
+          hit.createdAt._nanoseconds
+        ),
+      },
     }
   })
   return courts
