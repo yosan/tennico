@@ -1,9 +1,14 @@
 import 'firebase/firestore'
 
+import { firebase as fbConfig } from 'config'
 import firebase from 'firebase/app'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { EnumChangefreq, SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(fbConfig)
+}
 
 export default async (
   _req: NextApiRequest,
