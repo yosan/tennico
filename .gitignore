@@ -3,6 +3,7 @@ node_modules
 .firebaserc
 src/app/config.ts
 src/functions/config.ts
+firestore-debug.log
 
 # Firebase cache
 .firebase/
