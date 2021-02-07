@@ -1,6 +1,16 @@
 {
     "extends": "../tsconfig.json",
     "compilerOptions": {
-      "isolatedModules": false
+        "lib": ["es6", "dom", "es2016"],
+        "module": "commonjs",
+        "strict": true,
+        "outDir": "../../../dist/functions",
+        "sourceMap": true,
+        "target": "es2017",
+        "baseUrl": "../",
+        "forceConsistentCasingInFileNames": true,
+        "esModuleInterop": true,
+        "resolveJsonModule": true,
+        "isolatedModules": true
     },
   }

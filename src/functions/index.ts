@@ -12,7 +12,7 @@ const app = next({
 })
 const handle = app.getRequestHandler()
 
-export const botUserAgents = [
+const botUserAgents = [
   'bingbot',
   'facebookexternalhit',
   'googlebot',
@@ -76,13 +76,13 @@ const addToIndex = async (snapshot: FirebaseFirestore.DocumentSnapshot) => {
   }
 }
 
-exports.courtCreated = functions.firestore
+export const courtCreated = functions.firestore
   .document('courts/{courtID}')
   .onCreate(async (snapshot) => {
     await addToIndex(snapshot)
   })
 
-exports.courtUpdated = functions.firestore
+export const courtUpdated = functions.firestore
   .document('courts/{courtID}')
   .onUpdate(async (change) => {
     await addToIndex(change.after)
