@@ -14,7 +14,10 @@ describe('courtCreated', () => {
         {
           address: '東京都江東区有明2-2-22',
           createdAt: admin.firestore.Timestamp.now(),
-          geo: new admin.firestore.GeoPoint(35.635557, 139.786987),
+          geo: {
+            _latitude: 35.635557,
+            _longitude: 139.786987,
+          },
           name: '有明テニスの森公園',
           nighter: true,
           price:
