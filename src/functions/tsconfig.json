@@ -12,5 +12,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true
   },
-  "compileOnSave": true
+  "compileOnSave": true,
+  "exclude": [
+    "**/*.test.ts",
+  ]
 }

@@ -3,7 +3,7 @@ import * as functionsTest from 'firebase-functions-test'
 
 const ftest = functionsTest()
 
-import * as index from '../index'
+import * as index from '../firestore'
 
 const wrapped = ftest.wrap(index.courtCreated)
 
