@@ -1,10 +1,24 @@
 import * as admin from 'firebase-admin'
 import * as functionsTest from 'firebase-functions-test'
 
-const ftest = functionsTest()
-
 import * as index from '../firestore'
 
+const mockSaveObject = jest.fn().mockReturnValue({})
+jest.mock('algoliasearch', () => {
+  return {
+    default: () => {
+      return {
+        initIndex: () => {
+          return {
+            saveObject: () => mockSaveObject,
+          }
+        },
+      }
+    },
+  }
+})
+
+const ftest = functionsTest()
 const wrapped = ftest.wrap(index.courtCreated)
 
 describe('courtCreated', () => {
