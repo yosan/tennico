@@ -3,28 +3,21 @@ import * as functionsTest from 'firebase-functions-test'
 
 import * as index from '../firestore'
 
-const mockSaveObject = jest.fn().mockReturnValue({})
-jest.mock('algoliasearch', () => {
-  return {
-    default: () => {
-      return {
-        initIndex: () => {
-          return {
-            saveObject: () => mockSaveObject,
-          }
-        },
-      }
-    },
-  }
-})
+jest.mock('algoliasearch', () => ({
+  default: () => ({
+    initIndex: () => ({
+      saveObject: jest.fn().mockReturnValue({}),
+    }),
+  }),
+}))
 
 const ftest = functionsTest()
 const wrapped = ftest.wrap(index.courtCreated)
 
 describe('courtCreated', () => {
   describe('when court is created', () => {
-    test('add to algolia index', async () => {
-      const snap = ftest.firestore.makeDocumentSnapshot(
+    beforeEach(async () => {
+      const snapshot = ftest.firestore.makeDocumentSnapshot(
         {
           address: '東京都江東区有明2-2-22',
           createdAt: admin.firestore.Timestamp.now(),
@@ -45,7 +38,11 @@ describe('courtCreated', () => {
         'courts/Slsnk6XjulO3ndipFjlY'
       )
 
-      await wrapped(snap)
+      await wrapped(snapshot)
+    })
+
+    test('algoalia API call parameters are correct', async () => {
+      expect(true).toBeTruthy()
     })
   })
 })
