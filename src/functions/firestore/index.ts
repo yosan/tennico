@@ -11,7 +11,7 @@ const addToIndex = async (snapshot: FirebaseFirestore.DocumentSnapshot) => {
   const data = snapshot.data()
 
   if (!data) {
-    return
+    throw new functions.https.HttpsError('internal', 'no data')
   }
 
   const object = {
