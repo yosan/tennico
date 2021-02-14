@@ -19,14 +19,11 @@ interface CourtAlgolia {
   address: string
   price: string
   surfaces: { [type in SurfaceType]: number }
-  createdAt: {
-    _seconds: number
-    _nanoseconds: number
-  }
+  createdAt: string
   nighter: boolean
-  geo: {
-    _latitude: number
-    _longitude: number
+  _geoloc: {
+    lat: number
+    lng: number
   }
   url?: string
 }
@@ -41,13 +38,9 @@ export const search = async (
       id: hit.objectID,
       data: {
         ...hit,
-        geo: new firebase.firestore.GeoPoint(
-          hit.geo._latitude,
-          hit.geo._longitude
-        ),
-        createdAt: new firebase.firestore.Timestamp(
-          hit.createdAt._seconds,
-          hit.createdAt._nanoseconds
+        geo: new firebase.firestore.GeoPoint(hit._geoloc.lat, hit._geoloc.lng),
+        createdAt: firebase.firestore.Timestamp.fromDate(
+          new Date(hit.createdAt)
         ),
       },
     }
@@ -69,13 +62,9 @@ export const searchByGeo = async (
       id: hit.objectID,
       data: {
         ...hit,
-        geo: new firebase.firestore.GeoPoint(
-          hit.geo._latitude,
-          hit.geo._longitude
-        ),
-        createdAt: new firebase.firestore.Timestamp(
-          hit.createdAt._seconds,
-          hit.createdAt._nanoseconds
+        geo: new firebase.firestore.GeoPoint(hit._geoloc.lat, hit._geoloc.lng),
+        createdAt: firebase.firestore.Timestamp.fromDate(
+          new Date(hit.createdAt)
         ),
       },
     }
