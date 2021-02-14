@@ -10,13 +10,23 @@ const index = client.initIndex('courts')
 const addToIndex = async (snapshot: FirebaseFirestore.DocumentSnapshot) => {
   const data = snapshot.data()
 
+  if (!data) {
+    return
+  }
+
   const object = {
     objectID: snapshot.id,
+    address: data.address,
     _geoloc: {
-      lat: data?.geo._latitude,
-      lng: data?.geo._longitude,
+      lat: data.geo._latitude,
+      lng: data.geo._longitude,
     },
-    ...data,
+    name: data.name,
+    nighter: data.nighter,
+    price: data.price,
+    surfaces: data.surfaces,
+    url: data.url,
+    createdAt: data.createdAt.toDate(),
   }
   try {
     return await index.saveObject(object)

@@ -52,11 +52,11 @@ describe('courtCreated', () => {
     test('algoalia API call parameters are correct', async () => {
       expect(mockSaveObject.mock.calls.length).toBe(1)
       expect(mockSaveObject.mock.calls[0][0]).toStrictEqual({
+        objectID: 'Slsnk6XjulO3ndipFjlY',
         address: '東京都江東区有明2-2-22',
-        createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-01')),
-        geo: {
-          _latitude: 35.635557,
-          _longitude: 139.786987,
+        _geoloc: {
+          lat: 35.635557,
+          lng: 139.786987,
         },
         name: '有明テニスの森公園',
         nighter: true,
@@ -67,11 +67,7 @@ describe('courtCreated', () => {
           omni: 16,
         },
         url: 'http://www.tptc.co.jp/park/02_03',
-        objectID: 'Slsnk6XjulO3ndipFjlY',
-        _geoloc: {
-          lat: 35.635557,
-          lng: 139.786987,
-        },
+        createdAt: new Date('2021-01-01'),
       })
     })
   })
