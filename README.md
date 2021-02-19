@@ -46,7 +46,8 @@ export const algolia = {
 }
 
 export const google = {
-  apiKey: 'xxx'
+  apiKey: 'xxx',
+  apiKeyGeo: 'xxx',
 }
 
 export default { firebase, reduxFirebase, algolia, google }

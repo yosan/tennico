@@ -1,7 +1,7 @@
 dist
 node_modules
 .firebaserc
-src/app/config.ts
+src/app/config-prod.ts
 src/functions/config.ts
 firestore-debug.log
 .runtimeconfig.json
