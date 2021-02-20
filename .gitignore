@@ -4,7 +4,6 @@ node_modules
 src/app/config-prod.ts
 src/functions/config.ts
 firestore-debug.log
-.runtimeconfig.json
 
 # Firebase cache
 .firebase/

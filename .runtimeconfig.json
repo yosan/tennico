@@ -1,0 +1,10 @@
+{
+  "rendertron": {
+    "rendertron_host": "",
+    "app_host": ""
+  },
+  "algolia": {
+    "admin_key": "",
+    "app_id": ""
+  }
+}
