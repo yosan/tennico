@@ -21,4 +21,4 @@ jobs:
       - name: Build
         run: yarn preserve
       - name: Test
-        run: yarn test
+        run: yarn test --project ${GCLOUD_PROJECT}
