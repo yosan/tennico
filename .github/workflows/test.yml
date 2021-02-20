@@ -5,6 +5,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+      FIREBASE_PROJECT: ${{ secrets.FIREBASE_PROJECT }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -20,4 +21,4 @@ jobs:
       - name: Build
         run: yarn preserve
       - name: Test
-        run: yarn test
+        run: yarn test --project ${FIREBASE_PROJECT}
