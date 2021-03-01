@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { google } from 'config'
+import { getConfig } from 'config/getConfig'
 import firebase from 'firebase/app'
 import { useFormik } from 'formik'
 import { Court, CourtDoc } from 'models/court'
@@ -18,6 +18,8 @@ import { useRouter } from 'next/router'
 import * as React from 'react'
 import { useFirestore } from 'react-redux-firebase'
 import * as Yup from 'yup'
+
+const config = getConfig()
 
 const CourtSchema = Yup.object().shape({
   name: Yup.string()
@@ -152,7 +154,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
     const result = await client.geocode({
       params: {
         address: formik.values.address,
-        key: google.apiKeyGeo,
+        key: config.google.apiKeyGeo,
       },
     })
 

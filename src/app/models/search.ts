@@ -1,13 +1,15 @@
 import 'firebase/firestore'
 
 import algoliasearch from 'algoliasearch'
-import { algolia } from 'config'
+import { getConfig } from 'config/getConfig'
 import firebase from 'firebase/app'
 import { CourtDoc } from 'models/court'
 
 import { SurfaceType } from './surfaceType'
 
-const client = algoliasearch(algolia.appId, algolia.apiKey)
+const config = getConfig()
+
+const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
 const index = client.initIndex('courts')
 index.setSettings({
   searchableAttributes: ['name', 'address'],
