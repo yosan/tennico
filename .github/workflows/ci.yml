@@ -18,8 +18,6 @@ jobs:
           architecture: x64
       - name: Install dependencies
         run: yarn
-      - name: Clean
-        run: yarn clean
       - name: Build
         run: yarn preserve
       - name: Test
