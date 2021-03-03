@@ -1,13 +1,11 @@
 import 'firebase/firestore'
 
 import algoliasearch from 'algoliasearch'
-import { getConfig } from 'config/getConfig'
+import config from 'config'
 import firebase from 'firebase/app'
 import { CourtDoc } from 'models/court'
 
 import { SurfaceType } from './surfaceType'
-
-const config = getConfig()
 
 const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
 const index = client.initIndex('courts')

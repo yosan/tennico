@@ -1,12 +1,10 @@
 import 'firebase/firestore'
 
-import { getConfig } from 'config/getConfig'
+import config from 'config'
 import firebase from 'firebase/app'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { EnumChangefreq, SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'
-
-const config = getConfig()
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config.firebase)

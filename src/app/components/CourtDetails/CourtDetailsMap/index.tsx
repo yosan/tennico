@@ -1,12 +1,10 @@
 import Pin from 'components/Pin'
-import { getConfig } from 'config/getConfig'
+import config from 'config'
 import GoogleMapReact from 'google-map-react'
 import { CourtDoc } from 'models/court'
 import * as React from 'react'
 
 import styles from './styles.module.css'
-
-const config = getConfig()
 
 interface Props {
   courtDoc: CourtDoc

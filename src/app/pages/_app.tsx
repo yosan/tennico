@@ -4,7 +4,7 @@ import 'firebase/firestore'
 import './styles.css'
 
 import * as Sentry from '@sentry/browser'
-import { getConfig } from 'config/getConfig'
+import config from 'config'
 import firebase from 'firebase/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
@@ -18,8 +18,6 @@ import {
 import { combineReducers, createStore } from 'redux'
 import { devToolsEnhancer } from 'redux-devtools-extension/developmentOnly'
 import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
-
-const config = getConfig()
 
 const initialState = {}
 const rootReducer = combineReducers({

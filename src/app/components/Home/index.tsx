@@ -4,7 +4,7 @@ import Typography from '@material-ui/core/Typography'
 import Pin from 'components/Pin'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
-import { getConfig } from 'config/getConfig'
+import config from 'config'
 import GoogleMap, { fitBounds } from 'google-map-react'
 import { CourtDoc } from 'models/court'
 import { search, searchByGeo } from 'models/search'
@@ -23,8 +23,6 @@ const createMapOptions = () => {
     fullscreenControl: false,
   }
 }
-
-const config = getConfig()
 
 const Home: FC<Record<string, unknown>> = () => {
   const [mode, setMode] = useState<'text' | 'location'>('text')
