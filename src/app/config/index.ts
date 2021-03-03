@@ -18,6 +18,9 @@ const config = {
     apiKey: process.env.NEXT_PUBLIC_GOOGLE_API_KEY ?? 'xxx',
     apiKeyGeo: process.env.NEXT_PUBLIC_GOOGLE_API_KEY_GEO ?? 'xxx',
   },
+  sentry: {
+    dns: process.env.NEXT_PUBLIC_SENTRY_DNS ?? 'xxx',
+  },
 }
 
 export default config

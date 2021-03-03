@@ -32,7 +32,7 @@ if (!firebase.apps.length) {
 if (process.browser) {
   firebase.analytics()
   Sentry.init({
-    dsn: 'https://3473ab51105642b2ba19963d2a00a738@sentry.io/1771548',
+    dsn: config.sentry.dns,
   })
 }
 
