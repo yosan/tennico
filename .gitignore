@@ -3,7 +3,7 @@ node_modules
 .firebaserc
 firestore-debug.log
 .runtimeconfig.json
-src/app/config/config.json
+.env
 
 # Firebase cache
 .firebase/
