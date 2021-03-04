@@ -1,5 +1,5 @@
 import Pin from 'components/Pin'
-import { google } from 'config'
+import config from 'config'
 import GoogleMapReact from 'google-map-react'
 import { CourtDoc } from 'models/court'
 import * as React from 'react'
@@ -24,7 +24,7 @@ const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
       <div className={styles.map}>
         <GoogleMapReact
           bootstrapURLKeys={{
-            key: google.apiKey,
+            key: config.google.apiKey,
           }}
           defaultCenter={{
             lat: courtDoc.data.geo.latitude,

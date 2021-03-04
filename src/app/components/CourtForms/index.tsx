@@ -10,7 +10,7 @@ import {
   Typography,
 } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import { google } from 'config'
+import config from 'config'
 import firebase from 'firebase/app'
 import { useFormik } from 'formik'
 import { Court, CourtDoc } from 'models/court'
@@ -152,7 +152,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
     const result = await client.geocode({
       params: {
         address: formik.values.address,
-        key: google.apiKeyGeo,
+        key: config.google.apiKeyGeo,
       },
     })
 

@@ -2,8 +2,8 @@ import algoliasearch from 'algoliasearch'
 import * as functions from 'firebase-functions'
 
 const client = algoliasearch(
-  functions.config().algolia.app_id,
-  functions.config().algolia.admin_key
+  functions.config().algolia?.app_id ?? '',
+  functions.config().algolia?.admin_key ?? ''
 )
 const index = client.initIndex('courts')
 

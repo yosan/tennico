@@ -28,7 +28,7 @@ const isBot = (req: functions.https.Request): boolean => {
 const generateUrl = (req: functions.https.Request): string => {
   return url.format({
     protocol: 'https',
-    host: functions.config().rendertron.app_host,
+    host: functions.config().rendertron?.app_host ?? '',
     pathname: req.originalUrl,
   })
 }
@@ -37,7 +37,7 @@ export const nextApp = functions.https.onRequest(async (req, res) => {
   if (isBot(req) && req.path !== '/api/sitemap.xml') {
     const renderResp = await fetch(
       `https://${
-        functions.config().rendertron.rendertron_host
+        functions.config().rendertron?.rendertron_host ?? ''
       }/render/${generateUrl(req)}`
     )
     const body = await renderResp.text()

@@ -4,7 +4,7 @@ import 'firebase/firestore'
 import './styles.css'
 
 import * as Sentry from '@sentry/browser'
-import { firebase as fbConfig, reduxFirebase as rfConfig } from 'config'
+import config from 'config'
 import firebase from 'firebase/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
@@ -27,13 +27,18 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, initialState, devToolsEnhancer({}))
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(fbConfig)
+  firebase.initializeApp(config.firebase)
 }
 if (process.browser) {
   firebase.analytics()
   Sentry.init({
-    dsn: 'https://3473ab51105642b2ba19963d2a00a738@sentry.io/1771548',
+    dsn: config.sentry.dns,
   })
+}
+
+const rfConfig = {
+  useFirestoreForProfile: false,
+  enableLogging: false,
 }
 
 const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({

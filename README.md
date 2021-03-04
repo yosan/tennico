@@ -21,35 +21,22 @@ using [react-redux-firebase](https://github.com/prescottprue/react-redux-firebas
 }
 ```
 
-## 2. Add src/app/config.ts
+## 2. Add src/app/.env
 
-```typescript
-export const firebase = {
-  apiKey: 'xxx',
-  appId: 'xxx',
-  authDomain: 'xxx',
-  databaseURL: 'xxx',
-  measurementId: 'xxx',
-  messagingSenderId: 'xxx',
-  projectId: 'xxx',
-  storageBucket: 'xxx',
-}
-
-export const reduxFirebase = {
-  useFirestoreForProfile: false,
-  enableLogging: false,
-}
-
-export const algolia = {
-  appId: 'xxx',
-  apiKey: 'xxx',
-}
-
-export const google = {
-  apiKey: 'xxx'
-}
-
-export default { firebase, reduxFirebase, algolia, google }
+```
+NEXT_PUBLIC_FIREBASE_API_KEY=xxx
+NEXT_PUBLIC_FIREBASE_APP_ID=xxx
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=xxx
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=xxx
+NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=xxx
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=xxx
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=xxx
+NEXT_PUBLIC_STORAGE_BUCKET=xxx
+NEXT_PUBLIC_ALGOLIA_APP_ID=xxx
+NEXT_PUBLIC_ALGOLIA_API_KEY=xxx
+NEXT_PUBLIC_GOOGLE_API_KEY=xxx
+NEXT_PUBLIC_GOOGLE_API_KEY_GEO=xxx
+NEXT_PUBLIC_SENTRY_DNS=xxx
 ```
 
 ## 2. Set some cloudfunctions config
