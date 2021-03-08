@@ -2,8 +2,10 @@ import * as functions from 'firebase-functions'
 import next from 'next'
 import url from 'url'
 
+console.log(process.env.NODE_ENV)
+const dev = process.env.NODE_ENV !== 'production'
 const app = next({
-  dev: false,
+  dev,
   dir: __dirname,
   conf: {
     distDir: '../next',
