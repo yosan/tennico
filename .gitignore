@@ -2,6 +2,7 @@ dist
 node_modules
 .firebaserc
 firestore-debug.log
+ui-debug.log
 .runtimeconfig.json
 .env
 
