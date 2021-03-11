@@ -19,7 +19,7 @@
     "lint-functions": "eslint src/functions --ext .ts,.tsx",
     "copy-deps": "cpx \"*{package.json,package-lock.json,yarn.lock}\" \"dist/functions\" -C",
     "install-deps": "cd \"dist/functions\" && npm i",
-    "test": "firebase emulators:exec --only firestore 'jest --silent'"
+    "test": "firebase emulators:exec --only firestore 'jest --silent --env=node'"
   },
   "dependencies": {
     "@googlemaps/google-maps-services-js": "^3.1.16",
