@@ -60,10 +60,8 @@ beforeEach(async () => {
     .set({
       admin: true,
     })
-})
 
-afterEach(async () => {
-  await firebase.clearFirestoreData({ projectId })
+  await adminApp.delete()
 })
 
 describe('when unauthorized user', () => {
@@ -73,6 +71,10 @@ describe('when unauthorized user', () => {
     app = firebase.initializeTestApp({
       projectId,
     })
+  })
+
+  afterEach(async () => {
+    await app.delete()
   })
 
   describe('try to access courts collection', () => {
@@ -172,6 +174,10 @@ describe('when authorized user', () => {
     })
   })
 
+  afterEach(async () => {
+    await app.delete()
+  })
+
   describe('try to access courts collection', () => {
     test('read shoud be succeeded', async () => {
       await firebase.assertSucceeds(
@@ -267,6 +273,10 @@ describe('when admin user', () => {
       projectId,
       auth: { uid: '1234567890abcdefghijklmopqrs' },
     })
+  })
+
+  afterEach(async () => {
+    await app.delete()
   })
 
   describe('try to access courts collection', () => {
