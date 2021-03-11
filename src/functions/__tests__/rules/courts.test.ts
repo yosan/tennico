@@ -64,6 +64,10 @@ beforeEach(async () => {
   await adminApp.delete()
 })
 
+afterEach(async () => {
+  await firebase.clearFirestoreData({ projectId })
+})
+
 describe('when unauthorized user', () => {
   let app: ReturnType<typeof firebase.initializeTestApp>
 
