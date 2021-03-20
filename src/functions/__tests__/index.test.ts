@@ -28,7 +28,9 @@ describe('courtCreated', () => {
     beforeEach(async () => {
       const snapshot = ftest.firestore.makeDocumentSnapshot(
         {
-          address: '東京都江東区有明2-2-22',
+          prefecture: '東京都',
+          city: '江東区',
+          line: '有明2-2-22',
           createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-01')),
           geo: {
             _latitude: 35.635557,
@@ -54,7 +56,9 @@ describe('courtCreated', () => {
       expect(mockSaveObject.mock.calls.length).toBe(1)
       expect(mockSaveObject.mock.calls[0][0]).toStrictEqual({
         objectID: 'Slsnk6XjulO3ndipFjlY',
-        address: '東京都江東区有明2-2-22',
+        prefecture: '東京都',
+        city: '江東区',
+        line: '有明2-2-22',
         _geoloc: {
           lat: 35.635557,
           lng: 139.786987,
@@ -81,7 +85,9 @@ describe('courtUpdated', () => {
     beforeEach(async () => {
       const before = ftest.firestore.makeDocumentSnapshot(
         {
-          address: '東京都江東区有明2-2-22',
+          prefecture: '東京都',
+          city: '江東区',
+          line: '有明2-2-22',
           createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-01')),
           geo: {
             _latitude: 35.635557,
@@ -102,7 +108,9 @@ describe('courtUpdated', () => {
 
       const after = ftest.firestore.makeDocumentSnapshot(
         {
-          address: '東京都品川区八潮4-1-19',
+          prefecture: '東京都',
+          city: '品川区',
+          line: '八潮4-1-19',
           createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-02')),
           geo: {
             _latitude: 35.591023,
@@ -128,7 +136,9 @@ describe('courtUpdated', () => {
       expect(mockSaveObject.mock.calls.length).toBe(1)
       expect(mockSaveObject.mock.calls[0][0]).toStrictEqual({
         objectID: 'Slsnk6XjulO3ndipFjlY',
-        address: '東京都品川区八潮4-1-19',
+        prefecture: '東京都',
+        city: '品川区',
+        line: '八潮4-1-19',
         _geoloc: {
           lat: 35.591023,
           lng: 139.752222,

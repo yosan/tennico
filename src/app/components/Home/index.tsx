@@ -151,7 +151,11 @@ const Home: FC<Record<string, unknown>> = () => {
                     color="textSecondary"
                     component="p"
                   >
-                    {selectedCourtDoc.data.address}
+                    {[
+                      selectedCourtDoc.data.prefecture,
+                      selectedCourtDoc.data.city,
+                      selectedCourtDoc.data.line,
+                    ].join('')}
                   </Typography>
                 </CardContent>
               </CardActionArea>

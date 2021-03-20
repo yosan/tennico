@@ -16,7 +16,9 @@ beforeEach(async () => {
     .collection('courts')
     .doc('Slsnk6XjulO3ndipFjlY')
     .set({
-      address: '東京都江東区有明2-2-22',
+      prefecture: '東京都',
+      city: '江東区',
+      line: '有明2-2-22',
       createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-01')),
       geo: {
         _latitude: 35.635557,
@@ -37,7 +39,9 @@ beforeEach(async () => {
     .collection('courts')
     .doc('5dvq3wFZ362RLOSEfhVo')
     .set({
-      address: '東京都品川区八潮4-1-19',
+      prefecture: '東京都',
+      city: '品川区',
+      line: '八潮4-1-19',
       createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-02')),
       geo: {
         _latitude: 35.591023,
@@ -99,7 +103,9 @@ describe('when unauthorized user', () => {
           .collection('courts')
           .doc()
           .set({
-            address: '東京都東大和市桜が丘二・三丁目',
+            prefecture: '東京都',
+            city: '東大和市',
+            line: '桜が丘二・三丁目',
             createdAt: firebase.firestore.Timestamp.fromDate(
               new Date('2021-01-01')
             ),
@@ -200,7 +206,9 @@ describe('when authorized user', () => {
           .collection('courts')
           .doc()
           .set({
-            address: '東京都東大和市桜が丘二・三丁目',
+            prefecture: '東京都',
+            city: '東大和市',
+            line: '桜が丘二・三丁目',
             createdAt: firebase.firestore.Timestamp.fromDate(
               new Date('2021-01-01')
             ),
@@ -301,7 +309,9 @@ describe('when admin user', () => {
           .collection('courts')
           .doc()
           .set({
-            address: '東京都東大和市桜が丘二・三丁目',
+            prefecture: '東京都',
+            city: '東大和市',
+            line: '桜が丘二・三丁目',
             createdAt: firebase.firestore.Timestamp.fromDate(
               new Date('2021-01-01')
             ),

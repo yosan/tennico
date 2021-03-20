@@ -49,7 +49,10 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
     <main>
       <Head>
         <title>{`${court.name} - Tennico 東京のテニスコートを探そう`}</title>
-        <meta name="description" content={court.address} />
+        <meta
+          name="description"
+          content={[court.prefecture, court.city, court.line].join('')}
+        />
       </Head>
       <Typography variant="h4" gutterBottom className={classes.title}>
         {court.name}
