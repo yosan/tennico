@@ -23,7 +23,13 @@ const CourtSchema = Yup.object().shape({
   name: Yup.string()
     .required('必須項目です')
     .max(100, '最大100文字で入力してください'),
-  address: Yup.string()
+  prefecture: Yup.string()
+    .required('必須項目です')
+    .max(100, '最大10文字で入力してください'),
+  city: Yup.string()
+    .required('必須項目です')
+    .max(100, '最大20文字で入力してください'),
+  line: Yup.string()
     .required('必須項目です')
     .max(100, '最大100文字で入力してください'),
   price: Yup.string()
@@ -69,7 +75,9 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
     initialValues: courtDoc
       ? {
           name: courtDoc.data.name,
-          address: courtDoc.data.address,
+          prefecture: courtDoc.data.prefecture,
+          city: courtDoc.data.city,
+          line: courtDoc.data.line,
           price: courtDoc.data.price,
           url: courtDoc.data.url,
           surfaceOmni: courtDoc.data.surfaces.omni,
@@ -81,7 +89,9 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
         }
       : {
           name: '',
-          address: '',
+          prefecture: '',
+          city: '',
+          line: '',
           price: '',
           url: '',
           surfaceOmni: 0,
@@ -107,7 +117,9 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
       try {
         if (isEdit) {
           const data: Omit<Court, 'createdAt'> = {
-            address: values.address,
+            prefecture: values.prefecture,
+            city: values.city,
+            line: values.line,
             price: values.price,
             nighter: values.nighter,
             surfaces: surfaces,
@@ -122,7 +134,9 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
           router.push(`/courts/${courtDoc.id}`)
         } else {
           const data: Court = {
-            address: values.address,
+            prefecture: values.prefecture,
+            city: values.city,
+            line: values.line,
             price: values.price,
             nighter: values.nighter,
             surfaces: surfaces,
@@ -145,13 +159,17 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
   })
 
   const onClickGeo = React.useCallback(async () => {
-    if (formik.errors.address) {
+    if (formik.errors.prefecture || formik.errors.city || formik.errors.line) {
       return
     }
 
     const result = await client.geocode({
       params: {
-        address: formik.values.address,
+        address: [
+          formik.values.prefecture,
+          formik.values.city,
+          formik.values.line,
+        ].join(''),
         key: config.google.apiKeyGeo,
       },
     })
@@ -168,7 +186,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
         longitude: true,
       })
     }
-  }, [formik.values.address])
+  }, [formik.values.prefecture, formik.values.city, formik.values.line])
 
   return (
     <main>
@@ -191,20 +209,52 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
           />
           <TextField
             error={
-              formik.touched.address && formik.errors.address !== undefined
+              formik.touched.prefecture &&
+              formik.errors.prefecture !== undefined
             }
-            id="address"
-            label="住所"
-            value={formik.values.address}
-            helperText={formik.touched.address && formik.errors.address}
+            id="prefecture"
+            label="都道府県"
+            value={formik.values.prefecture}
+            helperText={formik.touched.prefecture && formik.errors.prefecture}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             className={classes.input}
-            name="address"
+            name="prefecture"
+            fullWidth
+          />
+          <TextField
+            error={
+              formik.touched.prefecture &&
+              formik.errors.prefecture !== undefined
+            }
+            id="city"
+            label="市区町村"
+            value={formik.values.city}
+            helperText={formik.touched.city && formik.errors.city}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={classes.input}
+            name="city"
+            fullWidth
+          />
+          <TextField
+            error={formik.touched.line && formik.errors.line !== undefined}
+            id="line"
+            label="住所その他"
+            value={formik.values.line}
+            helperText={formik.touched.line && formik.errors.line}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            className={classes.input}
+            name="line"
             fullWidth
           />
           <Button
-            disabled={!formik.values.address}
+            disabled={
+              !formik.values.prefecture ||
+              !formik.values.city ||
+              !formik.values.line
+            }
             color="primary"
             variant="contained"
             className={classes.button}

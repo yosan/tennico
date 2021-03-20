@@ -10,7 +10,9 @@ export interface CourtDoc {
 }
 
 export interface Court {
-  address: string
+  prefecture: string
+  city: string
+  line: string
   price: string
   nighter: boolean
   surfaces: { [type in SurfaceType]?: number }

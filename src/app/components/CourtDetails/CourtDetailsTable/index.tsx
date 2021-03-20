@@ -33,7 +33,9 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
           <TableCell className={classes.labelCell} component="th" scope="row">
             住所
           </TableCell>
-          <TableCell className={classes.valueCell}>{court.address}</TableCell>
+          <TableCell className={classes.valueCell}>
+            {[court.prefecture, court.city, court.line].join('')}
+          </TableCell>
         </TableRow>
         <TableRow>
           <TableCell className={classes.labelCell} component="th" scope="row">

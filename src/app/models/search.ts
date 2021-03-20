@@ -10,13 +10,15 @@ import { SurfaceType } from './surfaceType'
 const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
 const index = client.initIndex('courts')
 index.setSettings({
-  searchableAttributes: ['name', 'address'],
+  searchableAttributes: ['name', 'prefecture', 'city', 'line'],
 })
 
 interface CourtAlgolia {
   id: string
   name: string
-  address: string
+  prefecture: string
+  city: string
+  line: string
   price: string
   surfaces: { [type in SurfaceType]: number }
   createdAt: string
