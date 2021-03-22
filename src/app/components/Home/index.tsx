@@ -14,7 +14,7 @@ import { FC, useCallback, useEffect, useMemo, useState } from 'react'
 
 import styles from './styles.module.css'
 
-const hits = 10
+const hits = 50
 
 const createMapOptions = () => {
   return {
