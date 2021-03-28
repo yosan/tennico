@@ -3,8 +3,6 @@ import Room from '@material-ui/icons/Room'
 import React from 'react'
 import { FC, memo, useCallback } from 'react'
 
-import styles from './styles.module.css'
-
 interface Props {
   id: string
   lat: number
@@ -17,14 +15,16 @@ const Pin: FC<Props> = ({ id, selected, onClick }) => {
   const callback = useCallback(() => {
     onClick?.(id)
   }, [id, onClick])
+  const fontSize = selected ? 30 : 24
   return (
     <Room
-      className={selected ? styles.selected : styles.default}
       onClick={callback}
       style={{
         cursor: 'pointer',
         color: selected ? red[500] : orange[600],
-        fontSize: selected ? 30 : 24,
+        fontSize,
+        marginLeft: -fontSize / 2,
+        marginTop: -fontSize,
       }}
     />
   )
