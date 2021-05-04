@@ -5,7 +5,8 @@ import Pin from 'components/Pin'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
 import config from 'config'
-import GoogleMap, { fitBounds } from 'google-map-react'
+import GoogleMap from 'google-map-react'
+import { useFitBounds } from 'hooks/map'
 import { CourtDoc } from 'models/court'
 import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
@@ -65,41 +66,7 @@ const Home: FC<Record<string, unknown>> = () => {
     return courtDocs?.find((court) => court.id === selectedID)
   }, [selectedID, courtDocs])
 
-  const { center, zoom } = useMemo(() => {
-    if (!courtDocs || mode === 'location') {
-      return {}
-    }
-
-    if (courtDocs.length === 1) {
-      return {
-        center: {
-          lat: courtDocs[0].data.geo.latitude,
-          lng: courtDocs[0].data.geo.longitude,
-        },
-        zoom: 16,
-      }
-    }
-
-    const lats = courtDocs.map((court) => court.data.geo.latitude)
-    const lngs = courtDocs.map((court) => court.data.geo.longitude)
-    const bounds = {
-      nw: {
-        lat: Math.max(...lats),
-        lng: Math.min(...lngs),
-      },
-      se: {
-        lat: Math.min(...lats),
-        lng: Math.max(...lngs),
-      },
-    }
-
-    const size = {
-      width: window.innerWidth || document.body.clientWidth,
-      height: window.innerHeight || document.body.clientHeight,
-    }
-
-    return fitBounds(bounds, size)
-  }, [courtDocs])
+  const { center, zoom } = useFitBounds(courtDocs, mode === 'text')
 
   const onClick = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback((value: 'text' | 'location') => {
