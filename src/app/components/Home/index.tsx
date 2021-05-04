@@ -72,7 +72,10 @@ const Home: FC<Record<string, unknown>> = () => {
   const onClickMode = useCallback((value: 'text' | 'location') => {
     setMode(value)
   }, [])
-  const onBoundsChange = useCallback((center) => setMapCenter(center), [])
+  const onChange = useCallback(
+    (value: GoogleMap.ChangeEventValue) => setMapCenter(value.center),
+    []
+  )
 
   return (
     <main className={styles.main}>
@@ -84,7 +87,7 @@ const Home: FC<Record<string, unknown>> = () => {
           center={center}
           zoom={zoom}
           options={createMapOptions}
-          onBoundsChange={onBoundsChange}
+          onChange={onChange}
         >
           {courtDocs.map((courtDoc) => {
             return (
