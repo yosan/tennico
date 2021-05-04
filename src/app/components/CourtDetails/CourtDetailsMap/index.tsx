@@ -1,6 +1,6 @@
 import Pin from 'components/Pin'
 import config from 'config'
-import GoogleMapReact from 'google-map-react'
+import GoogleMap from 'google-map-react'
 import { CourtDoc } from 'models/court'
 import * as React from 'react'
 
@@ -22,7 +22,7 @@ const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
   return (
     courtDoc.data.geo && (
       <div className={styles.map}>
-        <GoogleMapReact
+        <GoogleMap
           bootstrapURLKeys={{
             key: config.google.apiKey,
           }}
@@ -39,7 +39,7 @@ const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
             lng={courtDoc.data.geo.longitude}
             selected={false}
           />
-        </GoogleMapReact>
+        </GoogleMap>
       </div>
     )
   )
