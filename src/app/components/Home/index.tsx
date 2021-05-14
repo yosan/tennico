@@ -5,7 +5,6 @@ import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
 import config from 'config'
-import { useFitBounds } from 'hooks/map'
 import { CourtDoc } from 'models/court'
 import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
@@ -24,10 +23,12 @@ const Home: FC<Record<string, unknown>> = () => {
   const [mapCenter, setMapCenter] = useState<
     { lat: number; lng: number } | undefined
   >()
+  const [map, setMap] = useState(undefined)
   const mapRef = useRef(null)
 
   const onLoaded = useCallback((map) => {
     mapRef.current = map
+    setMap(map)
   }, [])
 
   const onMapMoved = useCallback(() => {
@@ -72,11 +73,23 @@ const Home: FC<Record<string, unknown>> = () => {
   }, [mapCenter, mode])
 
   const selectedCourtDoc = useMemo(() => {
-    console.log(selectedID)
     return courtDocs?.find((court) => court.id === selectedID)
   }, [selectedID, courtDocs])
 
-  const { center, zoom } = useFitBounds(courtDocs, mode === 'text')
+  useEffect(() => {
+    if (map) {
+      const bounds = new (window as any).google.maps.LatLngBounds()
+
+      courtDocs.forEach((courtDoc) => {
+        bounds.extend({
+          lat: courtDoc.data.geo.latitude,
+          lng: courtDoc.data.geo.longitude,
+        })
+      })
+
+      map.fitBounds(bounds)
+    }
+  }, [courtDocs, map])
 
   const onClick = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback((value: 'text' | 'location') => {
@@ -96,7 +109,6 @@ const Home: FC<Record<string, unknown>> = () => {
             width: '100%',
             height: '100%',
           }}
-          center={center}
           options={{
             panControl: false,
             zoomControl: false,
@@ -104,7 +116,6 @@ const Home: FC<Record<string, unknown>> = () => {
             streetViewControl: false,
             mapTypeControl: false,
           }}
-          zoom={zoom}
           onIdle={onMapMoved}
           onLoad={onLoaded}
         >
