@@ -811,12 +811,6 @@
   dependencies:
     fast-deep-equal "^3.1.3"
 
-"@googlemaps/js-api-loader@^1.7.0":
-  version "1.11.4"
-  resolved "https://registry.yarnpkg.com/@googlemaps/js-api-loader/-/js-api-loader-1.11.4.tgz#f687a88e270234e3a29c64b42b76129e75467ca7"
-  dependencies:
-    fast-deep-equal "^3.1.3"
-
 "@grpc/grpc-js@^1.0.0":
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/@grpc/grpc-js/-/grpc-js-1.2.2.tgz#ee4a7417fe15a686a8e369c36ec4c80678445c67"
@@ -1045,10 +1039,6 @@
 "@jsdevtools/ono@^7.1.3":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@jsdevtools/ono/-/ono-7.1.3.tgz#9df03bbd7c696a5c58885c34aa06da41c8543796"
-
-"@mapbox/point-geometry@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@mapbox/point-geometry/-/point-geometry-0.1.0.tgz#8a83f9335c7860effa2eeeca254332aa0aeed8f2"
 
 "@material-ui/core@^4.11.2":
   version "4.11.2"
@@ -4063,10 +4053,6 @@ event-target-shim@^5.0.0:
   version "5.0.1"
   resolved "https://registry.yarnpkg.com/event-target-shim/-/event-target-shim-5.0.1.tgz#5d4d3ebdf9583d63a5333ce2deb7480ab2b05789"
 
-eventemitter3@^4.0.4:
-  version "4.0.7"
-  resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-4.0.7.tgz#2de9b68f6528d5644ef5c59526a1b4a07306169f"
-
 events-listener@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/events-listener/-/events-listener-1.1.0.tgz#dd49b4628480eba58fde31b870ee346b3990b349"
@@ -5004,15 +4990,6 @@ google-gax@^2.9.2:
     node-fetch "^2.6.1"
     protobufjs "^6.9.0"
     retry-request "^4.0.0"
-
-google-map-react@^2.1.9:
-  version "2.1.9"
-  resolved "https://registry.yarnpkg.com/google-map-react/-/google-map-react-2.1.9.tgz#6e539ce8bf28e7b8cda6058402e7581d1d1cec3d"
-  dependencies:
-    "@googlemaps/js-api-loader" "^1.7.0"
-    "@mapbox/point-geometry" "^0.1.0"
-    eventemitter3 "^4.0.4"
-    prop-types "^15.7.2"
 
 google-p12-pem@^3.0.3:
   version "3.0.3"
