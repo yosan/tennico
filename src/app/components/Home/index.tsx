@@ -1,29 +1,20 @@
 import { Card, CardContent, Container } from '@material-ui/core'
 import CardActionArea from '@material-ui/core/CardActionArea'
 import Typography from '@material-ui/core/Typography'
-import Pin from 'components/Pin'
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
 import config from 'config'
-import GoogleMap from 'google-map-react'
 import { useFitBounds } from 'hooks/map'
 import { CourtDoc } from 'models/court'
 import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
 import React from 'react'
-import { FC, useCallback, useEffect, useMemo, useState } from 'react'
+import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import styles from './styles.module.css'
 
 const hits = 50
-
-const createMapOptions = () => {
-  return {
-    panControl: false,
-    zoomControl: false,
-    fullscreenControl: false,
-  }
-}
 
 const Home: FC<Record<string, unknown>> = () => {
   const [mode, setMode] = useState<'text' | 'location'>('text')
@@ -33,6 +24,24 @@ const Home: FC<Record<string, unknown>> = () => {
   const [mapCenter, setMapCenter] = useState<
     { lat: number; lng: number } | undefined
   >()
+  const mapRef = useRef(null)
+
+  const onLoaded = useCallback((map) => {
+    mapRef.current = map
+  }, [])
+
+  const onMapMoved = useCallback(() => {
+    if (!mapRef.current) return
+    const param = mapRef.current.getCenter()
+    if (!param) return
+
+    const currentCenter = {
+      lat: param.lat(),
+      lng: param.lng(),
+    }
+    setMapCenter(currentCenter)
+  }, [mapRef, mapCenter])
+
   const onSearch = useCallback((value?: string) => {
     switch (mode) {
       case 'text':
@@ -72,31 +81,40 @@ const Home: FC<Record<string, unknown>> = () => {
   const onClickMode = useCallback((value: 'text' | 'location') => {
     setMode(value)
   }, [])
-  const onChange = useCallback(
-    (value: GoogleMap.ChangeEventValue) => setMapCenter(value.center),
-    []
-  )
+
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: config.google.apiKey,
+  })
 
   return (
     <main className={styles.main}>
-      {courtDocs && config && (
+      {courtDocs && config && isLoaded && (
         <GoogleMap
-          bootstrapURLKeys={{
-            key: config.google.apiKey,
+          mapContainerStyle={{
+            width: '100%',
+            height: '100%',
           }}
           center={center}
+          options={{
+            panControl: false,
+            zoomControl: false,
+            fullscreenControl: false,
+            streetViewControl: false,
+            mapTypeControl: false,
+          }}
           zoom={zoom}
-          options={createMapOptions}
-          onChange={onChange}
+          onIdle={onMapMoved}
+          onLoad={onLoaded}
         >
           {courtDocs.map((courtDoc) => {
             return (
-              <Pin
+              <Marker
                 key={courtDoc.id}
-                id={courtDoc.id}
-                lat={courtDoc.data.geo.latitude}
-                lng={courtDoc.data.geo.longitude}
-                selected={courtDoc.id === selectedID}
+                position={{
+                  lat: courtDoc.data.geo.latitude,
+                  lng: courtDoc.data.geo.longitude,
+                }}
                 onClick={onClick}
               />
             )
