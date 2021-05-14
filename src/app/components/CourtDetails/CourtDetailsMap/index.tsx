@@ -1,6 +1,5 @@
-import Pin from 'components/Pin'
+import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import config from 'config'
-import GoogleMap from 'google-map-react'
 import { CourtDoc } from 'models/court'
 import * as React from 'react'
 
@@ -10,37 +9,35 @@ interface Props {
   courtDoc: CourtDoc
 }
 
-const createMapOptions = () => {
-  return {
-    panControl: false,
-    zoomControl: false,
-    fullscreenControl: false,
-  }
-}
-
 const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
+  const { isLoaded } = useJsApiLoader({
+    id: 'google-map-script',
+    googleMapsApiKey: config.google.apiKey,
+  })
+
   return (
-    courtDoc.data.geo && (
-      <div className={styles.map}>
-        <GoogleMap
-          bootstrapURLKeys={{
-            key: config.google.apiKey,
-          }}
-          defaultCenter={{
+    courtDoc.data.geo &&
+    isLoaded && (
+      <GoogleMap
+        mapContainerClassName={styles.map}
+        center={{
+          lat: courtDoc.data.geo.latitude,
+          lng: courtDoc.data.geo.longitude,
+        }}
+        options={{
+          panControl: false,
+          zoomControl: false,
+          fullscreenControl: false,
+        }}
+        zoom={15}
+      >
+        <Marker
+          position={{
             lat: courtDoc.data.geo.latitude,
             lng: courtDoc.data.geo.longitude,
           }}
-          defaultZoom={15}
-          options={createMapOptions}
-        >
-          <Pin
-            id={courtDoc.id}
-            lat={courtDoc.data.geo.latitude}
-            lng={courtDoc.data.geo.longitude}
-            selected={false}
-          />
-        </GoogleMap>
-      </div>
+        />
+      </GoogleMap>
     )
   )
 }
