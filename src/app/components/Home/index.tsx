@@ -77,7 +77,7 @@ const Home: FC<Record<string, unknown>> = () => {
   }, [selectedID, courtDocs])
 
   useEffect(() => {
-    if (map) {
+    if (map && mode === 'text') {
       const bounds = new (window as any).google.maps.LatLngBounds()
 
       courtDocs.forEach((courtDoc) => {
