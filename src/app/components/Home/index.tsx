@@ -72,6 +72,7 @@ const Home: FC<Record<string, unknown>> = () => {
   }, [mapCenter, mode])
 
   const selectedCourtDoc = useMemo(() => {
+    console.log(selectedID)
     return courtDocs?.find((court) => court.id === selectedID)
   }, [selectedID, courtDocs])
 
@@ -115,7 +116,7 @@ const Home: FC<Record<string, unknown>> = () => {
                   lat: courtDoc.data.geo.latitude,
                   lng: courtDoc.data.geo.longitude,
                 }}
-                onClick={onClick}
+                onClick={() => onClick(courtDoc.id)}
               />
             )
           })}
