@@ -1,7 +1,10 @@
-import { Card, CardContent, Container } from '@material-ui/core'
-import CardActionArea from '@material-ui/core/CardActionArea'
-import Typography from '@material-ui/core/Typography'
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
+import { Button, Typography } from '@material-ui/core'
+import {
+  GoogleMap,
+  InfoWindow,
+  Marker,
+  useJsApiLoader,
+} from '@react-google-maps/api'
 import SearchBar from 'components/SearchBar'
 import SearchModeButton from 'components/SearchModeButton'
 import config from 'config'
@@ -24,11 +27,13 @@ const Home: FC<Record<string, unknown>> = () => {
     { lat: number; lng: number } | undefined
   >()
   const [map, setMap] = useState(undefined)
+  const [markerSize, setMarkerSize] = useState(undefined)
   const mapRef = useRef(null)
 
   const onLoaded = useCallback((map) => {
     mapRef.current = map
     setMap(map)
+    setMarkerSize(new (window as any).google.maps.Size(0, -45))
   }, [])
 
   const onMapMoved = useCallback(() => {
@@ -131,37 +136,39 @@ const Home: FC<Record<string, unknown>> = () => {
               />
             )
           })}
-        </GoogleMap>
-      )}
-      {selectedCourtDoc && (
-        <Container className={styles.card}>
-          <Link
-            href="/courts/[id]"
-            as={'/courts/' + selectedCourtDoc.id}
-            key={selectedCourtDoc.id}
-          >
-            <Card>
-              <CardActionArea>
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
-                    {selectedCourtDoc.data.name}
-                  </Typography>
-                  <Typography
-                    variant="body2"
-                    color="textSecondary"
-                    component="p"
+          {selectedCourtDoc && (
+            <InfoWindow
+              position={{
+                lat: selectedCourtDoc.data.geo.latitude,
+                lng: selectedCourtDoc.data.geo.longitude,
+              }}
+              options={{ pixelOffset: markerSize }}
+              onCloseClick={() => setSelectedID(undefined)}
+            >
+              <div>
+                <Typography gutterBottom variant="h5" component="h2">
+                  {selectedCourtDoc.data.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  {[
+                    selectedCourtDoc.data.prefecture,
+                    selectedCourtDoc.data.city,
+                    selectedCourtDoc.data.line,
+                  ].join('')}
+                </Typography>
+                <p>
+                  <Link
+                    href="/courts/[id]"
+                    as={'/courts/' + selectedCourtDoc.id}
+                    key={selectedCourtDoc.id}
                   >
-                    {[
-                      selectedCourtDoc.data.prefecture,
-                      selectedCourtDoc.data.city,
-                      selectedCourtDoc.data.line,
-                    ].join('')}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          </Link>
-        </Container>
+                    <Button variant="outlined">詳細</Button>
+                  </Link>
+                </p>
+              </div>
+            </InfoWindow>
+          )}
+        </GoogleMap>
       )}
       <div className={styles.controls}>
         <div className={styles.modeButton}>
