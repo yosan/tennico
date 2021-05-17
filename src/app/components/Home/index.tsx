@@ -1,4 +1,4 @@
-import { Button, Typography } from '@material-ui/core'
+import { Button, Container, Typography } from '@material-ui/core'
 import {
   GoogleMap,
   InfoWindow,
@@ -33,7 +33,7 @@ const Home: FC<Record<string, unknown>> = () => {
   const onLoaded = useCallback((map) => {
     mapRef.current = map
     setMap(map)
-    setMarkerSize(new (window as any).google.maps.Size(0, -45))
+    setMarkerSize(new window.google.maps.Size(0, -45))
   }, [])
 
   const onMapMoved = useCallback(() => {
@@ -83,7 +83,7 @@ const Home: FC<Record<string, unknown>> = () => {
 
   useEffect(() => {
     if (map && mode === 'text') {
-      const bounds = new (window as any).google.maps.LatLngBounds()
+      const bounds = new window.google.maps.LatLngBounds()
 
       courtDocs.forEach((courtDoc) => {
         bounds.extend({
@@ -94,9 +94,9 @@ const Home: FC<Record<string, unknown>> = () => {
 
       map.fitBounds(bounds)
     }
-  }, [courtDocs, map])
+  }, [courtDocs, map, mode])
 
-  const onClick = useCallback((id: string) => setSelectedID(id), [])
+  const onClickMarker = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback((value: 'text' | 'location') => {
     setMode(value)
   }, [])
@@ -132,7 +132,7 @@ const Home: FC<Record<string, unknown>> = () => {
                   lat: courtDoc.data.geo.latitude,
                   lng: courtDoc.data.geo.longitude,
                 }}
-                onClick={() => onClick(courtDoc.id)}
+                onClick={() => onClickMarker(courtDoc.id)}
               />
             )
           })}
@@ -145,11 +145,11 @@ const Home: FC<Record<string, unknown>> = () => {
               options={{ pixelOffset: markerSize }}
               onCloseClick={() => setSelectedID(undefined)}
             >
-              <div>
+              <Container>
                 <Typography gutterBottom variant="h5" component="h2">
                   {selectedCourtDoc.data.name}
                 </Typography>
-                <Typography variant="body2" color="textSecondary" component="p">
+                <Typography variant="body1" color="textSecondary" component="p">
                   {[
                     selectedCourtDoc.data.prefecture,
                     selectedCourtDoc.data.city,
@@ -165,7 +165,7 @@ const Home: FC<Record<string, unknown>> = () => {
                     <Button variant="outlined">詳細</Button>
                   </Link>
                 </p>
-              </div>
+              </Container>
             </InfoWindow>
           )}
         </GoogleMap>
