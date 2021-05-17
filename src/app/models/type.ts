@@ -21,6 +21,7 @@ declare global {
     google: {
       maps: {
         LatLngBounds: () => void
+        Size: (width: number, height: number) => void
       }
     }
   }
