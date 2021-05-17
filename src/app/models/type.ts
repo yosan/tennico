@@ -15,3 +15,13 @@ declare module 'react-redux' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultRootState extends State {}
 }
+
+declare global {
+  interface Window {
+    google: {
+      maps: {
+        LatLngBounds: () => void
+      }
+    }
+  }
+}
