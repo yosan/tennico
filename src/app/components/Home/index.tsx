@@ -94,9 +94,9 @@ const Home: FC<Record<string, unknown>> = () => {
 
       map.fitBounds(bounds)
     }
-  }, [courtDocs, map])
+  }, [courtDocs, map, mode])
 
-  const onClick = useCallback((id: string) => setSelectedID(id), [])
+  const onClickMarker = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback((value: 'text' | 'location') => {
     setMode(value)
   }, [])
@@ -132,7 +132,7 @@ const Home: FC<Record<string, unknown>> = () => {
                   lat: courtDoc.data.geo.latitude,
                   lng: courtDoc.data.geo.longitude,
                 }}
-                onClick={() => onClick(courtDoc.id)}
+                onClick={() => onClickMarker(courtDoc.id)}
               />
             )
           })}
