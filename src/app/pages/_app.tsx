@@ -11,20 +11,9 @@ import { AppContext, AppInitialProps, AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
-import {
-  firebaseReducer,
-  ReactReduxFirebaseProvider,
-} from 'react-redux-firebase'
-import { combineReducers, createStore } from 'redux'
-import { devToolsEnhancer } from 'redux-devtools-extension/developmentOnly'
-import { createFirestoreInstance, firestoreReducer } from 'redux-firestore'
-
-const initialState = {}
-const rootReducer = combineReducers({
-  firebase: firebaseReducer,
-  firestore: firestoreReducer,
-})
-const store = createStore(rootReducer, initialState, devToolsEnhancer({}))
+import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
+import { createFirestoreInstance } from 'redux-firestore'
+import { store } from 'store'
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config.firebase)
