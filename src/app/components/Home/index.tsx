@@ -12,13 +12,15 @@ import {
   changeCenter,
   changeMode,
   changeZoom,
+  searchByGeo,
+  searchByText,
   selectCenter,
+  selectCourtDocs,
   selectMode,
   selectZoom,
 } from 'features/home/homeSlice'
 import { useAppDispatch, useAppSelector } from 'hooks'
 import { CourtDoc } from 'models/court'
-import { search, searchByGeo } from 'models/search'
 import Link from 'next/link'
 import React from 'react'
 import { FC, useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -28,8 +30,6 @@ import styles from './styles.module.css'
 const hits = 50
 
 const Home: FC<Record<string, unknown>> = () => {
-  const [query, setQuery] = useState('東京')
-  const [courtDocs, setCourtDocs] = useState<CourtDoc[] | undefined>()
   const [selectedID, setSelectedID] = useState<string | undefined>()
   const [map, setMap] = useState(undefined)
   const [markerSize, setMarkerSize] = useState(undefined)
@@ -37,6 +37,7 @@ const Home: FC<Record<string, unknown>> = () => {
   const mode = useAppSelector(selectMode)
   const zoom = useAppSelector(selectZoom)
   const center = useAppSelector(selectCenter)
+  const courtDocs = useAppSelector(selectCourtDocs)
   const dispatch = useAppDispatch()
 
   const defaultCenter = useMemo(() => center, [])
@@ -51,6 +52,9 @@ const Home: FC<Record<string, unknown>> = () => {
     mapRef.current = map
     setMap(map)
     setMarkerSize(new window.google.maps.Size(0, -45))
+    if (courtDocs === undefined) {
+      dispatch(searchByText({ text: '東京', hits }))
+    }
   }, [])
 
   const onMapMoved = useCallback(() => {
@@ -67,50 +71,42 @@ const Home: FC<Record<string, unknown>> = () => {
     dispatch(changeCenter(currentCenter))
   }, [mapRef])
 
-  const onSearch = useCallback((value?: string) => {
-    switch (mode) {
-      case 'text':
-        value && setQuery(value)
-        break
-      default:
-        break
-    }
-  }, [])
-
-  useEffect(() => {
-    isLoaded &&
-      map &&
-      mode === 'text' &&
-      search(query, hits)
-        .then((courtDocs) => {
-          setCourtDocs(courtDocs)
-
-          const bounds = new window.google.maps.LatLngBounds()
-
-          courtDocs.forEach((courtDoc) => {
-            bounds.extend({
-              lat: courtDoc.data.geo.latitude,
-              lng: courtDoc.data.geo.longitude,
+  const onSearch = useCallback(
+    (text?: string) => {
+      switch (mode) {
+        case 'text':
+          if (text) {
+            dispatch(searchByText({ text, hits })).then((action) => {
+              const courtDocs = action.payload as CourtDoc[]
+              const bounds = new window.google.maps.LatLngBounds()
+              courtDocs.forEach((courtDoc) => {
+                bounds.extend({
+                  lat: courtDoc.data.geo.latitude,
+                  lng: courtDoc.data.geo.longitude,
+                })
+              })
+              map.fitBounds(bounds)
             })
-          })
-
-          map.fitBounds(bounds)
-        })
-        .catch((e) => console.error(e))
-  }, [map, query, mode, isLoaded])
+          }
+          break
+        default:
+          break
+      }
+    },
+    [map, mode]
+  )
 
   useEffect(() => {
     isLoaded &&
       mode === 'location' &&
       center &&
-      searchByGeo(center.lat, center.lng, hits)
-        .then((courtDocs) => setCourtDocs(courtDocs))
-        .catch((e) => console.error(e))
+      dispatch(searchByGeo({ lat: center.lat, lng: center.lng, hits }))
   }, [center, mode, isLoaded])
 
-  const selectedCourtDoc = useMemo(() => {
-    return courtDocs?.find((court) => court.id === selectedID)
-  }, [selectedID, courtDocs])
+  const selectedCourtDoc = useMemo(
+    () => courtDocs?.find((court) => court.id === selectedID),
+    [selectedID, courtDocs]
+  )
 
   const onClickMarker = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback(
