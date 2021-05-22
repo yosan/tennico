@@ -14,6 +14,7 @@ interface HomeState {
   zoom: number
   center: Geo
   courts?: CourtDoc[]
+  selectedCourtID?: string
 }
 
 const initialState: HomeState = {
@@ -51,6 +52,12 @@ export const homeSlice = createSlice({
     changeCenter: (state, action: PayloadAction<Geo>) => {
       state.center = action.payload
     },
+    changeSelectedCourtID: (
+      state,
+      action: PayloadAction<string | undefined>
+    ) => {
+      state.selectedCourtID = action.payload
+    },
   },
   extraReducers: {
     [searchByText.fulfilled.type]: (
@@ -68,12 +75,19 @@ export const homeSlice = createSlice({
   },
 })
 
-export const { changeMode, changeZoom, changeCenter } = homeSlice.actions
+export const {
+  changeMode,
+  changeZoom,
+  changeCenter,
+  changeSelectedCourtID,
+} = homeSlice.actions
 
 export const selectMode = (state: RootState): Mode => state.home.mode
 export const selectZoom = (state: RootState): number => state.home.zoom
 export const selectCenter = (state: RootState): Geo => state.home.center
 export const selectCourtDocs = (state: RootState): CourtDoc[] | undefined =>
   state.home.courts
+export const selectSelectedCourtID = (state: RootState): string | undefined =>
+  state.home.selectedCourtID
 
 export default homeSlice.reducer

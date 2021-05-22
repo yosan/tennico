@@ -11,12 +11,14 @@ import config from 'config'
 import {
   changeCenter,
   changeMode,
+  changeSelectedCourtID,
   changeZoom,
   searchByGeo,
   searchByText,
   selectCenter,
   selectCourtDocs,
   selectMode,
+  selectSelectedCourtID,
   selectZoom,
 } from 'features/home/homeSlice'
 import { useAppDispatch, useAppSelector } from 'hooks'
@@ -30,7 +32,6 @@ import styles from './styles.module.css'
 const hits = 50
 
 const Home: FC<Record<string, unknown>> = () => {
-  const [selectedID, setSelectedID] = useState<string | undefined>()
   const [map, setMap] = useState(undefined)
   const [markerSize, setMarkerSize] = useState(undefined)
   const mapRef = useRef(null)
@@ -38,6 +39,7 @@ const Home: FC<Record<string, unknown>> = () => {
   const zoom = useAppSelector(selectZoom)
   const center = useAppSelector(selectCenter)
   const courtDocs = useAppSelector(selectCourtDocs)
+  const selectedCourtID = useAppSelector(selectSelectedCourtID)
   const dispatch = useAppDispatch()
 
   const defaultCenter = useMemo(() => center, [])
@@ -104,11 +106,10 @@ const Home: FC<Record<string, unknown>> = () => {
   }, [center, mode, isLoaded])
 
   const selectedCourtDoc = useMemo(
-    () => courtDocs?.find((court) => court.id === selectedID),
-    [selectedID, courtDocs]
+    () => courtDocs?.find((court) => court.id === selectedCourtID),
+    [selectedCourtID, courtDocs]
   )
 
-  const onClickMarker = useCallback((id: string) => setSelectedID(id), [])
   const onClickMode = useCallback(
     (value: 'text' | 'location') => dispatch(changeMode(value)),
     []
@@ -143,7 +144,7 @@ const Home: FC<Record<string, unknown>> = () => {
                     lat: courtDoc.data.geo.latitude,
                     lng: courtDoc.data.geo.longitude,
                   }}
-                  onClick={() => onClickMarker(courtDoc.id)}
+                  onClick={() => dispatch(changeSelectedCourtID(courtDoc.id))}
                 />
               )
             })}
@@ -154,7 +155,7 @@ const Home: FC<Record<string, unknown>> = () => {
                 lng: selectedCourtDoc.data.geo.longitude,
               }}
               options={{ pixelOffset: markerSize }}
-              onCloseClick={() => setSelectedID(undefined)}
+              onCloseClick={() => dispatch(changeSelectedCourtID(undefined))}
             >
               <Container>
                 <Typography gutterBottom variant="h5" component="h2">
