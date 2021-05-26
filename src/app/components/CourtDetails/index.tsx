@@ -48,7 +48,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
   return (
     <main>
       <Head>
-        <title>{`${court.name} - Tennico 東京のテニスコートを探そう`}</title>
+        <title>{`${court.name}の場所`}</title>
         <meta
           name="description"
           content={[court.prefecture, court.city, court.line].join('')}
