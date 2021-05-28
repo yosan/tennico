@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     wordBreak: 'keep-all',
   },
   valueCell: {
-    overflowWrap: 'break-word',
+    overflowWrap: 'anywhere',
     wordWrap: 'break-word',
   },
 })
