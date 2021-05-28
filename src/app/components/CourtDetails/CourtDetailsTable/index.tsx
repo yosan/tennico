@@ -19,7 +19,7 @@ const useStyles = makeStyles({
   },
   valueCell: {
     overflowWrap: 'anywhere',
-    wordWrap: 'break-word',
+    wordBreak: 'break-all',
   },
 })
 
