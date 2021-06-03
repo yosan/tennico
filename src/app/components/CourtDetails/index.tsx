@@ -1,6 +1,6 @@
 import 'firebase/analytics'
 
-import Container from '@material-ui/core/Container'
+import { Box } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import CourtDetailsMap from 'components/CourtDetails/CourtDetailsMap'
@@ -19,8 +19,11 @@ interface Props {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    main: {
+      background: theme.palette.background.default,
+    },
     title: {
-      margin: theme.spacing(3),
+      color: 'white',
     },
   })
 )
@@ -46,7 +49,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
   }
 
   return (
-    <main>
+    <main className={classes.main}>
       <Head>
         <title>{`${court.name}の場所`}</title>
         <meta
@@ -54,13 +57,13 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
           content={[court.prefecture, court.city, court.line].join('')}
         />
       </Head>
-      <Typography variant="h4" gutterBottom className={classes.title}>
-        {court.name}
-      </Typography>
-      <Container>
+      <Box p={2}>
+        <Typography variant="h4" gutterBottom className={classes.title}>
+          {court.name}
+        </Typography>
         <CourtDetailsMap courtDoc={{ id, data: court }} />
         <CourtDetailsTable court={court} />
-      </Container>
+      </Box>
     </main>
   )
 }

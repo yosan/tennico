@@ -2,7 +2,6 @@ import 'firebase/analytics'
 import 'firebase/firestore'
 
 import CourtDetails from 'components/CourtDetails'
-import Navbar from 'components/Navbar'
 import firebase from 'firebase/app'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
@@ -16,12 +15,7 @@ const CourtPage: NextPage<Record<string, unknown>> = () => {
     firebase.analytics().logEvent('select_content', { court: id })
   }, [id])
 
-  return (
-    <>
-      <Navbar />
-      <CourtDetails id={id as string} />
-    </>
-  )
+  return <CourtDetails id={id as string} />
 }
 
 export default CourtPage

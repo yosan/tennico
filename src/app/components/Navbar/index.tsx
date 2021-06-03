@@ -14,7 +14,7 @@ const Navbar: React.FC<Props> = ({ absolute }) => {
     <AppBar position={absolute ? 'absolute' : 'static'}>
       <Toolbar>
         <Link href="/">
-          <Typography variant="h5" style={{ cursor: 'pointer' }}>
+          <Typography variant="h4" style={{ cursor: 'pointer' }}>
             Tennico
           </Typography>
         </Link>
