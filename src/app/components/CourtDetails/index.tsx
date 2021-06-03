@@ -1,14 +1,17 @@
 import 'firebase/analytics'
 
 import { Box } from '@material-ui/core'
+import IconButton from '@material-ui/core/IconButton'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
+import ArrowBack from '@material-ui/icons/ArrowBack'
 import CourtDetailsMap from 'components/CourtDetails/CourtDetailsMap'
 import CourtDetailsTable from 'components/CourtDetails/CourtDetailsTable'
 import firebase from 'firebase/app'
 import { Court } from 'models/court'
 import { State } from 'models/type'
 import Head from 'next/head'
+import Link from 'next/link'
 import * as React from 'react'
 import { useSelector } from 'react-redux'
 import { useFirestoreConnect } from 'react-redux-firebase'
@@ -23,7 +26,10 @@ const useStyles = makeStyles((theme: Theme) =>
       background: theme.palette.background.default,
     },
     title: {
-      color: 'white',
+      color: theme.palette.primary.contrastText,
+    },
+    backButton: {
+      color: theme.palette.primary.contrastText,
     },
   })
 )
@@ -59,6 +65,11 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
       </Head>
       <Box p={2}>
         <Typography variant="h4" gutterBottom className={classes.title}>
+          <Link href="/">
+            <IconButton className={classes.backButton}>
+              <ArrowBack />
+            </IconButton>
+          </Link>
           {court.name}
         </Typography>
         <CourtDetailsMap courtDoc={{ id, data: court }} />

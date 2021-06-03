@@ -3,7 +3,7 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import './styles.css'
 
-import { pink, teal } from '@material-ui/core/colors'
+import { orange, teal } from '@material-ui/core/colors'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as Sentry from '@sentry/browser'
@@ -21,11 +21,20 @@ import { store } from 'store'
 const theme = createMuiTheme({
   palette: {
     background: {
-      default:
-        'linear-gradient(180deg, #009688 0%, #009688 300px, #FFFFFF 300px, #FFFFFF 100%)',
+      default: `linear-gradient(180deg, ${teal[800]} 0%, ${teal[800]} 300px, #FFFFFF 300px, #FFFFFF 100%)`,
     },
-    primary: teal,
-    secondary: pink,
+    primary: {
+      light: teal[500],
+      main: teal[800],
+      dark: teal[900],
+      contrastText: 'white',
+    },
+    secondary: {
+      light: orange[500],
+      main: orange[700],
+      dark: orange[900],
+      contrastText: 'white',
+    },
   },
   typography: {
     fontSize: 12,
@@ -75,7 +84,6 @@ const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
           createFirestoreInstance={createFirestoreInstance}
         >
           <MuiThemeProvider theme={theme}>
-            <CssBaseline />
             <div className="App">
               <Component {...pageProps} />
             </div>
