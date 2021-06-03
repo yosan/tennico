@@ -1,6 +1,6 @@
 import 'firebase/analytics'
 
-import { Box } from '@material-ui/core'
+import { Box, Button } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     backButton: {
       color: theme.palette.primary.contrastText,
+    },
+    homeButton: {
+      width: '100%',
     },
   })
 )
@@ -74,6 +77,15 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
         </Typography>
         <CourtDetailsMap courtDoc={{ id, data: court }} />
         <CourtDetailsTable court={court} />
+        <Link href="/">
+          <Button
+            variant="contained"
+            color="secondary"
+            className={classes.homeButton}
+          >
+            他のコートを検索する
+          </Button>
+        </Link>
       </Box>
     </main>
   )
