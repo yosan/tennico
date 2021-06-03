@@ -4,7 +4,6 @@ import 'firebase/firestore'
 import './styles.css'
 
 import { orange, teal } from '@material-ui/core/colors'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
