@@ -3,6 +3,8 @@ import 'firebase/auth'
 import 'firebase/firestore'
 import './styles.css'
 
+import { orange, teal } from '@material-ui/core/colors'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
 import firebase from 'firebase/app'
@@ -14,6 +16,29 @@ import { Provider } from 'react-redux'
 import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
 import { createFirestoreInstance } from 'redux-firestore'
 import { store } from 'store'
+
+const theme = createMuiTheme({
+  palette: {
+    background: {
+      default: `linear-gradient(180deg, ${teal[800]} 0%, ${teal[800]} 300px, #FFFFFF 300px, #FFFFFF 100%)`,
+    },
+    primary: {
+      light: teal[500],
+      main: teal[800],
+      dark: teal[900],
+      contrastText: 'white',
+    },
+    secondary: {
+      light: orange[500],
+      main: orange[700],
+      dark: orange[900],
+      contrastText: 'white',
+    },
+  },
+  typography: {
+    fontSize: 9,
+  },
+})
 
 if (!firebase.apps.length) {
   firebase.initializeApp(config.firebase)
@@ -57,9 +82,11 @@ const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
           dispatch={store.dispatch}
           createFirestoreInstance={createFirestoreInstance}
         >
-          <div className="App">
-            <Component {...pageProps} />
-          </div>
+          <MuiThemeProvider theme={theme}>
+            <div className="App">
+              <Component {...pageProps} />
+            </div>
+          </MuiThemeProvider>
         </ReactReduxFirebaseProvider>
       </Provider>
     </>
