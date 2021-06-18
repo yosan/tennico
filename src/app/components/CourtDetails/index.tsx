@@ -67,7 +67,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
         />
       </Head>
       <Box p={2}>
-        <Typography variant="h4" gutterBottom className={classes.title}>
+        <Typography variant="h1" gutterBottom className={classes.title}>
           <Link href="/">
             <IconButton className={classes.backButton}>
               <ArrowBack />
