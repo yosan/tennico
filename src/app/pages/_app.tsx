@@ -36,7 +36,13 @@ const theme = createMuiTheme({
     },
   },
   typography: {
-    fontSize: 9,
+    fontSize: 14,
+    h1: {
+      fontSize: 24,
+      '@media (min-width:600px)': {
+        fontSize: 32,
+      },
+    },
   },
 })
 

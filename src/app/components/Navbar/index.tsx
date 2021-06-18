@@ -14,11 +14,11 @@ const Navbar: React.FC<Props> = ({ absolute }) => {
     <AppBar position={absolute ? 'absolute' : 'static'}>
       <Toolbar>
         <Link href="/">
-          <Typography variant="h4" style={{ cursor: 'pointer' }}>
+          <Typography variant="h1" style={{ cursor: 'pointer' }}>
             Tennico
           </Typography>
         </Link>
-        <Typography variant="body1" style={{ marginLeft: '20px' }}>
+        <Typography variant="caption" style={{ marginLeft: '20px' }}>
           東京のテニスコートを探そう
         </Typography>
       </Toolbar>
