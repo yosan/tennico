@@ -60,7 +60,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
   return (
     <main className={classes.main}>
       <Head>
-        <title>{`${court.name}の場所`}</title>
+        <title>{court.name}</title>
         <meta
           name="description"
           content={[court.prefecture, court.city, court.line].join('')}
