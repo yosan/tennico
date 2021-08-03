@@ -5,7 +5,7 @@ import * as fs from 'fs'
 const projectId = 'rules-courts-test'
 
 beforeEach(async () => {
-  firebase.loadFirestoreRules({
+  await firebase.loadFirestoreRules({
     projectId,
     rules: fs.readFileSync('firestore.rules', 'utf8'),
   })
