@@ -17,9 +17,8 @@ const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
   })
 
   return (
-    courtDoc.data.geo &&
-    isLoaded && (
-      <Paper elevation={2} style={{ overflow: 'hidden' }}>
+    <Paper elevation={2} style={{ overflow: 'hidden', height: '400px' }}>
+      {courtDoc.data.geo && isLoaded && (
         <GoogleMap
           mapContainerClassName={styles.map}
           center={{
@@ -40,8 +39,8 @@ const CourtDetailsMap: React.FC<Props> = ({ courtDoc }) => {
             }}
           />
         </GoogleMap>
-      </Paper>
-    )
+      )}
+    </Paper>
   )
 }
 
