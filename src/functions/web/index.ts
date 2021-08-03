@@ -48,6 +48,7 @@ export const nextApp = functions.https.onRequest(async (req, res) => {
     res.set('Vary', 'User-Agent')
     res.send(body.toString())
   } else {
+    res.set('Cache-Control', 'public, max-age=300, s-maxage=600')
     app.prepare().then(() => handle(req, res))
   }
 })
