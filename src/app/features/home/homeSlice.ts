@@ -75,12 +75,8 @@ export const homeSlice = createSlice({
   },
 })
 
-export const {
-  changeMode,
-  changeZoom,
-  changeCenter,
-  changeSelectedCourtID,
-} = homeSlice.actions
+export const { changeMode, changeZoom, changeCenter, changeSelectedCourtID } =
+  homeSlice.actions
 
 export const selectMode = (state: RootState): Mode => state.home.mode
 export const selectZoom = (state: RootState): number => state.home.zoom
