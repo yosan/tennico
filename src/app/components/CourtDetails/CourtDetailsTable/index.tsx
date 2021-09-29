@@ -75,7 +75,7 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
             className={classes.valueCell}
             style={{ overflowWrap: 'anywhere', wordBreak: 'break-all' }}
           >
-            <Link href={court.url} target="_blank">
+            <Link href={court.url} target="_blank" rel="noopener noreferrer">
               {court.url}
             </Link>
           </TableCell>
