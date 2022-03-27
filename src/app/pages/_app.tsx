@@ -4,7 +4,7 @@ import 'firebase/firestore'
 import './styles.css'
 
 import { orange, teal } from '@material-ui/core/colors'
-import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { createTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
 import firebase from 'firebase/app'
@@ -17,7 +17,7 @@ import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
 import { createFirestoreInstance } from 'redux-firestore'
 import { store } from 'store'
 
-const theme = createMuiTheme({
+const theme = createTheme({
   palette: {
     background: {
       default: `linear-gradient(180deg, ${teal[800]} 0%, ${teal[800]} 300px, #FFFFFF 300px, #FFFFFF 100%)`,
