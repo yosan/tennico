@@ -16,7 +16,6 @@ import { useFormik } from 'formik'
 import { Court, CourtDoc } from 'models/court'
 import { useRouter } from 'next/router'
 import * as React from 'react'
-import { useFirestore } from 'react-redux-firebase'
 import * as Yup from 'yup'
 
 const CourtSchema = Yup.object().shape({
@@ -67,7 +66,6 @@ interface Props {
 
 const CourtForms: React.FC<Props> = ({ courtDoc }) => {
   const classes = useStyles()
-  const firestore = useFirestore()
   const router = useRouter()
 
   const isEdit = courtDoc !== undefined
@@ -130,7 +128,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             ),
             url: values.url,
           }
-          await firestore.collection('courts').doc(courtDoc.id).update(data)
+          await firebase.firestore().collection('courts').doc(courtDoc.id).update(data)
           router.push(`/courts/${courtDoc.id}`)
         } else {
           const data: Court = {
@@ -148,7 +146,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             ),
             url: values.url,
           }
-          const ref = await firestore.collection('courts').add(data)
+          const ref = await firebase.firestore().collection('courts').add(data)
           router.push(`/courts/${ref.id}`)
         }
       } catch (e) {
