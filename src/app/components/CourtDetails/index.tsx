@@ -1,4 +1,5 @@
 import 'firebase/analytics'
+import 'firebase/firestore'
 
 import { Box, Button } from '@material-ui/core'
 import IconButton from '@material-ui/core/IconButton'
@@ -9,12 +10,10 @@ import CourtDetailsMap from 'components/CourtDetails/CourtDetailsMap'
 import CourtDetailsTable from 'components/CourtDetails/CourtDetailsTable'
 import firebase from 'firebase/app'
 import { Court } from 'models/court'
-import { State } from 'models/type'
 import Head from 'next/head'
 import Link from 'next/link'
 import * as React from 'react'
-import { useSelector } from 'react-redux'
-import { useFirestoreConnect } from 'react-redux-firebase'
+import { useFirestoreCourt } from 'hooks'
 
 interface Props {
   id: string
@@ -39,19 +38,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const CourtDetails: React.FC<Props> = ({ id }) => {
   const classes = useStyles()
+  const court: Court | undefined = useFirestoreCourt(id)
 
   React.useEffect(() => {
     firebase.analytics().logEvent('select_content', { id })
   }, [id])
-  useFirestoreConnect({
-    collection: 'courts',
-    doc: id,
-  })
-  const court = useSelector((state: State) => {
-    return (
-      state.firestore.data.courts && (state.firestore.data.courts[id] as Court)
-    )
-  })
 
   if (!court) {
     return null

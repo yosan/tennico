@@ -1,24 +1,14 @@
 import CourtForms from 'components/CourtForms'
+import { useFirestoreCourt } from 'hooks'
 import { Court } from 'models/court'
-import { State } from 'models/type'
 import React from 'react'
-import { useSelector } from 'react-redux'
-import { useFirestoreConnect } from 'react-redux-firebase'
 
 interface Props {
   id: string
 }
 
 const EditCourt: React.FC<Props> = ({ id }) => {
-  useFirestoreConnect({
-    collection: 'courts',
-    doc: id,
-  })
-  const court = useSelector((state: State) => {
-    return (
-      state.firestore.data.courts && (state.firestore.data.courts[id] as Court)
-    )
-  })
+  const court: Court | undefined = useFirestoreCourt(id)
 
   if (!court) {
     return null
