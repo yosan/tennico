@@ -7,10 +7,6 @@ class Document extends NextDocument<Record<string, unknown>> {
     return (
       <Html lang="ja">
         <Head>
-          <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-          />
           <link rel="manifest" href="/manifest.json" />
           <link rel="shortcut icon" href="/favicon.ico" />
           <link
