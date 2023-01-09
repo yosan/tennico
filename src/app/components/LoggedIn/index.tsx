@@ -3,26 +3,22 @@ import 'firebase/auth'
 import { Button } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import firebase from 'firebase/app'
-import { State } from 'models/type'
-import React from 'react'
+import React, { useState } from 'react'
 import { FC, useCallback, useEffect, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { isEmpty, isLoaded } from 'react-redux-firebase'
 
-type LoginStatus = 'loggedIn' | 'loggedOut' | 'unknown'
+type LoginStatus = 'loggedIn' | 'loggedOut'
 
 const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
-  const auth = useSelector((state: State) => state.firebase.auth)
+  const [user, setUser] = useState<firebase.User | undefined>(undefined)
+  const logInStatus: LoginStatus = user == undefined ? 'loggedOut' : 'loggedIn'
 
-  const logInStatus: LoginStatus = useMemo(() => {
-    if (!isLoaded(auth)) {
-      return 'unknown'
-    } else if (isEmpty(auth)) {
-      return 'loggedOut'
-    } else {
-      return 'loggedIn'
-    }
-  }, [auth])
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      setUser(user)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     if (process.browser && logInStatus === 'loggedOut') {
@@ -61,8 +57,6 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
       )
     case 'loggedOut':
       return <div id="firebaseui-auth-container" />
-    case 'unknown':
-      return <div>loading...</div>
   }
 }
 

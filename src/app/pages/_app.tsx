@@ -13,7 +13,6 @@ import { AppContext, AppInitialProps, AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
 import { createFirestoreInstance } from 'redux-firestore'
 import { store } from 'store'
 
@@ -82,18 +81,11 @@ const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
         />
       </Head>
       <Provider store={store}>
-        <ReactReduxFirebaseProvider
-          firebase={firebase}
-          config={rfConfig}
-          dispatch={store.dispatch}
-          createFirestoreInstance={createFirestoreInstance}
-        >
-          <MuiThemeProvider theme={theme}>
-            <div className="App">
-              <Component {...pageProps} />
-            </div>
-          </MuiThemeProvider>
-        </ReactReduxFirebaseProvider>
+        <MuiThemeProvider theme={theme}>
+          <div className="App">
+            <Component {...pageProps} />
+          </div>
+        </MuiThemeProvider>
       </Provider>
     </>
   )
