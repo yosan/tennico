@@ -1,8 +1,8 @@
-import 'firebase/firestore'
+import 'firebase/compat/firestore'
 
 import algoliasearch from 'algoliasearch'
 import config from 'config'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { CourtDoc } from 'models/court'
 
 import { SurfaceType } from './surfaceType'

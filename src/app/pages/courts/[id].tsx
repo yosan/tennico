@@ -1,8 +1,8 @@
-import 'firebase/analytics'
-import 'firebase/firestore'
+import 'firebase/compat/analytics'
+import 'firebase/compat/firestore'
 
 import CourtDetails from 'components/CourtDetails'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import * as React from 'react'

@@ -1,8 +1,8 @@
-import 'firebase/auth'
+import 'firebase/compat/auth'
 
 import { Button } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import React, { useState } from 'react'
 import { FC, useCallback, useEffect, useMemo } from 'react'
 

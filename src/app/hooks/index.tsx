@@ -1,10 +1,10 @@
-import 'firebase/firestore'
+import 'firebase/compat/firestore'
 
 import { AnyAction, Dispatch, ThunkDispatch } from '@reduxjs/toolkit'
 import { useEffect, useState } from 'react'
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux'
 import type { AppDispatch, RootState } from 'store'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { Court } from 'models/court'
 
 // Use throughout your app instead of plain `useDispatch` and `useSelector`

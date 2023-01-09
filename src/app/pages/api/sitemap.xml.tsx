@@ -1,7 +1,7 @@
-import 'firebase/firestore'
+import 'firebase/compat/firestore'
 
 import config from 'config'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { EnumChangefreq, SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'

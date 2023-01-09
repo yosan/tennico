@@ -1,4 +1,4 @@
-import 'firebase/firestore'
+import 'firebase/compat/firestore'
 
 import { Client, Status } from '@googlemaps/google-maps-services-js'
 import {
@@ -11,7 +11,7 @@ import {
 } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import config from 'config'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { useFormik } from 'formik'
 import { Court, CourtDoc } from 'models/court'
 import { useRouter } from 'next/router'

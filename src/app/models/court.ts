@@ -1,6 +1,6 @@
-import 'firebase/firestore'
+import 'firebase/compat/firestore'
 
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 
 import { SurfaceType } from './surfaceType'
 

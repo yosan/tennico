@@ -1,19 +1,18 @@
-import 'firebase/analytics'
-import 'firebase/auth'
-import 'firebase/firestore'
+import 'firebase/compat/analytics'
+import 'firebase/compat/auth'
+import 'firebase/compat/firestore'
 import './styles.css'
 
 import { orange, teal } from '@material-ui/core/colors'
 import { createTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
-import firebase from 'firebase/app'
+import firebase from 'firebase/compat/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
-import { createFirestoreInstance } from 'redux-firestore'
 import { store } from 'store'
 
 const theme = createTheme({
