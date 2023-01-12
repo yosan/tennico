@@ -7,12 +7,6 @@ import { CourtDoc } from 'models/court'
 
 import { SurfaceType } from './surfaceType'
 
-const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
-const index = client.initIndex('courts')
-index.setSettings({
-  searchableAttributes: ['name', 'prefecture', 'city', 'line'],
-})
-
 interface CourtAlgolia {
   id: string
   name: string
@@ -30,10 +24,20 @@ interface CourtAlgolia {
   url?: string
 }
 
+const getIndex = () => {
+  const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
+  const index = client.initIndex('courts')
+  index.setSettings({
+    searchableAttributes: ['name', 'prefecture', 'city', 'line'],
+  })
+  return index
+}
+
 export const search = async (
   text: string,
   hitsPerPage: number
 ): Promise<CourtDoc[]> => {
+  const index = getIndex()
   const result = await index.search<CourtAlgolia>(text, { hitsPerPage })
   const courts: CourtDoc[] = result.hits.map((hit) => {
     return {
@@ -55,6 +59,7 @@ export const searchByGeo = async (
   lng: number,
   hitsPerPage: number
 ): Promise<CourtDoc[]> => {
+  const index = getIndex()
   const result = await index.search<CourtAlgolia>('', {
     hitsPerPage,
     aroundLatLng: `${lat}, ${lng}`,
