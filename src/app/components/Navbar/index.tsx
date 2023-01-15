@@ -13,7 +13,7 @@ const Navbar: React.FC<Props> = ({ absolute }) => {
   return (
     <AppBar position={absolute ? 'absolute' : 'static'}>
       <Toolbar>
-        <Link href="/">
+        <Link href="/" style={{ textDecoration: 'none', color: 'white' }}>
           <Typography variant="h1" style={{ cursor: 'pointer' }}>
             Tennico
           </Typography>

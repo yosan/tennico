@@ -56,7 +56,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
       </Head>
       <Box p={2}>
         <Typography variant="h1" gutterBottom className={classes.title}>
-          <Link href="/">
+          <Link href="/" style={{ textDecoration: 'none' }}>
             <IconButton className={classes.backButton}>
               <ArrowBack />
             </IconButton>
@@ -65,7 +65,7 @@ const CourtDetails: React.FC<Props> = ({ id }) => {
         </Typography>
         <CourtDetailsMap courtDoc={{ id, data: court }} />
         <CourtDetailsTable court={court} />
-        <Link href="/">
+        <Link href="/" style={{ textDecoration: 'none' }}>
           <Button
             variant="contained"
             color="secondary"

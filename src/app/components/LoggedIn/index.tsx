@@ -1,9 +1,8 @@
 import { Button } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
 import React, { useState } from 'react'
-import { FC, useCallback, useEffect, useMemo } from 'react'
+import { FC, useCallback, useEffect } from 'react'
 import { User, getAuth, GoogleAuthProvider } from 'firebase/auth'
-import {  } from 'firebase/analytics'
 
 type LoginStatus = 'loggedIn' | 'loggedOut'
 

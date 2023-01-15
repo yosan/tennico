@@ -30,7 +30,7 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
     <Table>
       <TableBody>
         <TableRow>
-          <TableCell className={classes.labelCell} component="th" scope="row">
+          <TableCell className={classes.labelCell} scope="row">
             住所
           </TableCell>
           <TableCell className={classes.valueCell}>
@@ -38,13 +38,13 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell className={classes.labelCell} component="th" scope="row">
+          <TableCell className={classes.labelCell} scope="row">
             料金
           </TableCell>
           <TableCell className={classes.valueCell}>{court.price}</TableCell>
         </TableRow>
         <TableRow>
-          <TableCell className={classes.labelCell} component="th" scope="row">
+          <TableCell className={classes.labelCell} scope="row">
             面数
           </TableCell>
           <TableCell className={classes.valueCell}>
@@ -60,7 +60,7 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell className={classes.labelCell} component="th" scope="row">
+          <TableCell className={classes.labelCell} scope="row">
             ナイター
           </TableCell>
           <TableCell className={classes.valueCell}>
@@ -68,20 +68,23 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell component="th" scope="row">
-            URL
-          </TableCell>
+          <TableCell scope="row">URL</TableCell>
           <TableCell
             className={classes.valueCell}
             style={{ overflowWrap: 'anywhere', wordBreak: 'break-all' }}
           >
-            <Link href={court.url} target="_blank" rel="noopener noreferrer">
+            <Link
+              href={court.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{ textDecoration: 'none' }}
+            >
               {court.url}
             </Link>
           </TableCell>
         </TableRow>
         <TableRow>
-          <TableCell className={classes.labelCell} component="th" scope="row">
+          <TableCell className={classes.labelCell} scope="row">
             追加日
           </TableCell>
           <TableCell className={classes.valueCell}>
