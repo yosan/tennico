@@ -1,19 +1,17 @@
-import 'firebase/compat/analytics'
-import 'firebase/compat/auth'
-import 'firebase/compat/firestore'
 import './styles.css'
 
 import { orange, teal } from '@material-ui/core/colors'
 import { createTheme, MuiThemeProvider } from '@material-ui/core/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
-import firebase from 'firebase/compat/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
 import { store } from 'store'
+import { getApps, initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
 
 const theme = createTheme({
   palette: {
@@ -44,19 +42,14 @@ const theme = createTheme({
   },
 })
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config.firebase)
+if (getApps().length === 0) {
+  initializeApp(config.firebase)
 }
 if (process.browser) {
-  firebase.analytics()
+  getAnalytics()
   Sentry.init({
     dsn: config.sentry.dns,
   })
-}
-
-const rfConfig = {
-  useFirestoreForProfile: false,
-  enableLogging: false,
 }
 
 const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({

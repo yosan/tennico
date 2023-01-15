@@ -1,19 +1,18 @@
-import 'firebase/compat/auth'
-
 import { Button } from '@material-ui/core'
 import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import firebase from 'firebase/compat/app'
 import React, { useState } from 'react'
 import { FC, useCallback, useEffect, useMemo } from 'react'
+import { User, getAuth, GoogleAuthProvider } from 'firebase/auth'
+import {  } from 'firebase/analytics'
 
 type LoginStatus = 'loggedIn' | 'loggedOut'
 
 const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
-  const [user, setUser] = useState<firebase.User | undefined>(undefined)
+  const [user, setUser] = useState<User | undefined>(undefined)
   const logInStatus: LoginStatus = user == undefined ? 'loggedOut' : 'loggedIn'
 
   useEffect(() => {
-    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+    const unsubscribe = getAuth().onAuthStateChanged((user) => {
       setUser(user)
     })
 
@@ -23,9 +22,9 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
   useEffect(() => {
     if (process.browser && logInStatus === 'loggedOut') {
       import('firebaseui').then((firebaseui) => {
-        const ui = new firebaseui.auth.AuthUI(firebase.auth())
+        const ui = new firebaseui.auth.AuthUI(getAuth())
         ui.start('#firebaseui-auth-container', {
-          signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+          signInOptions: [GoogleAuthProvider.PROVIDER_ID],
           callbacks: {
             signInSuccessWithAuthResult: () => {
               ui.delete()
@@ -37,7 +36,7 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
     }
   }, [logInStatus])
 
-  const onLogOutClicked = useCallback(() => firebase.auth().signOut(), [])
+  const onLogOutClicked = useCallback(() => getAuth().signOut(), [])
 
   switch (logInStatus) {
     case 'loggedIn':

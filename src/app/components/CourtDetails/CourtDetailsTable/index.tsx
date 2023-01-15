@@ -85,7 +85,7 @@ const CourtDetailsTable: React.FC<Props> = ({ court }) => {
             追加日
           </TableCell>
           <TableCell className={classes.valueCell}>
-            {moment(court.createdAt.toDate()).calendar()}
+            {moment(court.createdAt).calendar()}
           </TableCell>
         </TableRow>
       </TableBody>

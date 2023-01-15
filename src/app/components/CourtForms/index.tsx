@@ -1,5 +1,3 @@
-import 'firebase/compat/firestore'
-
 import { Client, Status } from '@googlemaps/google-maps-services-js'
 import {
   Button,
@@ -11,12 +9,12 @@ import {
 } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import config from 'config'
-import firebase from 'firebase/compat/app'
 import { useFormik } from 'formik'
 import { Court, CourtDoc } from 'models/court'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import * as Yup from 'yup'
+import { GeoPoint, addDoc, updateDoc, doc, collection, getFirestore } from 'firebase/firestore'
 
 const CourtSchema = Yup.object().shape({
   name: Yup.string()
@@ -122,13 +120,13 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             nighter: values.nighter,
             surfaces: surfaces,
             name: values.name,
-            geo: new firebase.firestore.GeoPoint(
+            geo: new GeoPoint(
               values.latitude,
               values.longitude
             ),
             url: values.url,
           }
-          await firebase.firestore().collection('courts').doc(courtDoc.id).update(data)
+          await updateDoc(doc(getFirestore(), `courts/${courtDoc.id}`), data)
           router.push(`/courts/${courtDoc.id}`)
         } else {
           const data: Court = {
@@ -139,14 +137,14 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             nighter: values.nighter,
             surfaces: surfaces,
             name: values.name,
-            createdAt: firebase.firestore.Timestamp.now(),
-            geo: new firebase.firestore.GeoPoint(
+            createdAt: new Date().getUTCMilliseconds(),
+            geo: new GeoPoint(
               values.latitude,
               values.longitude
             ),
             url: values.url,
           }
-          const ref = await firebase.firestore().collection('courts').add(data)
+          const ref = await addDoc(collection(getFirestore(), 'courts'), data)
           router.push(`/courts/${ref.id}`)
         }
       } catch (e) {
