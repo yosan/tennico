@@ -1,37 +1,17 @@
-import IconButton from '@material-ui/core/IconButton'
-import InputBase from '@material-ui/core/InputBase'
-import Paper from '@material-ui/core/Paper'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
-import SearchIcon from '@material-ui/icons/Search'
+import IconButton from '@mui/material/IconButton'
+import InputBase from '@mui/material/InputBase'
+import Paper from '@mui/material/Paper'
+import SearchIcon from '@mui/icons-material/Search'
 import React from 'react'
 import { FC, memo, useCallback, useState } from 'react'
+import { useTheme } from '@mui/material/styles'
 
 interface Props {
   onSearch: (value?: string) => void
 }
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      padding: '2px 4px',
-      display: 'flex',
-      alignItems: 'center',
-      margin: '8px',
-    },
-    input: {
-      marginLeft: theme.spacing(1),
-      flex: 1,
-    },
-    iconButton: {
-      padding: 10,
-      marginRight: theme.spacing(1),
-    },
-  })
-)
-
 const SearchBar: FC<Props> = ({ onSearch }) => {
-  const classes = useStyles()
-
+  const theme = useTheme()
   const [query, setQuery] = useState<string | undefined>(undefined)
 
   const onChangeQuery = useCallback(
@@ -55,15 +35,28 @@ const SearchBar: FC<Props> = ({ onSearch }) => {
   )
 
   return (
-    <Paper className={classes.root}>
+    <Paper
+      style={{
+        padding: '2px 4px',
+        display: 'flex',
+        alignItems: 'center',
+        margin: '8px',
+      }}
+    >
       <InputBase
-        className={classes.input}
+        style={{
+          marginLeft: theme.spacing(1),
+          flex: 1,
+        }}
         placeholder="キーワード 例)東京都"
         onChange={onChangeQuery}
         onKeyPress={onKeyPress}
       />
       <IconButton
-        className={classes.iconButton}
+        style={{
+          padding: 10,
+          marginRight: theme.spacing(1),
+        }}
         aria-label="search"
         onClick={onClickGo}
       >

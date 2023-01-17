@@ -1,5 +1,5 @@
-import { orange, red } from '@material-ui/core/colors'
-import Room from '@material-ui/icons/Room'
+import { orange, red } from '@mui/material/colors'
+import Room from '@mui/icons-material/Room'
 import React from 'react'
 import { FC, memo, useCallback } from 'react'
 

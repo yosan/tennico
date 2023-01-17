@@ -1,4 +1,4 @@
-import { Paper } from '@material-ui/core'
+import { Paper } from '@mui/material'
 import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api'
 import config from 'config'
 import { CourtDoc } from 'models/court'

@@ -1,7 +1,7 @@
 import './styles.css'
 
-import { orange, teal } from '@material-ui/core/colors'
-import { createTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { orange, teal } from '@mui/material/colors'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
 import { NextComponentType } from 'next'
@@ -73,11 +73,11 @@ const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
         />
       </Head>
       <Provider store={store}>
-        <MuiThemeProvider theme={theme}>
+        <ThemeProvider theme={theme}>
           <div className="App">
             <Component {...pageProps} />
           </div>
-        </MuiThemeProvider>
+        </ThemeProvider>
       </Provider>
     </>
   )

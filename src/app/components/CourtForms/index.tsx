@@ -6,15 +6,22 @@ import {
   FormControlLabel,
   TextField,
   Typography,
-} from '@material-ui/core'
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
+} from '@mui/material'
 import config from 'config'
 import { useFormik } from 'formik'
 import { Court, CourtDoc } from 'models/court'
 import { useRouter } from 'next/router'
 import * as React from 'react'
 import * as Yup from 'yup'
-import { GeoPoint, addDoc, updateDoc, doc, collection, getFirestore } from 'firebase/firestore'
+import {
+  GeoPoint,
+  addDoc,
+  updateDoc,
+  doc,
+  collection,
+  getFirestore,
+} from 'firebase/firestore'
+import { useTheme } from '@mui/material/styles'
 
 const CourtSchema = Yup.object().shape({
   name: Yup.string()
@@ -41,21 +48,6 @@ const CourtSchema = Yup.object().shape({
   longitude: Yup.number().required('必須項目です').moreThan(0, '必須項目です'),
 })
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      margin: theme.spacing(1),
-      maxWidth: 120,
-    },
-    input: {
-      margin: theme.spacing(1),
-    },
-    button: {
-      margin: theme.spacing(1),
-    },
-  })
-)
-
 const client = new Client({})
 
 interface Props {
@@ -63,7 +55,7 @@ interface Props {
 }
 
 const CourtForms: React.FC<Props> = ({ courtDoc }) => {
-  const classes = useStyles()
+  const theme = useTheme()
   const router = useRouter()
 
   const isEdit = courtDoc !== undefined
@@ -120,10 +112,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             nighter: values.nighter,
             surfaces: surfaces,
             name: values.name,
-            geo: new GeoPoint(
-              values.latitude,
-              values.longitude
-            ),
+            geo: new GeoPoint(values.latitude, values.longitude),
             url: values.url,
           }
           await updateDoc(doc(getFirestore(), `courts/${courtDoc.id}`), data)
@@ -138,10 +127,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             surfaces: surfaces,
             name: values.name,
             createdAt: new Date().getUTCMilliseconds(),
-            geo: new GeoPoint(
-              values.latitude,
-              values.longitude
-            ),
+            geo: new GeoPoint(values.latitude, values.longitude),
             url: values.url,
           }
           const ref = await addDoc(collection(getFirestore(), 'courts'), data)
@@ -199,7 +185,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.name && formik.errors.name}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="name"
             fullWidth
           />
@@ -214,7 +200,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.prefecture && formik.errors.prefecture}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="prefecture"
             fullWidth
           />
@@ -229,7 +215,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.city && formik.errors.city}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="city"
             fullWidth
           />
@@ -241,7 +227,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.line && formik.errors.line}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="line"
             fullWidth
           />
@@ -253,7 +239,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             }
             color="primary"
             variant="contained"
-            className={classes.button}
+            style={{ margin: theme.spacing(1) }}
             onClick={onClickGeo}
           >
             住所から座標取得
@@ -268,7 +254,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.url && formik.errors.latitude}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="latitude"
           />
           <TextField
@@ -281,7 +267,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.url && formik.errors.longitude}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="longitude"
           />
           <TextField
@@ -293,7 +279,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             placeholder="1時間　平日1,300円　土日祝日1,300円　【夜間照明料】 1時間以内500円"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="price"
             fullWidth
           />
@@ -305,7 +291,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.url && formik.errors.url}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="url"
             fullWidth
           />
@@ -321,7 +307,10 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.surfaceOmni && formik.errors.surfaceOmni}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.select}
+            style={{
+              margin: theme.spacing(1),
+              maxWidth: 120,
+            }}
             name="surfaceOmni"
           />
           <TextField
@@ -336,7 +325,10 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.surfaceHard && formik.errors.surfaceHard}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.select}
+            style={{
+              margin: theme.spacing(1),
+              maxWidth: 120,
+            }}
             name="surfaceHard"
           />
           <TextField
@@ -351,7 +343,10 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             helperText={formik.touched.surfaceClay && formik.errors.surfaceClay}
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            className={classes.select}
+            style={{
+              margin: theme.spacing(1),
+              maxWidth: 120,
+            }}
             name="surfaceClay"
           />
           <FormControlLabel
@@ -364,7 +359,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
               />
             }
             label="ナイター設備有"
-            className={classes.input}
+            style={{ margin: theme.spacing(1) }}
             name="nighter"
           />
           <Button
@@ -372,7 +367,7 @@ const CourtForms: React.FC<Props> = ({ courtDoc }) => {
             disabled={formik.isSubmitting}
             color="secondary"
             variant="contained"
-            className={classes.button}
+            style={{ margin: theme.spacing(1) }}
             fullWidth
           >
             {isEdit ? '更新' : '登録'}
