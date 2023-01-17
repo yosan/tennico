@@ -1,5 +1,4 @@
 import { SurfaceType } from './surfaceType'
-import { GeoPoint } from 'firebase/firestore'
 
 export interface CourtDoc {
   id: string
@@ -15,6 +14,6 @@ export interface Court {
   surfaces: { [type in SurfaceType]?: number }
   name: string
   createdAt: number
-  geo: { latitude: number, longitude: number }
+  geo: { latitude: number; longitude: number }
   url?: string
 }

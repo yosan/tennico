@@ -15,11 +15,12 @@ export const useFirestoreCourt = (id: string) => {
   const [court, setCourt] = useState<Court | undefined>(undefined)
 
   useEffect(() => {
-    getDoc(doc(getFirestore(), `courts/${id}`)).then((doc) => setCourt(
-      {
+    getDoc(doc(getFirestore(), `courts/${id}`)).then((doc) =>
+      setCourt({
         ...doc.data(),
-        createdAt: doc.data()?.createdAt.toMillis()
-      } as Court))
+        createdAt: doc.data()?.createdAt.toMillis(),
+      } as Court)
+    )
   }, [id, setCourt])
 
   return court
