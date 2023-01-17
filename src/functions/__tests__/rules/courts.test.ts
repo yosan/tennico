@@ -74,9 +74,6 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await testEnv.clearFirestore()
-})
-
-afterAll(async () => {
   await testEnv.cleanup()
 })
 
