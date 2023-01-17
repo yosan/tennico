@@ -1,5 +1,4 @@
 import * as testing from '@firebase/rules-unit-testing'
-import * as admin from 'firebase-admin'
 import * as fs from 'fs'
 import 'firebase/compat/firestore'
 import firebase from 'firebase/compat/app'
@@ -75,6 +74,10 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await testEnv.clearFirestore()
+})
+
+afterAll(async () => {
+  await testEnv.cleanup()
 })
 
 describe('when unauthorized user', () => {
