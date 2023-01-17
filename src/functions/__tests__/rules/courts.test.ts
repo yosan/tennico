@@ -1,104 +1,109 @@
-import * as firebase from '@firebase/rules-unit-testing'
+import * as testing from '@firebase/rules-unit-testing'
 import * as admin from 'firebase-admin'
 import * as fs from 'fs'
+import 'firebase/compat/firestore'
+import firebase from 'firebase/compat/app'
 
 const projectId = 'rules-courts-test'
 
+let testEnv: testing.RulesTestEnvironment
+
 beforeEach(async () => {
-  await firebase.loadFirestoreRules({
+  testEnv = await testing.initializeTestEnvironment({
     projectId,
-    rules: fs.readFileSync('firestore.rules', 'utf8'),
+    firestore: {
+      rules: fs.readFileSync('firestore.rules', 'utf8'),
+    },
   })
 
-  const adminApp = firebase.initializeAdminApp({ projectId })
-  await adminApp
-    .firestore()
-    .collection('courts')
-    .doc('Slsnk6XjulO3ndipFjlY')
-    .set({
-      prefecture: '東京都',
-      city: '江東区',
-      line: '有明2-2-22',
-      createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-01')),
-      geo: {
-        _latitude: 35.635557,
-        _longitude: 139.786987,
-      },
-      name: '有明テニスの森公園',
-      nighter: true,
-      price:
-        '入場料なし 都内小・中・高等学校 1面1時間以内 平日 750 土日祝 900 その他 1面1時間以内 平日 1,500 土日祝 1,800 入場料あり 1面1時間以内 平日 2,500 土日祝 3,000',
-      surfaces: {
-        hard: 32,
-        omni: 16,
-      },
-      url: 'http://www.tptc.co.jp/park/02_03',
-    })
-  await adminApp
-    .firestore()
-    .collection('courts')
-    .doc('5dvq3wFZ362RLOSEfhVo')
-    .set({
-      prefecture: '東京都',
-      city: '品川区',
-      line: '八潮4-1-19',
-      createdAt: admin.firestore.Timestamp.fromDate(new Date('2021-01-02')),
-      geo: {
-        _latitude: 35.591023,
-        _longitude: 139.752222,
-      },
-      name: '大井ふ頭海浜公園',
-      nighter: true,
-      price:
-        '一般1時間以内 平日 1,500 土日祝 1,900　学校行事利用 1時間以内 平日 800 土日祝 900 夜間照明料 1時間以内 500',
-      surfaces: {
-        hard: 12,
-        omni: 2,
-      },
-      url: 'http://seaside-park.jp/park_ooisports/',
-    })
-  await adminApp
-    .firestore()
-    .collection('users')
-    .doc('1234567890abcdefghijklmopqrs')
-    .set({
+  await testEnv.withSecurityRulesDisabled(async (context) => {
+    const noRuleDB = context.firestore()
+
+    await noRuleDB
+      .collection('courts')
+      .doc('Slsnk6XjulO3ndipFjlY')
+      .set({
+        prefecture: '東京都',
+        city: '江東区',
+        line: '有明2-2-22',
+        createdAt: firebase.firestore.Timestamp.fromDate(
+          new Date('2021-01-01')
+        ),
+        geo: {
+          _latitude: 35.635557,
+          _longitude: 139.786987,
+        },
+        name: '有明テニスの森公園',
+        nighter: true,
+        price:
+          '入場料なし 都内小・中・高等学校 1面1時間以内 平日 750 土日祝 900 その他 1面1時間以内 平日 1,500 土日祝 1,800 入場料あり 1面1時間以内 平日 2,500 土日祝 3,000',
+        surfaces: {
+          hard: 32,
+          omni: 16,
+        },
+        url: 'http://www.tptc.co.jp/park/02_03',
+      })
+    await noRuleDB
+      .collection('courts')
+      .doc('5dvq3wFZ362RLOSEfhVo')
+      .set({
+        prefecture: '東京都',
+        city: '品川区',
+        line: '八潮4-1-19',
+        createdAt: firebase.firestore.Timestamp.fromDate(
+          new Date('2021-01-02')
+        ),
+        geo: {
+          _latitude: 35.591023,
+          _longitude: 139.752222,
+        },
+        name: '大井ふ頭海浜公園',
+        nighter: true,
+        price:
+          '一般1時間以内 平日 1,500 土日祝 1,900　学校行事利用 1時間以内 平日 800 土日祝 900 夜間照明料 1時間以内 500',
+        surfaces: {
+          hard: 12,
+          omni: 2,
+        },
+        url: 'http://seaside-park.jp/park_ooisports/',
+      })
+    await noRuleDB.collection('users').doc('1234567890abcdefghijklmopqrs').set({
       admin: true,
     })
-
-  await adminApp.delete()
+  })
 })
 
 afterEach(async () => {
-  await firebase.clearFirestoreData({ projectId })
+  await testEnv.clearFirestore()
 })
 
 describe('when unauthorized user', () => {
-  let app: ReturnType<typeof firebase.initializeTestApp>
+  let context: testing.RulesTestContext
 
-  beforeEach(() => {
-    app = firebase.initializeTestApp({
-      projectId,
-    })
-  })
-
-  afterEach(async () => {
-    await app.delete()
+  beforeEach(async () => {
+    context = testEnv.unauthenticatedContext()
   })
 
   describe('try to access courts collection', () => {
     test('read shoud be succeeded', async () => {
-      await firebase.assertSucceeds(
-        app.firestore().collection('courts').doc('Slsnk6XjulO3ndipFjlY').get()
+      await testing.assertSucceeds(
+        context
+          .firestore()
+          .collection('courts')
+          .doc('Slsnk6XjulO3ndipFjlY')
+          .get()
       )
     })
 
     test('list shoud be succeeded', async () => {
-      await firebase.assertSucceeds(app.firestore().collection('courts').get())
+      await testing.assertSucceeds(
+        context.firestore().collection('courts').get()
+      )
     })
 
     test('create shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('courts')
           .doc()
@@ -125,8 +130,8 @@ describe('when unauthorized user', () => {
     })
 
     test('update shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('courts')
           .doc('Slsnk6XjulO3ndipFjlY')
@@ -139,8 +144,8 @@ describe('when unauthorized user', () => {
 
   describe('try to access users collection', () => {
     test('read shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
@@ -149,20 +154,20 @@ describe('when unauthorized user', () => {
     })
 
     test('list shoud be failed', async () => {
-      await firebase.assertFails(app.firestore().collection('users').get())
+      await testing.assertFails(context.firestore().collection('users').get())
     })
 
     test('create shoud be failed', async () => {
-      await firebase.assertFails(
-        app.firestore().collection('users').doc().set({
+      await testing.assertFails(
+        context.firestore().collection('users').doc().set({
           admin: true,
         })
       )
     })
 
     test('update shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
@@ -175,33 +180,32 @@ describe('when unauthorized user', () => {
 })
 
 describe('when authorized user', () => {
-  let app: ReturnType<typeof firebase.initializeTestApp>
+  let context: testing.RulesTestContext
 
-  beforeEach(() => {
-    app = firebase.initializeTestApp({
-      projectId,
-      auth: { uid: 'abcdefghijklmopqrs1234567890' },
-    })
-  })
-
-  afterEach(async () => {
-    await app.delete()
+  beforeEach(async () => {
+    context = testEnv.authenticatedContext('abcdefghijklmopqrs1234567890')
   })
 
   describe('try to access courts collection', () => {
     test('read shoud be succeeded', async () => {
-      await firebase.assertSucceeds(
-        app.firestore().collection('courts').doc('Slsnk6XjulO3ndipFjlY').get()
+      await testing.assertSucceeds(
+        context
+          .firestore()
+          .collection('courts')
+          .doc('Slsnk6XjulO3ndipFjlY')
+          .get()
       )
     })
 
     test('list shoud be succeeded', async () => {
-      await firebase.assertSucceeds(app.firestore().collection('courts').get())
+      await testing.assertSucceeds(
+        context.firestore().collection('courts').get()
+      )
     })
 
     test('create shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('courts')
           .doc()
@@ -228,8 +232,8 @@ describe('when authorized user', () => {
     })
 
     test('update shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('courts')
           .doc('Slsnk6XjulO3ndipFjlY')
@@ -242,8 +246,8 @@ describe('when authorized user', () => {
 
   describe('try to access users collection', () => {
     test('read shoud be succeeded', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
@@ -252,20 +256,20 @@ describe('when authorized user', () => {
     })
 
     test('list shoud be succeeded', async () => {
-      await firebase.assertFails(app.firestore().collection('users').get())
+      await testing.assertFails(context.firestore().collection('users').get())
     })
 
     test('create shoud be failed', async () => {
-      await firebase.assertFails(
-        app.firestore().collection('users').doc().set({
+      await testing.assertFails(
+        context.firestore().collection('users').doc().set({
           admin: true,
         })
       )
     })
 
     test('update shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
@@ -278,33 +282,32 @@ describe('when authorized user', () => {
 })
 
 describe('when admin user', () => {
-  let app: ReturnType<typeof firebase.initializeTestApp>
+  let context: testing.RulesTestContext
 
-  beforeEach(() => {
-    app = firebase.initializeTestApp({
-      projectId,
-      auth: { uid: '1234567890abcdefghijklmopqrs' },
-    })
-  })
-
-  afterEach(async () => {
-    await app.delete()
+  beforeEach(async () => {
+    context = testEnv.authenticatedContext('1234567890abcdefghijklmopqrs')
   })
 
   describe('try to access courts collection', () => {
     test('read shoud be succeeded', async () => {
-      await firebase.assertSucceeds(
-        app.firestore().collection('courts').doc('Slsnk6XjulO3ndipFjlY').get()
+      await testing.assertSucceeds(
+        context
+          .firestore()
+          .collection('courts')
+          .doc('Slsnk6XjulO3ndipFjlY')
+          .get()
       )
     })
 
     test('list shoud be succeeded', async () => {
-      await firebase.assertSucceeds(app.firestore().collection('courts').get())
+      await testing.assertSucceeds(
+        context.firestore().collection('courts').get()
+      )
     })
 
     test('create shoud be succeeded', async () => {
-      await firebase.assertSucceeds(
-        app
+      await testing.assertSucceeds(
+        context
           .firestore()
           .collection('courts')
           .doc()
@@ -331,8 +334,8 @@ describe('when admin user', () => {
     })
 
     test('update shoud be succeeded', async () => {
-      await firebase.assertSucceeds(
-        app
+      await testing.assertSucceeds(
+        context
           .firestore()
           .collection('courts')
           .doc('Slsnk6XjulO3ndipFjlY')
@@ -345,8 +348,8 @@ describe('when admin user', () => {
 
   describe('try to access users collection', () => {
     test('read shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
@@ -355,20 +358,20 @@ describe('when admin user', () => {
     })
 
     test('list shoud be failed', async () => {
-      await firebase.assertFails(app.firestore().collection('users').get())
+      await testing.assertFails(context.firestore().collection('users').get())
     })
 
     test('create shoud be failed', async () => {
-      await firebase.assertFails(
-        app.firestore().collection('users').doc().set({
+      await testing.assertFails(
+        context.firestore().collection('users').doc().set({
           admin: true,
         })
       )
     })
 
     test('update shoud be failed', async () => {
-      await firebase.assertFails(
-        app
+      await testing.assertFails(
+        context
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
