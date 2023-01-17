@@ -1,13 +1,12 @@
-import 'firebase/firestore'
-
 import config from 'config'
-import firebase from 'firebase/app'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { EnumChangefreq, SitemapStream, streamToPromise } from 'sitemap'
 import { createGzip } from 'zlib'
+import { initializeApp, getApps } from 'firebase/app'
+import { getFirestore, collection, getDocs } from 'firebase/firestore'
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config.firebase)
+if (!getApps().length) {
+  initializeApp(config.firebase)
 }
 
 export default async (
@@ -31,7 +30,7 @@ export default async (
       changefreq: EnumChangefreq.MONTHLY,
     })
 
-    const querySnapshot = await firebase.firestore().collection('courts').get()
+    const querySnapshot = await getDocs(collection(getFirestore(), 'courts'))
     querySnapshot.docs.forEach((doc) => {
       smStream.write({
         url: `/courts/${doc.id}`,

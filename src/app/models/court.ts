@@ -1,7 +1,3 @@
-import 'firebase/firestore'
-
-import firebase from 'firebase/app'
-
 import { SurfaceType } from './surfaceType'
 
 export interface CourtDoc {
@@ -17,7 +13,7 @@ export interface Court {
   nighter: boolean
   surfaces: { [type in SurfaceType]?: number }
   name: string
-  createdAt: firebase.firestore.Timestamp
-  geo: firebase.firestore.GeoPoint
+  createdAt: number
+  geo: { latitude: number; longitude: number }
   url?: string
 }

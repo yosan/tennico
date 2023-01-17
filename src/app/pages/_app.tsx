@@ -1,21 +1,17 @@
-import 'firebase/analytics'
-import 'firebase/auth'
-import 'firebase/firestore'
 import './styles.css'
 
-import { orange, teal } from '@material-ui/core/colors'
-import { createTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import { orange, teal } from '@mui/material/colors'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 import * as Sentry from '@sentry/browser'
 import config from 'config'
-import firebase from 'firebase/app'
 import { NextComponentType } from 'next'
 import { AppContext, AppInitialProps, AppProps } from 'next/app'
 import Head from 'next/head'
 import * as React from 'react'
 import { Provider } from 'react-redux'
-import { ReactReduxFirebaseProvider } from 'react-redux-firebase'
-import { createFirestoreInstance } from 'redux-firestore'
 import { store } from 'store'
+import { getApps, initializeApp } from 'firebase/app'
+import { getAnalytics } from 'firebase/analytics'
 
 const theme = createTheme({
   palette: {
@@ -46,19 +42,14 @@ const theme = createTheme({
   },
 })
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(config.firebase)
+if (getApps().length === 0) {
+  initializeApp(config.firebase)
 }
 if (process.browser) {
-  firebase.analytics()
+  getAnalytics()
   Sentry.init({
     dsn: config.sentry.dns,
   })
-}
-
-const rfConfig = {
-  useFirestoreForProfile: false,
-  enableLogging: false,
 }
 
 const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
@@ -82,18 +73,11 @@ const App: NextComponentType<AppContext, AppInitialProps, AppProps> = ({
         />
       </Head>
       <Provider store={store}>
-        <ReactReduxFirebaseProvider
-          firebase={firebase}
-          config={rfConfig}
-          dispatch={store.dispatch}
-          createFirestoreInstance={createFirestoreInstance}
-        >
-          <MuiThemeProvider theme={theme}>
-            <div className="App">
-              <Component {...pageProps} />
-            </div>
-          </MuiThemeProvider>
-        </ReactReduxFirebaseProvider>
+        <ThemeProvider theme={theme}>
+          <div className="App">
+            <Component {...pageProps} />
+          </div>
+        </ThemeProvider>
       </Provider>
     </>
   )

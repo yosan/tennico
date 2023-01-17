@@ -1,4 +1,4 @@
-import { Button, Container, Typography } from '@material-ui/core'
+import { Button, Container, Typography } from '@mui/material'
 import {
   GoogleMap,
   InfoWindow,
@@ -173,6 +173,7 @@ const Home: FC<Record<string, unknown>> = () => {
                     href="/courts/[id]"
                     as={'/courts/' + selectedCourtDoc.id}
                     key={selectedCourtDoc.id}
+                    style={{ textDecoration: 'none' }}
                   >
                     <Button variant="outlined">詳細</Button>
                   </Link>

@@ -1,6 +1,6 @@
-import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import AppBar from '@mui/material/AppBar'
+import Toolbar from '@mui/material/Toolbar'
+import Typography from '@mui/material/Typography'
 import Link from 'next/link'
 import React from 'react'
 import { memo } from 'react'
@@ -13,7 +13,7 @@ const Navbar: React.FC<Props> = ({ absolute }) => {
   return (
     <AppBar position={absolute ? 'absolute' : 'static'}>
       <Toolbar>
-        <Link href="/">
+        <Link href="/" style={{ textDecoration: 'none', color: 'white' }}>
           <Typography variant="h1" style={{ cursor: 'pointer' }}>
             Tennico
           </Typography>

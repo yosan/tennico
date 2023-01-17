@@ -1,35 +1,29 @@
-import 'firebase/auth'
+import { Button } from '@mui/material'
+import ExitToAppIcon from '@mui/icons-material/ExitToApp'
+import React, { useState } from 'react'
+import { FC, useCallback, useEffect } from 'react'
+import { User, getAuth, GoogleAuthProvider } from 'firebase/auth'
 
-import { Button } from '@material-ui/core'
-import ExitToAppIcon from '@material-ui/icons/ExitToApp'
-import firebase from 'firebase/app'
-import { State } from 'models/type'
-import React from 'react'
-import { FC, useCallback, useEffect, useMemo } from 'react'
-import { useSelector } from 'react-redux'
-import { isEmpty, isLoaded } from 'react-redux-firebase'
-
-type LoginStatus = 'loggedIn' | 'loggedOut' | 'unknown'
+type LoginStatus = 'loggedIn' | 'loggedOut'
 
 const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
-  const auth = useSelector((state: State) => state.firebase.auth)
+  const [user, setUser] = useState<User | undefined>(undefined)
+  const logInStatus: LoginStatus = user == undefined ? 'loggedOut' : 'loggedIn'
 
-  const logInStatus: LoginStatus = useMemo(() => {
-    if (!isLoaded(auth)) {
-      return 'unknown'
-    } else if (isEmpty(auth)) {
-      return 'loggedOut'
-    } else {
-      return 'loggedIn'
-    }
-  }, [auth])
+  useEffect(() => {
+    const unsubscribe = getAuth().onAuthStateChanged((user) => {
+      setUser(user)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   useEffect(() => {
     if (process.browser && logInStatus === 'loggedOut') {
       import('firebaseui').then((firebaseui) => {
-        const ui = new firebaseui.auth.AuthUI(firebase.auth())
+        const ui = new firebaseui.auth.AuthUI(getAuth())
         ui.start('#firebaseui-auth-container', {
-          signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
+          signInOptions: [GoogleAuthProvider.PROVIDER_ID],
           callbacks: {
             signInSuccessWithAuthResult: () => {
               ui.delete()
@@ -41,7 +35,7 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
     }
   }, [logInStatus])
 
-  const onLogOutClicked = useCallback(() => firebase.auth().signOut(), [])
+  const onLogOutClicked = useCallback(() => getAuth().signOut(), [])
 
   switch (logInStatus) {
     case 'loggedIn':
@@ -61,8 +55,6 @@ const LoggedIn: FC<Record<string, unknown>> = ({ children }) => {
       )
     case 'loggedOut':
       return <div id="firebaseui-auth-container" />
-    case 'unknown':
-      return <div>loading...</div>
   }
 }
 

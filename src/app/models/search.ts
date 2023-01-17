@@ -1,17 +1,7 @@
-import 'firebase/firestore'
-
 import algoliasearch from 'algoliasearch'
 import config from 'config'
-import firebase from 'firebase/app'
 import { CourtDoc } from 'models/court'
-
 import { SurfaceType } from './surfaceType'
-
-const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
-const index = client.initIndex('courts')
-index.setSettings({
-  searchableAttributes: ['name', 'prefecture', 'city', 'line'],
-})
 
 interface CourtAlgolia {
   id: string
@@ -30,20 +20,25 @@ interface CourtAlgolia {
   url?: string
 }
 
+const getIndex = async () => {
+  const client = algoliasearch(config.algolia.appId, config.algolia.apiKey)
+  const index = client.initIndex('courts')
+  return index
+}
+
 export const search = async (
   text: string,
   hitsPerPage: number
 ): Promise<CourtDoc[]> => {
+  const index = await getIndex()
   const result = await index.search<CourtAlgolia>(text, { hitsPerPage })
   const courts: CourtDoc[] = result.hits.map((hit) => {
     return {
       id: hit.objectID,
       data: {
         ...hit,
-        geo: new firebase.firestore.GeoPoint(hit._geoloc.lat, hit._geoloc.lng),
-        createdAt: firebase.firestore.Timestamp.fromDate(
-          new Date(hit.createdAt)
-        ),
+        geo: { latitude: hit._geoloc.lat, longitude: hit._geoloc.lng },
+        createdAt: new Date(hit.createdAt).getUTCMilliseconds(),
       },
     }
   })
@@ -55,6 +50,7 @@ export const searchByGeo = async (
   lng: number,
   hitsPerPage: number
 ): Promise<CourtDoc[]> => {
+  const index = await getIndex()
   const result = await index.search<CourtAlgolia>('', {
     hitsPerPage,
     aroundLatLng: `${lat}, ${lng}`,
@@ -64,10 +60,8 @@ export const searchByGeo = async (
       id: hit.objectID,
       data: {
         ...hit,
-        geo: new firebase.firestore.GeoPoint(hit._geoloc.lat, hit._geoloc.lng),
-        createdAt: firebase.firestore.Timestamp.fromDate(
-          new Date(hit.createdAt)
-        ),
+        geo: { latitude: hit._geoloc.lat, longitude: hit._geoloc.lng },
+        createdAt: new Date(hit.createdAt).getUTCMilliseconds(),
       },
     }
   })

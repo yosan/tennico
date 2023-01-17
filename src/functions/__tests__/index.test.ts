@@ -1,8 +1,6 @@
 import * as admin from 'firebase-admin'
 import * as functionsTest from 'firebase-functions-test'
 
-import * as index from '../firestore'
-
 let mockSaveObject: ReturnType<typeof jest.fn>
 jest.mock('algoliasearch', () => {
   mockSaveObject = jest.fn().mockReturnValue({})
@@ -14,6 +12,8 @@ jest.mock('algoliasearch', () => {
     }),
   }
 })
+
+import * as index from '../firestore'
 
 const ftest = functionsTest()
 
