@@ -7,9 +7,6 @@ const dev = process.env.NODE_ENV !== 'production'
 const app = next({
   dev,
   dir: __dirname,
-  conf: {
-    distDir: '../next',
-  },
 })
 const handle = app.getRequestHandler()
 

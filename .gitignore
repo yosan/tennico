@@ -6,6 +6,7 @@ ui-debug.log
 .runtimeconfig.json
 .env
 tsconfig.tsbuildinfo
+firebase-debug.log
 
 # Firebase cache
 .firebase/
