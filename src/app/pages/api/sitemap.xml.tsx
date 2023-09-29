@@ -11,7 +11,7 @@ if (!getApps().length) {
 
 export default async (
   _req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ): Promise<void> => {
   if (!res) return
 

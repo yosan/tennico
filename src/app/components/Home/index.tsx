@@ -95,7 +95,7 @@ const Home: FC<Record<string, unknown>> = () => {
           break
       }
     },
-    [map, mode]
+    [map, mode],
   )
 
   useEffect(() => {
@@ -107,12 +107,12 @@ const Home: FC<Record<string, unknown>> = () => {
 
   const selectedCourtDoc = useMemo(
     () => courtDocs?.find((court) => court.id === selectedCourtID),
-    [selectedCourtID, courtDocs]
+    [selectedCourtID, courtDocs],
   )
 
   const onClickMode = useCallback(
     (value: 'text' | 'location') => dispatch(changeMode(value)),
-    []
+    [],
   )
 
   return (

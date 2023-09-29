@@ -40,7 +40,7 @@ export const nextApp = functions.https.onRequest(async (req, res) => {
     const renderResp = await fetch(
       `https://${
         functions.config().rendertron?.rendertron_host ?? ''
-      }/render/${generateUrl(req)}`
+      }/render/${generateUrl(req)}`,
     )
     const body = await renderResp.text()
 

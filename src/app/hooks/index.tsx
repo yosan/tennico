@@ -19,7 +19,7 @@ export const useFirestoreCourt = (id: string) => {
       setCourt({
         ...doc.data(),
         createdAt: doc.data()?.createdAt.toMillis(),
-      } as Court)
+      } as Court),
     )
   }, [id, setCourt])
 
