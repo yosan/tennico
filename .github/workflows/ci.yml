@@ -2,7 +2,7 @@ name: CI
 on: [push]
 jobs:
   test:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
       GCLOUD_PROJECT: ${{ secrets.GCLOUD_PROJECT }}
