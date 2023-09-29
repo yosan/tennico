@@ -46,7 +46,7 @@ describe('courtCreated', () => {
           },
           url: 'http://www.tptc.co.jp/park/02_03',
         },
-        'courts/Slsnk6XjulO3ndipFjlY'
+        'courts/Slsnk6XjulO3ndipFjlY',
       )
 
       await wrapped(snapshot)
@@ -103,7 +103,7 @@ describe('courtUpdated', () => {
           },
           url: 'http://www.tptc.co.jp/park/02_03',
         },
-        'courts/Slsnk6XjulO3ndipFjlY'
+        'courts/Slsnk6XjulO3ndipFjlY',
       )
 
       const after = ftest.firestore.makeDocumentSnapshot(
@@ -126,7 +126,7 @@ describe('courtUpdated', () => {
           },
           url: 'http://seaside-park.jp/park_ooisports/',
         },
-        'courts/Slsnk6XjulO3ndipFjlY'
+        'courts/Slsnk6XjulO3ndipFjlY',
       )
 
       await wrapped({ before, after })

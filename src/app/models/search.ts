@@ -28,7 +28,7 @@ const getIndex = async () => {
 
 export const search = async (
   text: string,
-  hitsPerPage: number
+  hitsPerPage: number,
 ): Promise<CourtDoc[]> => {
   const index = await getIndex()
   const result = await index.search<CourtAlgolia>(text, { hitsPerPage })
@@ -48,7 +48,7 @@ export const search = async (
 export const searchByGeo = async (
   lat: number,
   lng: number,
-  hitsPerPage: number
+  hitsPerPage: number,
 ): Promise<CourtDoc[]> => {
   const index = await getIndex()
   const result = await index.search<CourtAlgolia>('', {

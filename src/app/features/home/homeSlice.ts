@@ -28,7 +28,7 @@ export const searchByText = createAsyncThunk(
   async (params: { text: string; hits: number }) => {
     const courtDocs = await search(params.text, params.hits)
     return courtDocs
-  }
+  },
 )
 
 export const searchByGeo = createAsyncThunk(
@@ -36,7 +36,7 @@ export const searchByGeo = createAsyncThunk(
   async (params: { lat: number; lng: number; hits: number }) => {
     const courtDocs = await _searchByGeo(params.lat, params.lng, params.hits)
     return courtDocs
-  }
+  },
 )
 
 export const homeSlice = createSlice({
@@ -54,7 +54,7 @@ export const homeSlice = createSlice({
     },
     changeSelectedCourtID: (
       state,
-      action: PayloadAction<string | undefined>
+      action: PayloadAction<string | undefined>,
     ) => {
       state.selectedCourtID = action.payload
     },
@@ -62,13 +62,13 @@ export const homeSlice = createSlice({
   extraReducers: {
     [searchByText.fulfilled.type]: (
       state,
-      action: PayloadAction<CourtDoc[]>
+      action: PayloadAction<CourtDoc[]>,
     ) => {
       state.courts = action.payload
     },
     [searchByGeo.fulfilled.type]: (
       state,
-      action: PayloadAction<CourtDoc[]>
+      action: PayloadAction<CourtDoc[]>,
     ) => {
       state.courts = action.payload
     },

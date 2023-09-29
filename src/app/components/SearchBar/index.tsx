@@ -18,7 +18,7 @@ const SearchBar: FC<Props> = ({ onSearch }) => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setQuery(event.target.value)
     },
-    []
+    [],
   )
 
   const onClickGo = useCallback(() => {
@@ -31,7 +31,7 @@ const SearchBar: FC<Props> = ({ onSearch }) => {
         onSearch(query)
       }
     },
-    [query]
+    [query],
   )
 
   return (

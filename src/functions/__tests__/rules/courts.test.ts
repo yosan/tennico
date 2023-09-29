@@ -26,7 +26,7 @@ beforeEach(async () => {
         city: '江東区',
         line: '有明2-2-22',
         createdAt: firebase.firestore.Timestamp.fromDate(
-          new Date('2021-01-01')
+          new Date('2021-01-01'),
         ),
         geo: {
           _latitude: 35.635557,
@@ -50,7 +50,7 @@ beforeEach(async () => {
         city: '品川区',
         line: '八潮4-1-19',
         createdAt: firebase.firestore.Timestamp.fromDate(
-          new Date('2021-01-02')
+          new Date('2021-01-02'),
         ),
         geo: {
           _latitude: 35.591023,
@@ -91,13 +91,13 @@ describe('when unauthorized user', () => {
           .firestore()
           .collection('courts')
           .doc('Slsnk6XjulO3ndipFjlY')
-          .get()
+          .get(),
       )
     })
 
     test('list shoud be succeeded', async () => {
       await testing.assertSucceeds(
-        context.firestore().collection('courts').get()
+        context.firestore().collection('courts').get(),
       )
     })
 
@@ -112,7 +112,7 @@ describe('when unauthorized user', () => {
             city: '東大和市',
             line: '桜が丘二・三丁目',
             createdAt: firebase.firestore.Timestamp.fromDate(
-              new Date('2021-01-01')
+              new Date('2021-01-01'),
             ),
             geo: {
               _latitude: 35.7332582,
@@ -125,7 +125,7 @@ describe('when unauthorized user', () => {
               omni: 8,
             },
             url: 'https://www.tokyo-park.or.jp/park/format/index052.html',
-          })
+          }),
       )
     })
 
@@ -137,7 +137,7 @@ describe('when unauthorized user', () => {
           .doc('Slsnk6XjulO3ndipFjlY')
           .update({
             name: '有明テニスの森公園！',
-          })
+          }),
       )
     })
   })
@@ -149,7 +149,7 @@ describe('when unauthorized user', () => {
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
-          .get()
+          .get(),
       )
     })
 
@@ -161,7 +161,7 @@ describe('when unauthorized user', () => {
       await testing.assertFails(
         context.firestore().collection('users').doc().set({
           admin: true,
-        })
+        }),
       )
     })
 
@@ -173,7 +173,7 @@ describe('when unauthorized user', () => {
           .doc('1234567890abcdefghijklmopqrs')
           .update({
             admin: false,
-          })
+          }),
       )
     })
   })
@@ -193,13 +193,13 @@ describe('when authorized user', () => {
           .firestore()
           .collection('courts')
           .doc('Slsnk6XjulO3ndipFjlY')
-          .get()
+          .get(),
       )
     })
 
     test('list shoud be succeeded', async () => {
       await testing.assertSucceeds(
-        context.firestore().collection('courts').get()
+        context.firestore().collection('courts').get(),
       )
     })
 
@@ -214,7 +214,7 @@ describe('when authorized user', () => {
             city: '東大和市',
             line: '桜が丘二・三丁目',
             createdAt: firebase.firestore.Timestamp.fromDate(
-              new Date('2021-01-01')
+              new Date('2021-01-01'),
             ),
             geo: {
               _latitude: 35.7332582,
@@ -227,7 +227,7 @@ describe('when authorized user', () => {
               omni: 8,
             },
             url: 'https://www.tokyo-park.or.jp/park/format/index052.html',
-          })
+          }),
       )
     })
 
@@ -239,7 +239,7 @@ describe('when authorized user', () => {
           .doc('Slsnk6XjulO3ndipFjlY')
           .update({
             name: '有明テニスの森公園！',
-          })
+          }),
       )
     })
   })
@@ -251,7 +251,7 @@ describe('when authorized user', () => {
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
-          .get()
+          .get(),
       )
     })
 
@@ -263,7 +263,7 @@ describe('when authorized user', () => {
       await testing.assertFails(
         context.firestore().collection('users').doc().set({
           admin: true,
-        })
+        }),
       )
     })
 
@@ -275,7 +275,7 @@ describe('when authorized user', () => {
           .doc('1234567890abcdefghijklmopqrs')
           .update({
             admin: false,
-          })
+          }),
       )
     })
   })
@@ -295,13 +295,13 @@ describe('when admin user', () => {
           .firestore()
           .collection('courts')
           .doc('Slsnk6XjulO3ndipFjlY')
-          .get()
+          .get(),
       )
     })
 
     test('list shoud be succeeded', async () => {
       await testing.assertSucceeds(
-        context.firestore().collection('courts').get()
+        context.firestore().collection('courts').get(),
       )
     })
 
@@ -316,7 +316,7 @@ describe('when admin user', () => {
             city: '東大和市',
             line: '桜が丘二・三丁目',
             createdAt: firebase.firestore.Timestamp.fromDate(
-              new Date('2021-01-01')
+              new Date('2021-01-01'),
             ),
             geo: {
               _latitude: 35.7332582,
@@ -329,7 +329,7 @@ describe('when admin user', () => {
               omni: 8,
             },
             url: 'https://www.tokyo-park.or.jp/park/format/index052.html',
-          })
+          }),
       )
     })
 
@@ -341,7 +341,7 @@ describe('when admin user', () => {
           .doc('Slsnk6XjulO3ndipFjlY')
           .update({
             name: '有明テニスの森公園！',
-          })
+          }),
       )
     })
   })
@@ -353,7 +353,7 @@ describe('when admin user', () => {
           .firestore()
           .collection('users')
           .doc('1234567890abcdefghijklmopqrs')
-          .get()
+          .get(),
       )
     })
 
@@ -365,7 +365,7 @@ describe('when admin user', () => {
       await testing.assertFails(
         context.firestore().collection('users').doc().set({
           admin: true,
-        })
+        }),
       )
     })
 
@@ -377,7 +377,7 @@ describe('when admin user', () => {
           .doc('1234567890abcdefghijklmopqrs')
           .update({
             admin: false,
-          })
+          }),
       )
     })
   })
