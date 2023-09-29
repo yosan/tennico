@@ -6,9 +6,6 @@ The application to find tennis court
 
 Next.js + Typescript + Firebase
 
-using [react-redux-firebase](https://github.com/prescottprue/react-redux-firebase)
-
-
 # Setup
 
 ## 1. Add .firebaserc
